@@ -1,0 +1,97 @@
+<!-- testimonials.html -->
+
+<section class="testimonials">
+  <h3 class="h3 testimonials-title">Testimonials</h3>
+  <ul class="testimonials-list has-scrollbar">
+
+    <li class="testimonials-item">
+      <div class="content-card" data-testimonials-item>
+        <figure class="testimonials-avatar-box">
+          <img src="{{ url_for('static', filename='assets/images/memo_12.png') }}" alt="Mayuri Nerkar" width="60" data-testimonials-avatar>
+        </figure>
+        <h4 class="h4 testimonials-item-title" data-testimonials-title>Mayuri Nerkar</h4>
+        <span class="testimonial-role">HR Executive, Clustor Computing</span>
+        <div class="testimonials-text" data-testimonials-text>
+          <p>During his time at CLUSTOR COMPUTING, he was punctual, hardworking, and inquisitive. We wish him the best of luck and believe he will be an integral asset in any workplace.</p>
+        </div>
+      </div>
+    </li>
+
+    <li class="testimonials-item">
+      <div class="content-card" data-testimonials-item>
+        <figure class="testimonials-avatar-box">
+          <img src="{{ url_for('static', filename='assets/images/avatar-3.png') }}" alt="AppxBuild" width="60" data-testimonials-avatar>
+        </figure>
+        <h4 class="h4 testimonials-item-title" data-testimonials-title>APPXBUILD TECHNOLOGIES PVT LTD</h4>
+        <div class="testimonials-text" data-testimonials-text>
+          <p>During his internship at our firm APPXBUILD, we found his performance satisfactory. We wish him the best in his future endeavours.</p>
+        </div>
+      </div>
+    </li>
+
+    <li class="testimonials-item">
+      <div class="content-card" data-testimonials-item>
+        <figure class="testimonials-avatar-box">
+          <img src="{{ url_for('static', filename='assets/images/memo_35.png') }}" alt="Bhairav Badage" width="60" data-testimonials-avatar>
+        </figure>
+        <h4 class="h4 testimonials-item-title" data-testimonials-title>Bhairav Badage</h4>
+        <span class="testimonial-role">GDSC Lead 2021–22</span>
+        <div class="testimonials-text" data-testimonials-text>
+          <p>I want to express my heartfelt gratitude for your contributions to GDSC. Your dedication and collaboration with the team were remarkable. Stay connected, and best wishes in your career.</p>
+        </div>
+      </div>
+    </li>
+
+    <li class="testimonials-item">
+      <div class="content-card" data-testimonials-item>
+        <figure class="testimonials-avatar-box">
+          <img src="{{ url_for('static', filename='assets/images/memo_10.png') }}" alt="Saniya Imroze" width="60" data-testimonials-avatar>
+        </figure>
+        <h4 class="h4 testimonials-item-title" data-testimonials-title>Saniya Imroze</h4>
+        <span class="testimonial-role">GDSC Lead 2021–22</span>
+        <div class="testimonials-text" data-testimonials-text>
+          <p>A brilliant, motivated individual who always showed up early, worked diligently, and supported the community through leadership and mentoring. Best of luck for your future endeavors!</p>
+        </div>
+      </div>
+    </li>
+
+    <li class="testimonials-item">
+      <div class="content-card" data-testimonials-item>
+        <figure class="testimonials-avatar-box">
+          <img src="{{ url_for('static', filename='assets/images/avatar-1.png') }}" alt="Sohail Ansari" width="60" data-testimonials-avatar>
+        </figure>
+        <h4 class="h4 testimonials-item-title" data-testimonials-title>Sohail Ansari</h4>
+        <span class="testimonial-role">Tech Pallottine Development Centre In-charge</span>
+        <div class="testimonials-text" data-testimonials-text>
+          <p>Sahil led the Online Student Mentoring System project from Oct–Dec 2021. His leadership, coding skills, and self-motivation were exceptional. We wish him great success ahead.</p>
+        </div>
+      </div>
+    </li>
+
+  </ul>
+</section>
+
+<!-- Optional Modal Template (can be enhanced with JS for interaction) -->
+<div class="modal-container" data-modal-container>
+  <div class="overlay" data-overlay></div>
+  <section class="testimonials-modal">
+    <button class="modal-close-btn" data-modal-close-btn>
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+    <div class="modal-img-wrapper">
+      <figure class="modal-avatar-box">
+        <img src="{{ url_for('static', filename='assets/images/avatar-1.png') }}" alt="Daniel Lewis" width="80" data-modal-img>
+      </figure>
+      <img src="{{ url_for('static', filename='assets/images/icon-quote.svg') }}" alt="quote icon">
+    </div>
+    <div class="modal-content">
+      <h4 class="h3 modal-title" data-modal-title>Daniel Lewis</h4>
+      <time datetime="2021-06-14">22 June, 2021</time>
+      <div data-modal-text>
+        <p>
+          This is placeholder modal content for the testimonial. You can dynamically populate it using JavaScript when a testimonial is clicked.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>

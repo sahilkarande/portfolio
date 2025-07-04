@@ -1,0 +1,240 @@
+<!-- resume.html -->
+{% extends 'layout.html' %}
+{% set active_page = 'resume' %}
+{% block content %}
+<br><br><br>
+<header>
+  <h2 class="h2 article-title">Resume</h2>
+</header>
+
+<a href="{{ url_for('static', filename='assets/resume/sahil_karande_resume.pdf') }}"
+   download="sahil_karande_resume.pdf"
+   class="download-button">
+     <div class="download-icon">
+    <ion-icon name="cloud-download-outline"></ion-icon>
+  </div>
+  <div class="download-text">Download Latest Resume</div>
+</a>
+
+
+<br><br>
+
+<section class="timeline">
+  <div class="title-wrapper">
+    <div class="icon-box">
+      <ion-icon name="book-outline"></ion-icon>
+    </div>
+    <h3 class="h3">Education</h3>
+  </div>
+                 <ol class="timeline-list">
+                     <li class="timeline-item">
+                        <h4 class="h4 timeline-item-title" style="color: #fcca64;">Post Graduate Diploma in Big Data Analytics</h4>
+                        <span>CDAC Mumbai-Kharghar</span>
+                        <p style="color: #fcca64;">Feb 2025 - Present</p>
+                     </li>
+                     <li class="timeline-item">
+                        <h4 class="h4 timeline-item-title" style="color: #fcca64;">Bachelor of Technology, Computer Engineering</h4>
+                        <span>St. Vincent Pallotti College of Engineering & Technology, Nagpur, IN</span>
+                        <p style="color: #3366cc;">CGPA: 8.13</p>
+                        <p style="color: #fcca64;">2021 - 2024</p>
+                     </li>
+                     <li class="timeline-item">
+                        <h4 class="h4 timeline-item-title" style="color: #fcca64;">Higher secondary education - 12th</h4>
+                        <span>Macaroon Students Academy, Jr. Science College, Chandrapur, IN</span>
+                        <p style="color: #3366cc;">CGPA: 6.13</p>
+                        <p style="color: #fcca64;">2020</p>
+                     </li>
+                     <li class="timeline-item">
+                        <h4 class="h4 timeline-item-title" style="color: #fcca64;">Central Board of Secondary Education - 10th</h4>
+                        <span>Macaroon Students Academy, Wani, IN</span>
+                        <p style="color: #3366cc;">CGPA: 7.72</p>
+                        <p style="color: #fcca64;">2018</p>
+                     </li>
+                  </ol>
+               </section>
+               <section class="timeline">
+                  <div class="title-wrapper">
+                     <div class="icon-box">
+                        <ion-icon name="book-outline"></ion-icon>
+                     </div>
+                     <h3 class="h3">Work Experience</h3>
+                  </div>
+                  <ol class="timeline-list">
+                     <!-- experience item 1 -->
+                     <li class="timeline-item">
+                        <h4 class="h4 timeline-item-title" style="color: #fcca64;">IIOT Intern</h4>
+                        <a href="https://www.clustorcomputing.com/" style="color: #fcca64;">Solar Industries India Limited</a>
+                        <div style="display: flex; align-items: center;">
+                           <ion-icon name="location-outline" style="color: #D6D6D6;"></ion-icon>
+                           <p style="margin-left: 5px; color: #D6D6D6;">Nagpur, Maharashtra</p>
+                        </div>
+                        <span>20th Dec 2023 - 17th July 2024 </span>
+                        <p class="timeline-text" style="color: #D6D6D6;">
+                        <ul style="list-style-type: disc; color: #D6D6D6;">
+                           <li>Engaged in ongoing data analysis and visualization projects, utilizing data science techniques for predicting future product trends through
+                              forecasting.
+                           </li>
+                           <li>Utilized Power BI, DAX queries and MS SQL, Postgres commands for data manipulation and analysis.</li>
+                           <li>Actively involved in time series analysis to enhance understanding of product performance over time</li>
+                           <li>Contributing to a prestigious team at Solar Industries, a globally renowned company</li>
+                           <li>Dealt with real-world data sets, preparing</li>
+                        </ul>
+                        </p>
+                        <a href="assets\certificates\SolarCompletion.pdf" download>
+                           <div href style="display: flex; align-items: center;">
+                              <ion-icon name="cloud-download-outline" style="color: #3366cc;"></ion-icon>
+                              <p style="margin-left: 5px; color: #3366cc ;">Download Certificate</p>
+                           </div>
+                        </a>
+                     </li>
+                     <!-- experience item 2 -->
+                     <li class="timeline-item">
+                        <h4 class="h4 timeline-item-title" style="color: #fcca64;">Data Science Intern</h4>
+                        <a href="https://www.clustorcomputing.com/" style="color: #fcca64;">Clustor Computing</a>
+                        <div style="display: flex; align-items: center;">
+                           <ion-icon name="location-outline" style="color: #D6D6D6;"></ion-icon>
+                           <p style="margin-left: 5px; color: #D6D6D6;">Nagpur, Maharashtra</p>
+                        </div>
+                        <span>1st Jul 2023 - 31st Jul 2023</span>
+                        <p class="timeline-text" style="color: #D6D6D6;">
+                        <ul style="list-style-type: disc; color: #D6D6D6;">
+                           <li>Worked on a project, gained handson experience in data analysis, machine learning, and data visualization.</li>
+                           <li>Dealt with real-world data sets, preparing</li>
+                        </ul>
+                        </p>
+                        <a href="assets\certificates\Clustor Computing .pdf" download>
+                           <div href style="display: flex; align-items: center;">
+                              <ion-icon name="cloud-download-outline" style="color: #3366cc;"></ion-icon>
+                              <p style="margin-left: 5px; color: #3366cc ;">Download Certificate</p>
+                           </div>
+                        </a>
+                     </li>
+                     <!-- experience item 3 -->
+                     <li class="timeline-item">
+                        <h4 class="h4 timeline-item-title" style="color: #fcca64;">Summer Internship</h4>
+                        <a href="https://www.appxbuild.com/" style="color: #fcca64;">AppxBuild Pvt Ltd</a>
+                        <div style="display: flex; align-items: center;">
+                           <ion-icon name="location-outline" style="color: #D6D6D6;"></ion-icon>
+                           <p style="margin-left: 5px; color: #D6D6D6;">Nagpur, Maharashtra</p>
+                        </div>
+                        <span>March 2023 - April 2023</span>
+                        <p class="timeline-text" style="color: #D6D6D6;">
+                        <ul style="list-style-type: disc; color: #D6D6D6;">
+                           <li>
+                              Collaborated with a team of skilled
+                              developers, designers, and project
+                              managers to create a functional and
+                              visually appealing website
+                           </li>
+                           <li>
+                              Created a Website based on
+                              WordPress and hosted it.
+                           </li>
+                        </ul>
+                        </p>
+                        <a href="assets\certificates\APPXBUILD (1).pdf" download>
+                           <div href style="display: flex; align-items: center;">
+                              <ion-icon name="cloud-download-outline" style="color: #3366cc;"></ion-icon>
+                              <p style="margin-left: 5px; color: #3366cc ;">Download Certificate</p>
+                           </div>
+                        </a>
+                     </li>
+                     <!-- experience item 4 -->
+                     <li class="timeline-item">
+                        <h4 class="h4 timeline-item-title" style="color: #fcca64;">Technical Lead</h4>
+                        <a href="https://www.clustorcomputing.com/" style="color: #fcca64;">GDSC St. Vincent Pallotti College of Engineering and Technology</a>
+                        <div style="display: flex; align-items: center;">
+                           <ion-icon name="location-outline" style="color: #D6D6D6;"></ion-icon>
+                           <p style="margin-left: 5px; color: #D6D6D6;">Nagpur, Maharashtra</p>
+                        </div>
+                        <span>Jul 2022 - Jul 2023</span>
+                        <p class="timeline-text" style="color: #D6D6D6;">
+                        <ul style="list-style-type: disc; color: #D6D6D6;">
+                           <li>Led GDSC events and mentored newcomers.</li>
+                           <li>Used Technical skills for effective teamwork and communication.</li>
+                        </ul>
+                        </p>
+                        <a href="assets\certificates\LOR GDSC 2021.pdf" download>
+                           <div href style="display: flex; align-items: center;">
+                              <ion-icon name="cloud-download-outline" style="color: #3366cc;"></ion-icon>
+                              <p style="margin-left: 5px; color: #3366cc ;">Download Certificate</p>
+                           </div>
+                        </a>
+                     </li>
+                     <!-- experience item 5 -->
+                     <li class="timeline-item">
+                        <h4 class="h4 timeline-item-title" style="color: #fcca64;">Marketing, Networking and Event Managment</h4>
+                        <a href="https://www.clustorcomputing.com/" style="color: #fcca64;">GDSC St. Vincent Pallotti College of Engineering and Technology</a>
+                        <div style="display: flex; align-items: center;">
+                           <ion-icon name="location-outline" style="color: #D6D6D6;"></ion-icon>
+                           <p style="margin-left: 5px; color: #D6D6D6;">Nagpur, Maharashtra</p>
+                        </div>
+                        <span>Sept 2021 - Jul 2022</span>
+                        <p class="timeline-text" style="color: #D6D6D6;">
+                        <ul style="list-style-type: disc; color: #D6D6D6;">
+                           <li>Led diverse marketing campaigns and research to create audience-focused strategies.</li>
+                           <li>Strengthened networking and partnership skills, enabling business growth and market expansion.</li>
+                        </ul>
+                        </p>
+                        <a href="assets\certificates\LOR GDSC 2021.pdf" download>
+                           <div href style="display: flex; align-items: center;">
+                              <ion-icon name="cloud-download-outline" style="color: #3366cc;"></ion-icon>
+                              <p style="margin-left: 5px; color: #3366cc ;">Download Certificate</p>
+                           </div>
+                        </a>
+                     </li>
+                  </ol>
+               </section>
+               <!-- Technical Skills -->
+<section class="skill">
+  <h3 class="h3 skills-title">Technical Skills</h3>
+  <div class="skills-container">
+    <div class="skills-column">
+      <ul class="skills-list content-card">
+        <li class="skills-item"><h5 class="h5">Data Engineering</h5></li>
+        <li class="skills-item"><h5 class="h5">Big Data (Hadoop, Spark)</h5></li>
+        <li class="skills-item"><h5 class="h5">Machine Learning</h5></li>
+        <li class="skills-item"><h5 class="h5">Data Science & Analytics</h5></li>
+        <li class="skills-item"><h5 class="h5">EDA & Predictive Modeling</h5></li>
+        <li class="skills-item"><h5 class="h5">Data Visualization (Power BI, Tableau)</h5></li>
+        <li class="skills-item"><h5 class="h5">Data Dashboards (Streamlit)</h5></li>
+      </ul>
+    </div>
+    <div class="skills-column">
+      <ul class="skills-list content-card">
+        <li class="skills-item"><h5 class="h5">Python, Pandas, NumPy</h5></li>
+        <li class="skills-item"><h5 class="h5">SQL, MySQL, MongoDB</h5></li>
+        <li class="skills-item"><h5 class="h5">Apache Kafka & Airflow</h5></li>
+        <li class="skills-item"><h5 class="h5">Flask, Streamlit</h5></li>
+        <li class="skills-item"><h5 class="h5">Docker, Git & GitHub</h5></li>
+        <li class="skills-item"><h5 class="h5">AWS (S3, EC2, Redshift)</h5></li>
+        <li class="skills-item"><h5 class="h5">Linux & CLI Tools</h5></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Non-Technical Skills -->
+<section class="skill">
+  <h3 class="h3 skills-title">Non-Technical Skills</h3>
+  <div class="skills-container">
+    <div class="skills-column">
+      <ul class="skills-list content-card">
+        <li class="skills-item"><h5 class="h5">Leadership & Team Management</h5></li>
+        <li class="skills-item"><h5 class="h5">Communication & Public Speaking</h5></li>
+        <li class="skills-item"><h5 class="h5">Presentation & Demo Skills</h5></li>
+        <li class="skills-item"><h5 class="h5">Seminar & Event Organization</h5></li>
+      </ul>
+    </div>
+    <div class="skills-column">
+      <ul class="skills-list content-card">
+        <li class="skills-item"><h5 class="h5">Mentoring & Peer Support</h5></li>
+        <li class="skills-item"><h5 class="h5">Collaboration in Agile Teams</h5></li>
+        <li class="skills-item"><h5 class="h5">Problem-Solving Mindset</h5></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+            
+{% endblock %}

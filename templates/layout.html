@@ -1,0 +1,66 @@
+<!-- layout.html -->
+{% include 'loader.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Explore Sahil Karande's portfolio including Data Science projects, Web Development, certifications, and insightful Medium blogs.">
+  <meta name="keywords" content="Sahil Karande, Blogs, Data Science, Web Development, CDAC, Python, Portfolio">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/blog.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/clipboard.ico') }}" type="image/x-icon">
+  <link rel="stylesheet" href="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/loader.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='assets/images/favicon.ico') }}" type="image/x-icon">
+  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/projects-extra.css') }}">
+
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <main>
+    {% include 'sidebar.html' %}
+
+    <div class="main-content">
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <div class="info-box">
+            <p class="info-text">Profile Last Updated: <b>20th June 2025</b></p>
+          </div>
+          <li class="navbar-item"><a href="{{ url_for('about') }}" class="navbar-link {% if active_page == 'about' %}active{% endif %}">About</a></li>
+          <li class="navbar-item"><a href="{{ url_for('resume') }}" class="navbar-link {% if active_page == 'resume' %}active{% endif %}">Resume</a></li>
+          <li class="navbar-item"><a href="{{ url_for('projects') }}" class="navbar-link {% if active_page == 'projects' %}active{% endif %}">Projects</a></li>
+          <li class="navbar-item"><a href="{{ url_for('certificates') }}" class="navbar-link {% if active_page == 'certificates' %}active{% endif %}">Certificates</a></li>
+          <li class="navbar-item"><a href="{{ url_for('blogs') }}" class="navbar-link {% if active_page == 'blogs' %}active{% endif %}">Blogs</a></li>
+          <li class="navbar-item"><a href="{{ url_for('contact') }}" class="navbar-link {% if active_page == 'contact' %}active{% endif %}">Contact</a></li>
+        </ul>
+      </nav>
+
+    <article class="page-section active">
+      {% block content %}{% endblock %}
+    </article>
+
+    </div>
+  </main>
+
+  <!-- External Scripts -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <!-- Your Custom JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="{{ url_for('static', filename='assets/js/loader.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="{{ url_for('static', filename='assets/js/loader.js') }}"></script>
+
+  <script src="{{ url_for('static', filename='static/assets/js/script.js') }}"></script>
+</body>
+
+</html>

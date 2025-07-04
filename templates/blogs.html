@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+{% set active_page = 'blogs' %}
+{% block content %}
+<br><br><br>
+<header><h2 class="h2 article-title">My Blogs</h2></header>
+
+<section class="blog-section">
+  <div class="blog-grid">
+
+    <!-- Blog 1 -->
+    <div class="blog-card">
+    <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*HbgN28k26SrTN7A1Tudi7A.png" alt="Cloud computing diagram showing IaaS, PaaS, and SaaS layers with icons and arrows, illustrating relationships between infrastructure, platform, and software services. The environment is clean and modern, with a focus on clarity and education. Text in the image: IaaS, PaaS, SaaS. The tone is informative and neutral." class="blog-image">
+      <h3 class="blog-title">Understanding IaaS, PaaS, and SaaS</h3>
+      <p>Explore the pillars of cloud computing—how IaaS, PaaS, and SaaS are transforming app development and deployment.</p>
+      <a href="https://medium.com/@yourusername/iaas-paas-saas-guide" target="_blank" class="blog-link">Read on Medium →</a>
+    </div>
+
+    <!-- Blog 2 -->
+    <div class="blog-card">
+      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*Iyzm1_-di-l2CIyykz1K3A.png" alt="PCA" class="blog-image">
+      <h3 class="blog-title">PCA: From Concepts to Code</h3>
+      <p>Break down Principal Component Analysis—what it is, why it matters, and how to implement it in Python.</p>
+      <a href="https://medium.com/@yourusername/pca-from-concepts-to-code" target="_blank" class="blog-link">Read on Medium →</a>
+    </div>
+
+    <!-- Blog 3 -->
+    <div class="blog-card">
+      <img src="{{ url_for('static', filename='assets/images/regression.jpg') }}" alt="Regression" class="blog-image">
+      <h3 class="blog-title">Regression Types 101</h3>
+      <p>A complete guide to Linear, Logistic, Count, and other regression types with examples and use cases.</p>
+      <a href="https://medium.com/@yourusername/regression-types-guide" target="_blank" class="blog-link">Read on Medium →</a>
+    </div>
+
+    <!-- Blog 4 -->
+    <div class="blog-card">
+      <img src="{{ url_for('static', filename='assets/images/sigmoid.jpg') }}" alt="Sigmoid" class="blog-image">
+      <h3 class="blog-title">Sigmoid Function & Loan Prediction</h3>
+      <p>Understand the sigmoid curve and how it powers logistic regression models used in finance and beyond.</p>
+      <a href="https://medium.com/@yourusername/sigmoid-loan-logistic" target="_blank" class="blog-link">Read on Medium →</a>
+    </div>
+
+    <!-- Blog 5 -->
+    <div class="blog-card">
+      <img src="{{ url_for('static', filename='assets/images/interview.jpg') }}" alt="Interview Questions" class="blog-image">
+      <h3 class="blog-title">Top Interview Questions for Data Science Freshers</h3>
+      <p>Get prepared with real-world ML, NLP, and statistics questions frequently asked in DS interviews.</p>
+      <a href="https://medium.com/@yourusername/data-science-interview-questions" target="_blank" class="blog-link">Read on Medium →</a>
+    </div>
+
+    <!-- Blog 6 -->
+    <div class="blog-card">
+      <img src="{{ url_for('static', filename='assets/images/logodds.jpg') }}" alt="Log Odds" class="blog-image">
+      <h3 class="blog-title">Log-Odds Explained</h3>
+      <p>Dive deep into the intuition and math behind log-odds in logistic regression and real-world decisions.</p>
+      <a href="https://medium.com/@yourusername/log-odds-intuition" target="_blank" class="blog-link">Read on Medium →</a>
+    </div>
+
+    <!-- Blog 7 -->
+    <div class="blog-card">
+      <img src="{{ url_for('static', filename='assets/images/neural1.jpg') }}" alt="Neural Networks" class="blog-image">
+      <h3 class="blog-title">Advanced Concepts in Neural Networks</h3>
+      <p>Explore vanishing gradients, activation functions, and architectures that shape modern neural networks.</p>
+      <a href="https://medium.com/@yourusername/neural-networks-advanced" target="_blank" class="blog-link">Read on Medium →</a>
+    </div>
+
+    <!-- Blog 8 -->
+    <div class="blog-card">
+      <img src="{{ url_for('static', filename='assets/images/ann.jpg') }}" alt="ANN" class="blog-image">
+      <h3 class="blog-title">Understanding Artificial Neural Networks</h3>
+      <p>Go from feedforward basics to backpropagation and learn how ANNs mimic human learning.</p>
+      <a href="https://medium.com/@yourusername/understanding-anns" target="_blank" class="blog-link">Read on Medium →</a>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

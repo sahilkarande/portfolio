@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+{% set active_page = 'projects' %}
+{% block content %}
+<br><br><br>
+<header>
+  <h2 class="h2 article-title">Projects</h2>
+</header>
+
+<section class="projects">
+  <!-- Desktop Filter Buttons -->
+  <ul class="filter-list">
+    <li class="filter-item"><button class="active" data-filter-btn>All</button></li>
+    <li class="filter-item"><button data-filter-btn>Web Development</button></li>
+    <li class="filter-item"><button data-filter-btn>Data Science</button></li>
+  </ul>
+
+
+  <!-- Mobile Dropdown Filter -->
+  <div class="filter-select-box">
+    <button class="filter-select" data-select>
+      <div class="select-value" data-select-value>Select category</div>
+      <div class="select-icon">
+        <ion-icon name="chevron-down"></ion-icon>
+      </div>
+    </button>
+  <ul class="select-list">
+    <li class="select-item"><button data-select-item>All</button></li>
+    <li class="select-item"><button data-select-item>Web Development</button></li>
+    <li class="select-item"><button data-select-item>Data Science</button></li>
+  </ul>
+
+  </div>
+
+  <!-- Project Cards -->
+  <ul class="project-list">
+    {% for project in [
+      {'title': 'Furrify - A Pet Community', 'image': 'furrifyweb.jpg', 'category': 'Web Development'},
+      {'title': 'Walmart Sales Prediction Dashboard', 'image': 'walmart.png', 'category': 'Data Science'},
+      {'title': 'Apna Bank', 'image': 'Apnabankweb (1).png', 'category': 'Web Development'},
+      {'title': 'Stocks Prediction For BSE And NSE Companies', 'image': 'stocksproject (1).png', 'category': 'Data Science'},
+      {'title': 'Basic Portfolio', 'image': 'basicportfolio (1).png', 'category': 'Web Development'},
+      {'title': 'EncipherX Website', 'image': 'encipherX.png', 'category': 'Web Development'},
+      {'title': 'Happiness Center - Online Student Mentoring System', 'image': 'happiness.png', 'category': 'Web Development'},
+      {'title': 'GDSC Website', 'image': 'GDSC.png', 'category': 'Web Development'},
+      {'title': 'Drug Classification', 'image': 'drugclassification (1).png', 'category': 'Data Science'}
+    ] %}
+<li class="project-item active" data-filter-item data-category="{{ project.category|lower }}">
+      <a href="#">
+        <figure class="project-img">
+          <img src="{{ url_for('static', filename='assets/images/' ~ project.image) }}" alt="{{ project.title }}" loading="lazy">
+        </figure>
+        <h3 class="project-title">{{ project.title }}</h3>
+        <p class="project-category">{{ project.category }}</p>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}
