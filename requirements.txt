@@ -4,6 +4,7 @@ MarkupSafe==2.1.5
 itsdangerous==2.1.2
 Werkzeug==3.0.2
 click==8.1.7
-gunicorn app:app
+Flask==3.0.3
+gunicorn
 feedparser==6.0.10
 requests==2.31.0
