@@ -34,4 +34,4 @@ def blogs():
     entries = feed.entries[:6]  # Show latest 6 posts
     return render_template("blogs.html", entries=entries, title="Blogs - Sahil")
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False, host='0.0.0.0')
