@@ -30,8 +30,8 @@ def contact():
 
 @app.route("/blogs")
 def blogs():
-    feed = feedparser.parse("https://medium.com/feed/@skarande220")  # Replace with your username
-    entries = feed.entries[:6]  # Show latest 6 posts
+    feed = feedparser.parse("https://medium.com/feed/@skarande220") 
+    entries = feed.entries[:6] 
     return render_template("blogs.html", entries=entries, title="Blogs - Sahil")
 if __name__ == "__main__":
     app.run(debug=False, host='0.0.0.0')

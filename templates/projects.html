@@ -7,15 +7,15 @@
 </header>
 
 <section class="projects">
-  <!-- Desktop Filter Buttons -->
+
+  <!-- Desktop Filter -->
   <ul class="filter-list">
     <li class="filter-item"><button class="active" data-filter-btn>All</button></li>
     <li class="filter-item"><button data-filter-btn>Web Development</button></li>
     <li class="filter-item"><button data-filter-btn>Data Science</button></li>
   </ul>
 
-
-  <!-- Mobile Dropdown Filter -->
+  <!-- Mobile Filter Dropdown -->
   <div class="filter-select-box">
     <button class="filter-select" data-select>
       <div class="select-value" data-select-value>Select category</div>
@@ -23,29 +23,79 @@
         <ion-icon name="chevron-down"></ion-icon>
       </div>
     </button>
-  <ul class="select-list">
-    <li class="select-item"><button data-select-item>All</button></li>
-    <li class="select-item"><button data-select-item>Web Development</button></li>
-    <li class="select-item"><button data-select-item>Data Science</button></li>
-  </ul>
-
+    <ul class="select-list">
+      <li class="select-item"><button data-select-item>All</button></li>
+      <li class="select-item"><button data-select-item>Web Development</button></li>
+      <li class="select-item"><button data-select-item>Data Science</button></li>
+    </ul>
   </div>
 
-  <!-- Project Cards -->
+  <!-- Projects Grid -->
   <ul class="project-list">
     {% for project in [
-      {'title': 'Furrify - A Pet Community', 'image': 'furrifyweb.jpg', 'category': 'Web Development'},
-      {'title': 'Walmart Sales Prediction Dashboard', 'image': 'walmart.png', 'category': 'Data Science'},
-      {'title': 'Apna Bank', 'image': 'Apnabankweb (1).png', 'category': 'Web Development'},
-      {'title': 'Stocks Prediction For BSE And NSE Companies', 'image': 'stocksproject (1).png', 'category': 'Data Science'},
-      {'title': 'Basic Portfolio', 'image': 'basicportfolio (1).png', 'category': 'Web Development'},
-      {'title': 'EncipherX Website', 'image': 'encipherX.png', 'category': 'Web Development'},
-      {'title': 'Happiness Center - Online Student Mentoring System', 'image': 'happiness.png', 'category': 'Web Development'},
-      {'title': 'GDSC Website', 'image': 'GDSC.png', 'category': 'Web Development'},
-      {'title': 'Drug Classification', 'image': 'drugclassification (1).png', 'category': 'Data Science'}
+      {
+        'title': 'Excel Sales Dashboard - Superstore Analysis',
+        'image': 'superstore_analysis.png',
+        'category': 'Data Science',
+        'link': 'https://github.com/sahilkarande/Superstore-Analysis'
+      },
+      {
+        'title': 'Furrify - A Pet Community',
+        'image': 'furrifyweb.jpg',
+        'category': 'Web Development',
+        'link': '#'
+      },
+      {
+        'title': 'Walmart Sales Prediction Dashboard',
+        'image': 'walmart.png',
+        'category': 'Data Science',
+        'link': '#'
+      },
+      {
+        'title': 'Apna Bank',
+        'image': 'Apnabankweb (1).png',
+        'category': 'Web Development',
+        'link': '#'
+      },
+      {
+        'title': 'Stocks Prediction For BSE And NSE Companies',
+        'image': 'stocksproject (1).png',
+        'category': 'Data Science',
+        'link': '#'
+      },
+      {
+        'title': 'Basic Portfolio',
+        'image': 'basicportfolio (1).png',
+        'category': 'Web Development',
+        'link': '#'
+      },
+      {
+        'title': 'EncipherX Website',
+        'image': 'encipherX.png',
+        'category': 'Web Development',
+        'link': '#'
+      },
+      {
+        'title': 'Happiness Center - Online Student Mentoring System',
+        'image': 'happiness.png',
+        'category': 'Web Development',
+        'link': '#'
+      },
+      {
+        'title': 'GDSC Website',
+        'image': 'GDSC.png',
+        'category': 'Web Development',
+        'link': '#'
+      },
+      {
+        'title': 'Drug Classification',
+        'image': 'drugclassification (1).png',
+        'category': 'Data Science',
+        'link': '#'
+      }
     ] %}
-<li class="project-item active" data-filter-item data-category="{{ project.category|lower }}">
-      <a href="#">
+    <li class="project-item active" data-filter-item data-category="{{ project.category | lower }}">
+      <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer">
         <figure class="project-img">
           <img src="{{ url_for('static', filename='assets/images/' ~ project.image) }}" alt="{{ project.title }}" loading="lazy">
         </figure>
