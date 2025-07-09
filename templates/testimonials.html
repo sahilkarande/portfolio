@@ -14,6 +14,43 @@
         <div class="testimonials-text" data-testimonials-text>
           <p>During his time at CLUSTOR COMPUTING, he was punctual, hardworking, and inquisitive. We wish him the best of luck and believe he will be an integral asset in any workplace.</p>
         </div>
+        <!-- Modal functionality for testimonials -->
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            const testimonials = document.querySelectorAll('[data-testimonials-item]');
+            const modalContainer = document.querySelector('[data-modal-container]');
+            const modalTitle = document.querySelector('[data-modal-title]');
+            const modalText = document.querySelector('[data-modal-text] p');
+            const modalImg = document.querySelector('[data-modal-img]');
+            const modalCloseBtn = document.querySelector('[data-modal-close-btn]');
+            const overlay = document.querySelector('[data-overlay]');
+        
+            testimonials.forEach(function (item) {
+              item.addEventListener('click', function () {
+                const title = item.querySelector('[data-testimonials-title]').textContent;
+                const text = item.querySelector('[data-testimonials-text] p').textContent;
+                const imgSrc = item.querySelector('[data-testimonials-avatar]').getAttribute('src');
+                const imgAlt = item.querySelector('[data-testimonials-avatar]').getAttribute('alt');
+        
+                modalTitle.textContent = title;
+                modalText.textContent = text;
+                modalImg.setAttribute('src', imgSrc);
+                modalImg.setAttribute('alt', imgAlt);
+        
+                modalContainer.classList.add('active');
+                modalContainer.style.display = 'flex';
+              });
+            });
+        
+            function closeModal() {
+              modalContainer.classList.remove('active');
+              modalContainer.style.display = 'none';
+            }
+        
+            modalCloseBtn.addEventListener('click', closeModal);
+            overlay.addEventListener('click', closeModal);
+          });
+        </script>
       </div>
     </li>
 
@@ -41,23 +78,9 @@
         </div>
       </div>
     </li>
-
+       
     <li class="testimonials-item">
-      <div class="content-card" data-testimonials-item>
-        <figure class="testimonials-avatar-box">
-          <img src="{{ url_for('static', filename='assets/images/memo_10.png') }}" alt="Saniya Imroze" width="60" data-testimonials-avatar>
-        </figure>
-        <h4 class="h4 testimonials-item-title" data-testimonials-title>Saniya Imroze</h4>
-        <span class="testimonial-role" style="color: white;">GDSC Lead 2021–22</span>
-        <div class="testimonials-text" data-testimonials-text>
-          <p>A brilliant, motivated individual who always showed up early, worked diligently, and supported the community through leadership and mentoring. Best of luck for your future endeavors!</p>
-        </div>
-      </div>
-    </li>
-
-    <li class="testimonials-item">
-      <div class="content-card" data-testimonials-item>
-        <figure class="testimonials-avatar-box">
+      <div class="content-card" data-testimonials-item>        <figure class="testimonials-avatar-box">
           <img src="{{ url_for('static', filename='assets/images/avatar-1.png') }}" alt="Sohail Ansari" width="60" data-testimonials-avatar>
         </figure>
         <h4 class="h4 testimonials-item-title" data-testimonials-title>Sohail Ansari</h4>
@@ -95,3 +118,88 @@
     </div>
   </section>
 </div>
+<div class="modal-container" data-modal-container style="display: none;">
+  <div class="overlay" data-overlay></div>
+  <section class="testimonials-modal">
+    <button class="modal-close-btn" data-modal-close-btn>
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+    <div class="modal-img-wrapper">
+      <figure class="modal-avatar-box">
+        <img src="{{ url_for('static', filename='assets/images/avatar-1.png') }}" alt="Daniel Lewis" width="80" data-modal-img>
+      </figure>
+      <img src="{{ url_for('static', filename='assets/images/icon-quote.svg') }}" alt="quote icon">
+    </div>
+    <div class="modal-content">
+      <h4 class="h3 modal-title" data-modal-title>Daniel Lewis</h4>
+      <time datetime="2021-06-14">22 June, 2021</time>
+      <div data-modal-text>
+        <p>
+          This is placeholder modal content for the testimonial. You can dynamically populate it using JavaScript when a testimonial is clicked.
+        </p>
+      </div>
+    </div>
+  </section>
+<style>
+  .modal-container {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  .modal-container.active {
+    display: flex !important;
+  }
+  .overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
+  }
+  .testimonials-modal {
+    position: relative;
+    background: #222;
+    color: #fff;
+    padding: 3.5rem 3rem 3rem 3rem; /* Increased padding for more space */
+   
+    z-index: 2;
+    max-width: 650px; /* Increased max width */
+    width: 90%;
+    min-height: 350px; /* Increased min height */
+    
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  }
+  .modal-content {
+   
+    font-size: 1.15rem;
+
+  }
+  .modal-img-wrapper {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .modal-close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+   
+
+    font-size: 2.5rem;
+    cursor: pointer;
+    z-index: 3;
+    padding: 0;
+    line-height: 1;
+  }
+  @media (max-width: 700px) {
+    .testimonials-modal {
+      max-width: 98vw;
+      padding: 2rem 0.5rem;
+    }
+  }
+</style>

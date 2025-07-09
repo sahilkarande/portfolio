@@ -6,104 +6,72 @@
   <h2 class="h2 article-title">Projects</h2>
 </header>
 
+<!-- Filter Section -->
+<section class="project-filter">
+  <button class="filter-btn active" data-category="all">All</button>
+  <button class="filter-btn" data-category="data science">Data Science</button>
+  <button class="filter-btn" data-category="web development">Web Development</button>
+</section>
+
 <section class="projects">
-
-  <!-- Desktop Filter -->
-  <ul class="filter-list">
-    <li class="filter-item"><button class="active" data-filter-btn>All</button></li>
-    <li class="filter-item"><button data-filter-btn>Web Development</button></li>
-    <li class="filter-item"><button data-filter-btn>Data Science</button></li>
-  </ul>
-
-  <!-- Mobile Filter Dropdown -->
-  <div class="filter-select-box">
-    <button class="filter-select" data-select>
-      <div class="select-value" data-select-value>Select category</div>
-      <div class="select-icon">
-        <ion-icon name="chevron-down"></ion-icon>
-      </div>
-    </button>
-    <ul class="select-list">
-      <li class="select-item"><button data-select-item>All</button></li>
-      <li class="select-item"><button data-select-item>Web Development</button></li>
-      <li class="select-item"><button data-select-item>Data Science</button></li>
-    </ul>
-  </div>
-
-  <!-- Projects Grid -->
+  <!-- Project Cards -->
   <ul class="project-list">
     {% for project in [
-      {
-        'title': 'Excel Sales Dashboard - Superstore Analysis',
-        'image': 'superstore_analysis.png',
-        'category': 'Data Science',
-        'link': 'https://github.com/sahilkarande/Superstore-Analysis'
-      },
-      {
-        'title': 'Furrify - A Pet Community',
-        'image': 'furrifyweb.jpg',
-        'category': 'Web Development',
-        'link': '#'
-      },
-      {
-        'title': 'Walmart Sales Prediction Dashboard',
-        'image': 'walmart.png',
-        'category': 'Data Science',
-        'link': '#'
-      },
-      {
-        'title': 'Apna Bank',
-        'image': 'Apnabankweb (1).png',
-        'category': 'Web Development',
-        'link': '#'
-      },
-      {
-        'title': 'Stocks Prediction For BSE And NSE Companies',
-        'image': 'stocksproject (1).png',
-        'category': 'Data Science',
-        'link': '#'
-      },
-      {
-        'title': 'Basic Portfolio',
-        'image': 'basicportfolio (1).png',
-        'category': 'Web Development',
-        'link': '#'
-      },
-      {
-        'title': 'EncipherX Website',
-        'image': 'encipherX.png',
-        'category': 'Web Development',
-        'link': '#'
-      },
-      {
-        'title': 'Happiness Center - Online Student Mentoring System',
-        'image': 'happiness.png',
-        'category': 'Web Development',
-        'link': '#'
-      },
-      {
-        'title': 'GDSC Website',
-        'image': 'GDSC.png',
-        'category': 'Web Development',
-        'link': '#'
-      },
-      {
-        'title': 'Drug Classification',
-        'image': 'drugclassification (1).png',
-        'category': 'Data Science',
-        'link': '#'
-      }
-    ] %}
-    <li class="project-item active" data-filter-item data-category="{{ project.category | lower }}">
-      <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer">
+        {'title': 'Excel Sales Dashboard - Superstore Analysis', 'image': 'superstore_analysis.png', 'category': 'data science', 'link': 'https://github.com/sahilkarande/Superstore-Analysis'},
+        {'title': 'Furrify - A Pet Community', 'image': 'furrifyweb.jpg', 'category': 'web development', 'link': '#'},
+        {'title': 'Walmart Sales Prediction Dashboard', 'image': 'walmart.png', 'category': 'data science', 'link': '#'},
+        {'title': 'Apna Bank', 'image': 'Apnabankweb (1).png', 'category': 'web development', 'link': '#'},
+        {'title': 'Stocks Prediction For BSE And NSE Companies', 'image': 'stocksproject (1).png', 'category': 'data science', 'link': '#'},
+        {'title': 'Basic Portfolio', 'image': 'basicportfolio (1).png', 'category': 'web development', 'link': '#'},
+        {'title': 'EncipherX Website', 'image': 'encipherX.png', 'category': 'web development', 'link': '#'},
+        {'title': 'Happiness Center - Online Student Mentoring System', 'image': 'happiness.png', 'category': 'web development', 'link': '#'},
+        {'title': 'GDSC Website', 'image': 'GDSC.png', 'category': 'web development', 'link': '#'},
+        {'title': 'Drug Classification', 'image': 'drugclassification (1).png', 'category': 'data science', 'link': '#'}
+      ] %}
+    <li class="project-item" data-category="{{ project.category }}">
+      <a href="{{ project.link }}" target="_blank">
         <figure class="project-img">
-          <img src="{{ url_for('static', filename='assets/images/' ~ project.image) }}" alt="{{ project.title }}" loading="lazy">
+          <img src="{{ url_for('static', filename='assets/images/' ~ project.image) }}" alt="{{ project.title }}">
         </figure>
         <h3 class="project-title">{{ project.title }}</h3>
-        <p class="project-category">{{ project.category }}</p>
+        
       </a>
     </li>
     {% endfor %}
   </ul>
 </section>
+
+{% block scripts %}
+<script>
+  // Get all filter buttons and project items
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const projectItems = document.querySelectorAll('.project-item');
+
+  // Add click event listeners to each filter button
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const category = this.getAttribute('data-category');
+
+      // Show all projects if 'all' is selected
+      if (category === 'all') {
+        projectItems.forEach(item => item.style.display = 'block');
+      } else {
+        projectItems.forEach(item => {
+          // Show project item only if its category matches the selected category
+          if (item.getAttribute('data-category') === category) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      }
+
+      // Add active class to the clicked filter button
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+{% endblock %}
+
 {% endblock %}

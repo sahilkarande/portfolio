@@ -1,4 +1,3 @@
-<!-- layout.html -->
 {% include 'loader.html' %}
 
 <!DOCTYPE html>
@@ -12,55 +11,205 @@
   <title>{{ title }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/blog.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
-  <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/clipboard.ico') }}" type="image/x-icon">
-  <link rel="stylesheet" href="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/loader.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/project.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/clipboard.ico') }}" type="image/x-icon">
   <link rel="icon" href="{{ url_for('static', filename='assets/images/favicon.ico') }}" type="image/x-icon">
-  <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/projects-extra.css') }}">
-
-  
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #232526 0%, #414345 100%);
+      color: #f3f3f3;
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .main-content {
+      margin-left: 10px;
+      padding: 40px 30px 30px 30px;
+      background: rgba(30, 32, 34, 0.95);
+      min-height: 100vh;
+      border-radius: 32px 0 0 32px;
+      box-shadow: -8px 0 32px rgba(0,0,0,0.2);
+      transition: margin-left 0.3s;
+    }
+    .navbar {
+      background: rgba(44, 47, 51, 0.95);
+      border-radius: 16px;
+      padding: 18px 32px;
+      margin-bottom: 32px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .navbar-list {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar-link {
+      color: #bdbdbd;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.08rem;
+      padding: 8px 18px;
+      border-radius: 8px;
+      transition: color 0.2s;
+      position: relative;
+      background: none;
+      box-shadow: none;
+    }
+    .navbar-link.active,
+    .navbar-link:hover {
+      color: #ffdb70;
+    }
+    .navbar-link::after {
+      content: "";
+      display: block;
+      height: 2.5px;
+      width: 0;
+      background: linear-gradient(90deg, #fcca64 0%, #ffdb70 100%);
+      border-radius: 2px;
+      transition: width 0.2s;
+      position: absolute;
+      left: 18px;
+      bottom: 6px;
+    }
+    .navbar-link.active::after,
+    .navbar-link:hover::after {
+      width: calc(100% - 36px);
+    }
+    /* Profile update info box - moved out, see below for comments */
+
+    .page-section {
+      background: rgba(36, 37, 38, 0.98);
+      border-radius: 18px;
+      padding: 36px 32px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+      margin-top: 8px;
+      min-height: 70vh;
+      animation: fadeIn 0.7s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(24px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    /* Responsive */
+    @media (max-width: 900px) {
+      .main-content {
+        margin-left: 0;
+        border-radius: 0;
+        padding: 20px 5vw;
+      }
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .page-section {
+        padding: 18px 5vw;
+      }
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      background: #232526;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(90deg, #fcca64 0%, #ffdb70 100%);
+      border-radius: 8px;
+    }
+    /* Add a floating social bar */
+    .social-bar {
+      position: fixed;
+      top: 50%;
+      left: 18px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      z-index: 1000;
+    }
+    .social-bar a {
+      color: #ffdb70;
+      background: #232526;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: 0 2px 8px rgba(0,198,255,0.12);
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+    .social-bar a:hover {
+      background: linear-gradient(90deg, #fcca64 0%, #ffdb70 100%);
+      color: black;
+      transform: scale(1.1);
+    }
+    /* Info box style (for profile update) */
+    .info-box {
+      background: #232526;
+     
+      color: #ffdb70;
+      padding: 6px 18px;
+      border-radius: 8px;
+      font-size: 0.98rem;
+      margin-right: 24px;
+      box-shadow: 0 2px 8px rgba(0,198,255,0.08);
+      display: inline-block;
+    }
+  </style>
 </head>
 <body>
+  <!-- Social Bar -->
+  <div class="social-bar">
+    <a href="https://github.com/sahilkarande" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+    <a href="https://www.linkedin.com/in/sahil-karande-a77aa7207/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    <a href="mailto:skarande220@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+    <a href="https://twitter.com/Sahilkarande9" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+    <a href="https://www.instagram.com/escaee/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://wa.me/+919881678709" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+  </div>
+
 
   <main>
     {% include 'sidebar.html' %}
 
     <div class="main-content">
       <nav class="navbar">
-        <ul class="navbar-list">
-          <div class="info-box">
-            <p class="info-text">Profile Last Updated: <b>5th July 2025</b></p>
-          </div>
-          <li class="navbar-item"><a href="{{ url_for('about') }}" class="navbar-link {% if active_page == 'about' %}active{% endif %}">About</a></li>
-          <li class="navbar-item"><a href="{{ url_for('resume') }}" class="navbar-link {% if active_page == 'resume' %}active{% endif %}">Resume</a></li>
-          <li class="navbar-item"><a href="{{ url_for('projects') }}" class="navbar-link {% if active_page == 'projects' %}active{% endif %}">Projects</a></li>
-          <li class="navbar-item"><a href="{{ url_for('certificates') }}" class="navbar-link {% if active_page == 'certificates' %}active{% endif %}">Certificates</a></li>
-          <li class="navbar-item"><a href="{{ url_for('blogs') }}" class="navbar-link {% if active_page == 'blogs' %}active{% endif %}">Blogs</a></li>
-          <li class="navbar-item"><a href="{{ url_for('contact') }}" class="navbar-link {% if active_page == 'contact' %}active{% endif %}">Contact</a></li>
-        </ul>
+        <div class="navbar-content">
+          <ul class="navbar-list">
+            <li class="navbar-item"><a href="{{ url_for('about') }}" class="navbar-link {% if active_page == 'about' %}active{% endif %}"><i class="fas fa-user"></i> About</a></li>
+            <li class="navbar-item"><a href="{{ url_for('resume') }}" class="navbar-link {% if active_page == 'resume' %}active{% endif %}"><i class="fas fa-file-alt"></i> Resume</a></li>
+            <li class="navbar-item"><a href="{{ url_for('projects') }}" class="navbar-link {% if active_page == 'projects' %}active{% endif %}"><i class="fas fa-code"></i> Projects</a></li>
+            <li class="navbar-item"><a href="{{ url_for('certificates') }}" class="navbar-link {% if active_page == 'certificates' %}active{% endif %}"><i class="fas fa-certificate"></i> Certificates</a></li>
+            <li class="navbar-item"><a href="{{ url_for('blogs') }}" class="navbar-link {% if active_page == 'blogs' %}active{% endif %}"><i class="fas fa-blog"></i> Blogs</a></li>
+            <li class="navbar-item"><a href="{{ url_for('contact') }}" class="navbar-link {% if active_page == 'contact' %}active{% endif %}"><i class="fas fa-envelope"></i> Contact</a></li>
+          </ul>
+        </div>
       </nav>
 
-    <article class="page-section active">
-      {% block content %}{% endblock %}
-    </article>
-
+      <article class="page-section active">
+        {% block content %}{% endblock %}
+      </article>
     </div>
   </main>
 
   <!-- External Scripts -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-  <!-- Your Custom JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="{{ url_for('static', filename='assets/js/loader.js') }}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="{{ url_for('static', filename='assets/js/loader.js') }}"></script>
-
   <script src="{{ url_for('static', filename='static/assets/js/script.js') }}"></script>
 </body>
-
 </html>
