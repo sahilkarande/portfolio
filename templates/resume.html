@@ -2,7 +2,6 @@
 {% set active_page = 'resume' %}
 {% block content %}
 <style>
-
    .article-title {
       font-size: 2.5rem;
       color: #fcca64;
@@ -30,6 +29,7 @@
       transition: background 0.2s, color 0.2s, transform 0.2s;
       gap: 1rem;
       width: fit-content;
+      cursor: pointer;
    }
    .download-button:hover {
       background: #fcca64 100%;
@@ -44,6 +44,7 @@
       font-size: 1.1rem;
       font-weight: 600;
    }
+
    .timeline {
       background: #232323;
       border-radius: 18px;
@@ -114,7 +115,7 @@
       margin-bottom: 0.3rem;
       line-height: 1.5;
    }
-   .timeline-item a[download] {
+   .timeline-item .download-cert {
       text-decoration: none;
       display: inline-flex;
       align-items: center;
@@ -125,19 +126,18 @@
       transition: background 0.2s;
       box-shadow: 0 1px 4px #00000022;
    }
-   .timeline-item a[download]:hover {
-      background: #3366cc;
-   }
-   .timeline-item a[download] ion-icon {
+   .timeline-item .download-cert:hover { background: #3366cc; }
+   .timeline-item .download-cert ion-icon {
       font-size: 1.3rem;
       margin-right: 0.4rem;
       color: #fcca64;
    }
-   .timeline-item a[download] p {
+   .timeline-item .download-cert p {
       color: #fcca64;
       font-weight: 600;
       margin: 0;
    }
+
    .dropdown-toggle {
       background: none;
       border: none;
@@ -157,18 +157,20 @@
    .dropdown-toggle[aria-expanded="true"] .dropdown-arrow {
       transform: rotate(90deg);
    }
+   /* dropdown content - hidden by default, with smooth max-height animation */
    .dropdown-content {
-      display: none;
+      display: block; /* keep block for layout but use max-height to animate */
+      max-height: 0;
+      overflow: hidden;
       margin-top: 0.5rem;
-      animation: fadeIn 0.3s;
+      opacity: 0;
+      transition: max-height 0.28s ease, opacity 0.2s ease;
    }
    .dropdown-content.open {
-      display: block;
+      max-height: 800px; /* large enough to show content */
+      opacity: 1;
    }
-   @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-   }
+
    .skill {
       background: #232323;
       border-radius: 18px;
@@ -216,24 +218,13 @@
       letter-spacing: 0.5px;
    }
    @media (max-width: 900px) {
-      .skills-container {
-         flex-direction: column;
-         gap: 1rem;
-      }
-      .timeline, .skill {
-         padding: 1.2rem 0.7rem 0.7rem 0.7rem;
-      }
+      .skills-container { flex-direction: column; gap: 1rem; }
+      .timeline, .skill { padding: 1.2rem 0.7rem 0.7rem 0.7rem; }
    }
    @media (max-width: 600px) {
-      .article-title {
-         font-size: 2rem;
-      }
-      .timeline, .skill {
-         padding: 1rem 0.3rem 0.7rem 0.3rem;
-      }
-      .skills-list {
-         padding: 0.7rem 0.7rem;
-      }
+      .article-title { font-size: 2rem; }
+      .timeline, .skill { padding: 1rem 0.3rem 0.7rem 0.3rem; }
+      .skills-list { padding: 0.7rem 0.7rem; }
    }
 </style>
 
@@ -245,7 +236,8 @@
 <a href="{{ url_for('static', filename='assets/resume/sahil_karande_resume2.pdf') }}"
    download="sahil_karande_resume.pdf"
    class="download-button">
-   Download Latest Resume
+   <span class="download-icon"><ion-icon name="cloud-download-outline"></ion-icon></span>
+   <span class="download-text">Download Latest Resume</span>
 </a>
 
 <section class="timeline">
@@ -259,11 +251,11 @@
       <li class="timeline-item">
          <h4 class="h4 timeline-item-title">Post Graduate Diploma in Big Data Analytics</h4>
          <span>CDAC Mumbai-Kharghar</span>
-         <p style="color: #fcca64;">Feb 2025 - Present</p>
+         <p style="color: #fcca64;">Feb 2025 - Completed</p>
       </li>
       <li class="timeline-item">
          <h4 class="h4 timeline-item-title">Bachelor of Technology, Computer Engineering</h4>
-         <span>St. Vincent Pallotti College of Engineering & Technology, Nagpur, IN</span>
+         <span>St. Vincent Pallotti College of Engineering &amp; Technology, Nagpur, IN</span>
          <p style="color: #3366cc;">CGPA: 8.13</p>
          <p style="color: #fcca64;">2021 - 2024</p>
       </li>
@@ -292,24 +284,23 @@
    <ol class="timeline-list">
       <li class="timeline-item">
          <h4 class="h4 timeline-item-title">IIOT Intern</h4>
-         <a href="https://www.clustorcomputing.com/" style="color: #fcca64;">Solar Industries India Limited</a>
+         <span>Solar Industries India Limited</span>
          <div style="display: flex; align-items: center;">
             <ion-icon name="location-outline" style="color: #D6D6D6;"></ion-icon>
             <p style="margin-left: 5px; color: #D6D6D6;">Nagpur, Maharashtra</p>
          </div>
-         <span>20th Dec 2023 - 17th July 2024 </span>
+         <span>20th Dec 2023 - 17th July 2024</span>
          <button class="dropdown-toggle" aria-expanded="false" type="button">
             <span class="dropdown-arrow">&#9654;</span> Show More
          </button>
          <div class="dropdown-content">
             <ul>
-               <li>Engaged in ongoing data analysis and visualization projects, utilizing data science techniques for predicting future product trends through forecasting.</li>
-               <li>Utilized Power BI, DAX queries and MS SQL, Postgres commands for data manipulation and analysis.</li>
-               <li>Actively involved in time series analysis to enhance understanding of product performance over time</li>
-               <li>Contributing to a prestigious team at Solar Industries, a globally renowned company</li>
-               <li>Dealt with real-world data sets, preparing</li>
+               <li>Worked on data analysis and visualization projects to support forecasting and process monitoring.</li>
+               <li>Built Power BI dashboards and used DAX, MS SQL, and Postgres queries for data manipulation.</li>
+               <li>Performed time-series analysis to understand product performance trends.</li>
+               <li>Handled real-world datasets and collaborated with cross-functional teams.</li>
             </ul>
-            <a href="assets/certificates/SolarCompletion.pdf" download>
+            <a class="download-cert" href="{{ url_for('static', filename='assets/certificates/SolarCompletion.pdf') }}" download>
                <ion-icon name="cloud-download-outline"></ion-icon>
                <p>Download Certificate</p>
             </a>
@@ -317,7 +308,7 @@
       </li>
       <li class="timeline-item">
          <h4 class="h4 timeline-item-title">Data Science Intern</h4>
-         <a href="https://www.clustorcomputing.com/" style="color: #fcca64;">Clustor Computing</a>
+         <a href="https://www.clustorcomputing.com/" target="_blank" rel="noopener noreferrer" style="color: #fcca64; text-decoration: none;">Clustor Computing</a>
          <div style="display: flex; align-items: center;">
             <ion-icon name="location-outline" style="color: #D6D6D6;"></ion-icon>
             <p style="margin-left: 5px; color: #D6D6D6;">Nagpur, Maharashtra</p>
@@ -328,10 +319,10 @@
          </button>
          <div class="dropdown-content">
             <ul>
-               <li>Worked on a project, gained handson experience in data analysis, machine learning, and data visualization.</li>
-               <li>Dealt with real-world data sets, preparing</li>
+               <li>Gained hands-on experience in data analysis, ML modeling, and visualization.</li>
+               <li>Prepared and cleaned real-world datasets for analysis and reporting.</li>
             </ul>
-            <a href="assets/certificates/Clustor Computing .pdf" download>
+            <a class="download-cert" href="{{ url_for('static', filename='assets/certificates/ClustorComputing.pdf') }}" download>
                <ion-icon name="cloud-download-outline"></ion-icon>
                <p>Download Certificate</p>
             </a>
@@ -339,7 +330,7 @@
       </li>
       <li class="timeline-item">
          <h4 class="h4 timeline-item-title">Summer Internship</h4>
-         <a href="https://www.appxbuild.com/" style="color: #fcca64;">AppxBuild Pvt Ltd</a>
+         <a href="https://www.appxbuild.com/" target="_blank" rel="noopener noreferrer" style="color: #fcca64; text-decoration: none;">AppxBuild Pvt Ltd</a>
          <div style="display: flex; align-items: center;">
             <ion-icon name="location-outline" style="color: #D6D6D6;"></ion-icon>
             <p style="margin-left: 5px; color: #D6D6D6;">Nagpur, Maharashtra</p>
@@ -350,10 +341,10 @@
          </button>
          <div class="dropdown-content">
             <ul>
-               <li>Collaborated with a team of skilled developers, designers, and project managers to create a functional and visually appealing website</li>
-               <li>Created a Website based on WordPress and hosted it.</li>
+               <li>Collaborated with developers and designers to build a WordPress website and hosted it.</li>
+               <li>Worked on frontend integration and deployment tasks.</li>
             </ul>
-            <a href="assets/certificates/APPXBUILD (1).pdf" download>
+            <a class="download-cert" href="{{ url_for('static', filename='assets/certificates/APPXBUILD.pdf') }}" download>
                <ion-icon name="cloud-download-outline"></ion-icon>
                <p>Download Certificate</p>
             </a>
@@ -361,7 +352,7 @@
       </li>
       <li class="timeline-item">
          <h4 class="h4 timeline-item-title">Technical Lead</h4>
-         <a href="https://www.clustorcomputing.com/" style="color: #fcca64;">GDSC St. Vincent Pallotti College of Engineering and Technology</a>
+         <span style="color: #fcca64;">GDSC St. Vincent Pallotti College of Engineering and Technology</span>
          <div style="display: flex; align-items: center;">
             <ion-icon name="location-outline" style="color: #D6D6D6;"></ion-icon>
             <p style="margin-left: 5px; color: #D6D6D6;">Nagpur, Maharashtra</p>
@@ -372,18 +363,18 @@
          </button>
          <div class="dropdown-content">
             <ul>
-               <li>Led GDSC events and mentored newcomers.</li>
-               <li>Used Technical skills for effective teamwork and communication.</li>
+               <li>Led GDSC events, mentored newcomers, and coordinated workshops and seminars.</li>
+               <li>Provided technical guidance and support to club members.</li>
             </ul>
-            <a href="assets/certificates/LOR GDSC 2021.pdf" download>
+            <a class="download-cert" href="{{ url_for('static', filename='assets/certificates/LOR_GDSC_2021.pdf') }}" download>
                <ion-icon name="cloud-download-outline"></ion-icon>
                <p>Download Certificate</p>
             </a>
          </div>
       </li>
       <li class="timeline-item">
-         <h4 class="h4 timeline-item-title">Marketing, Networking and Event Managment</h4>
-         <a href="https://www.clustorcomputing.com/" style="color: #fcca64;">GDSC St. Vincent Pallotti College of Engineering and Technology</a>
+         <h4 class="h4 timeline-item-title">Marketing, Networking and Event Management</h4>
+         <span style="color: #fcca64;">GDSC St. Vincent Pallotti College of Engineering and Technology</span>
          <div style="display: flex; align-items: center;">
             <ion-icon name="location-outline" style="color: #D6D6D6;"></ion-icon>
             <p style="margin-left: 5px; color: #D6D6D6;">Nagpur, Maharashtra</p>
@@ -394,10 +385,10 @@
          </button>
          <div class="dropdown-content">
             <ul>
-               <li>Led diverse marketing campaigns and research to create audience-focused strategies.</li>
-               <li>Strengthened networking and partnership skills, enabling business growth and market expansion.</li>
+               <li>Led marketing campaigns and research to create audience-focused strategies.</li>
+               <li>Built partnerships and strengthened networking skills to support event growth.</li>
             </ul>
-            <a href="assets/certificates/LOR GDSC 2021.pdf" download>
+            <a class="download-cert" href="{{ url_for('static', filename='assets/certificates/LOR_GDSC_2021.pdf') }}" download>
                <ion-icon name="cloud-download-outline"></ion-icon>
                <p>Download Certificate</p>
             </a>
@@ -405,6 +396,7 @@
       </li>
    </ol>
 </section>
+
 <section class="skill">
    <div class="skills-row">
       <h3 class="h3 skills-title">Technical Skills</h3>
@@ -416,8 +408,8 @@
       <div class="skills-container">
          <div class="skills-column">
             <ul class="skills-list content-card">
-               <li class="skills-item"><h5 class="h5">Data Science & Analytics</h5></li>
-               <li class="skills-item"><h5 class="h5">EDA & Predictive Modeling</h5></li>
+               <li class="skills-item"><h5 class="h5">Data Science &amp; Analytics</h5></li>
+               <li class="skills-item"><h5 class="h5">EDA &amp; Predictive Modeling</h5></li>
                <li class="skills-item"><h5 class="h5">Data Visualization (Power BI, Tableau)</h5></li>
                <li class="skills-item"><h5 class="h5">Data Dashboards (Streamlit)</h5></li>
             </ul>
@@ -426,11 +418,11 @@
             <ul class="skills-list content-card">
                <li class="skills-item"><h5 class="h5">Python, Pandas, NumPy</h5></li>
                <li class="skills-item"><h5 class="h5">SQL, MySQL, MongoDB</h5></li>
-               <li class="skills-item"><h5 class="h5">Apache Kafka & Airflow</h5></li>
+               <li class="skills-item"><h5 class="h5">Apache Kafka &amp; Airflow</h5></li>
                <li class="skills-item"><h5 class="h5">Flask, Streamlit</h5></li>
-               <li class="skills-item"><h5 class="h5">Docker, Git & GitHub</h5></li>
+               <li class="skills-item"><h5 class="h5">Docker, Git &amp; GitHub</h5></li>
                <li class="skills-item"><h5 class="h5">AWS (S3, EC2, Redshift)</h5></li>
-               <li class="skills-item"><h5 class="h5">Linux & CLI Tools</h5></li>
+               <li class="skills-item"><h5 class="h5">Linux &amp; CLI Tools</h5></li>
             </ul>
          </div>
       </div>
@@ -448,15 +440,15 @@
       <div class="skills-container">
          <div class="skills-column">
             <ul class="skills-list content-card">
-               <li class="skills-item"><h5 class="h5">Leadership & Team Management</h5></li>
-               <li class="skills-item"><h5 class="h5">Communication & Public Speaking</h5></li>
-               <li class="skills-item"><h5 class="h5">Presentation & Demo Skills</h5></li>
-               <li class="skills-item"><h5 class="h5">Seminar & Event Organization</h5></li>
+               <li class="skills-item"><h5 class="h5">Leadership &amp; Team Management</h5></li>
+               <li class="skills-item"><h5 class="h5">Communication &amp; Public Speaking</h5></li>
+               <li class="skills-item"><h5 class="h5">Presentation &amp; Demo Skills</h5></li>
+               <li class="skills-item"><h5 class="h5">Seminar &amp; Event Organization</h5></li>
             </ul>
          </div>
          <div class="skills-column">
             <ul class="skills-list content-card">
-               <li class="skills-item"><h5 class="h5">Mentoring & Peer Support</h5></li>
+               <li class="skills-item"><h5 class="h5">Mentoring &amp; Peer Support</h5></li>
                <li class="skills-item"><h5 class="h5">Collaboration in Agile Teams</h5></li>
                <li class="skills-item"><h5 class="h5">Problem-Solving Mindset</h5></li>
             </ul>
@@ -465,109 +457,59 @@
    </div>
 </section>
 
-<style>
-/* Skills Dropdown Custom Styles */
-.skill {
-   margin-bottom: 2.5rem;
-   background: #232323;
-   border-radius: 18px;
-   padding: 2rem 2rem 1rem 2rem;
-   box-shadow: 0 2px 16px #00000022;
-   transition: box-shadow 0.2s;
-}
-.skills-row {
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   gap: 2rem;
-   margin-bottom: 1.2rem;
-}
-.skills-title {
-   color: #fcca64;
-   font-size: 1.5rem;
-   text-align: left;
-   letter-spacing: 1px;
-   margin: 0;
-}
-.skill-toggle {
-   display: flex;
-   align-items: center;
-   background:#fcca64;
-   color: #181818;
-   border-radius: 40px;
-   padding: 0.7rem 2rem;
-   font-weight: bold;
-   font-size: 1.05rem;
-   text-decoration: none;
-   box-shadow: 0 2px 12px #00000022;
-   transition: background 0.2s, color 0.2s, transform 0.2s;
-   gap: 0.7rem;
-   border: none;
-   cursor: pointer;
-}
-.skill-toggle:hover {
-   background: #fcca64;
-   color: #fff;
-   transform: translateY(-2px) scale(1.03);
-}
-.skill-toggle .dropdown-arrow {
-   font-size: 1.2rem;
-   margin-right: 0.5rem;
-   transition: transform 0.2s;
-}
-.skill-toggle[aria-expanded="true"] .dropdown-arrow {
-   transform: rotate(90deg);
-}
-.skill-dropdown {
-   display: none;
-   margin-top: 0.5rem;
-   animation: fadeIn 0.3s;
-}
-.skill-dropdown.open {
-   display: block;
-}
-@media (max-width: 900px) {
-   .skill {
-      padding: 1.2rem 0.7rem 0.7rem 0.7rem;
-   }
-   .skills-row {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0.7rem;
-   }
-   .skills-title {
-      text-align: center;
-   }
-}
-@media (max-width: 600px) {
-   .skill {
-      padding: 1rem 0.3rem 0.7rem 0.3rem;
-   }
-}
-</style>
-
 <script>
    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.skill-toggle').forEach(function(btn) {
-         btn.addEventListener('click', function() {
-            const content = btn.closest('.skill').querySelector('.skill-dropdown');
+      // Generic toggle logic for any .dropdown-toggle button.
+      document.querySelectorAll('.dropdown-toggle').forEach(function(btn) {
+         btn.addEventListener('click', function(e) {
+            e.stopPropagation(); // prevent outer click handler from closing immediately
             const expanded = btn.getAttribute('aria-expanded') === 'true';
-            // Close all other skill dropdowns
-            document.querySelectorAll('.skill-toggle').forEach(function(otherBtn) {
-               if (otherBtn !== btn) {
-                  otherBtn.setAttribute('aria-expanded', 'false');
-                  const otherContent = otherBtn.closest('.skill').querySelector('.skill-dropdown');
-                  if (otherContent) {
-                     otherContent.classList.remove('open');
-                  }
-               }
-            });
-            btn.setAttribute('aria-expanded', !expanded);
-            if (content) {
-               content.classList.toggle('open', !expanded);
+
+            // Find the nearest container (.timeline-item or .skill) and its .dropdown-content
+            const container = btn.closest('.timeline-item') || btn.closest('.skill') || btn.closest('section');
+            let content = null;
+            if (container) {
+               content = container.querySelector('.dropdown-content');
             }
+            // Fallback: next element sibling
+            if (!content && btn.nextElementSibling && btn.nextElementSibling.classList.contains('dropdown-content')) {
+               content = btn.nextElementSibling;
+            }
+
+            // Close other open dropdowns (except the current one)
+            document.querySelectorAll('.dropdown-content.open').forEach(function(openEl) {
+               if (openEl !== content) openEl.classList.remove('open');
+            });
+            document.querySelectorAll('.dropdown-toggle').forEach(function(otherBtn) {
+               if (otherBtn !== btn) otherBtn.setAttribute('aria-expanded', 'false');
+            });
+
+            // Toggle current
+            btn.setAttribute('aria-expanded', String(!expanded));
+            if (content) content.classList.toggle('open', !expanded);
          });
+      });
+
+      // Click outside to close any open dropdowns
+      document.addEventListener('click', function(event) {
+         if (!event.target.closest('.dropdown-toggle') && !event.target.closest('.dropdown-content')) {
+            document.querySelectorAll('.dropdown-content.open').forEach(function(openEl) {
+               openEl.classList.remove('open');
+            });
+            document.querySelectorAll('.dropdown-toggle').forEach(function(btn) {
+               btn.setAttribute('aria-expanded', 'false');
+            });
+         }
+      });
+
+      // Accessibility: close with Escape key
+      document.addEventListener('keydown', function(e) {
+         if (e.key === 'Escape') {
+            document.querySelectorAll('.dropdown-content.open').forEach(function(openEl) { openEl.classList.remove('open'); });
+            document.querySelectorAll('.dropdown-toggle').forEach(function(btn) { btn.setAttribute('aria-expanded', 'false'); });
+         }
       });
    });
 </script>
+
 {% endblock %}
