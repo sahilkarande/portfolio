@@ -2,71 +2,683 @@
 {% extends 'layout.html' %}
 {% set active_page = 'about' %}
 {% block content %}
-<br><br><br>
-<header>
-  <h2 class="h2 article-title">About me</h2>
-</header>
 
-<section class="about-text">
-  <p>I am a Computer Engineering graduate and CDAC-certified professional, having completed the <b>Diploma in Big Data Analytics (DBDA)</b> from CDAC Mumbai-Kharghar. I specialize in data engineering, analytics, and cloud technologies with hands-on experience in Hadoop, Spark, Kafka, MongoDB, MySQL, and AWS.</p>
-  
-  <p>My experience includes internships at <b>Solar Industries India Ltd.</b> and <b>Clustor Computing</b>, where I built real-time dashboards and business intelligence reports. Key projects include <b>InsightHub</b> (Streamlit-based analytics platform), <b>Stock Market Prediction</b>, and advanced case studies in EDA, regression, and machine learning models.</p>
-  
-  <p>I enjoy creating scalable data solutions, full-stack applications, and dashboards. As a <b>Technical Class Representative</b> and former <b>GDSC organizer</b>, I have developed strong leadership, teamwork, and communication skills.</p>
-  
-  <p>Passionate about <b>Big Data, Cloud, and AI-driven analytics</b>, I’m eager to contribute to innovative projects and collaborate with forward-thinking teams.</p>
-</section>
+<style>
+  /* About Page Specific Styles */
+  .about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 
-<section class="service">
-   <h3 class="h3 service-title">What I'm Doing</h3>
-   <ul class="service-list">
-      <li class="service-item">
-         <div class="service-icon-box">
-            <img src="static/assets/images/DBDA2.svg" alt="Big Data icon" width="40">
-         </div>
-         <div class="service-content-box">
-            <h4 class="h4 service-item-title">Big Data & Analytics</h4>
-            <p class="service-item-text">
-               Completed CDAC DBDA with expertise in Hadoop, Spark, Kafka, MongoDB, and cloud tools like AWS for scalable data engineering and real-time analytics.
-            </p>
-         </div>
-      </li>
-      <li class="service-item">
-         <div class="service-icon-box">
-            <img src="static/assets/images/icons8-data-analytics-68.png" alt="Data Science icon" width="40">
-         </div>
-         <div class="service-content-box">
-            <h4 class="h4 service-item-title">Data Science</h4>
-            <p class="service-item-text">
-               Skilled in Python, pandas, scikit-learn, and visualization tools for EDA, predictive modeling, and business insights.
-            </p>
-         </div>
-      </li>
-      <li class="service-item">
-         <div class="service-icon-box">
-            <img src="static/assets/images/code-icon.png" alt="Development icon" width="40">
-         </div>
-         <div class="service-content-box">
-            <h4 class="h4 service-item-title">Web & App Development</h4>
-            <p class="service-item-text">
-               Building full-stack apps with Flask, Streamlit, HTML, CSS, and JavaScript integrated with APIs and databases.
-            </p>
-         </div>
-      </li>
-      <li class="service-item">
-         <div class="service-icon-box">
-            <img src="static/assets/images/icons8-management-50.png" alt="Management icon" width="40">
-         </div>
-         <div class="service-content-box">
-            <h4 class="h4 service-item-title">Leadership</h4>
-            <p class="service-item-text">
-               Experience as Technical CR at CDAC and GDSC organizer, leading sessions, mentoring peers, and coordinating events.
-            </p>
-         </div>
-      </li>
-   </ul>
-</section>
+  /* Header Styling */
+  .about-header {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
 
-{% include 'testimonials.html' %}
+  .h2.article-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+  }
+
+  .h2.article-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, #ffdb70 50%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  .about-subtitle {
+    font-size: 1.05rem;
+    color: #bdbdbd;
+    margin-top: 1rem;
+  }
+
+  /* Stats Section */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg,
+      rgba(44, 47, 51, 0.6) 0%,
+      rgba(36, 37, 38, 0.5) 100%
+    );
+    border-radius: 16px;
+    padding: 1.75rem;
+    text-align: center;
+    border: 1px solid rgba(255, 219, 112, 0.1);
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 219, 112, 0.3);
+    box-shadow: 
+      0 10px 30px rgba(255, 219, 112, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .stat-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, 
+      rgba(255, 219, 112, 0.2) 0%, 
+      rgba(252, 202, 100, 0.12) 100%
+    );
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.5rem;
+    color: #ffdb70;
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 219, 112, 0.3);
+    border: 1px solid rgba(255, 219, 112, 0.15);
+  }
+
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffdb70;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    color: #bdbdbd;
+    margin-top: 0.5rem;
+  }
+
+  /* About Text Section */
+  .about-text {
+    background: linear-gradient(135deg,
+      rgba(44, 47, 51, 0.6) 0%,
+      rgba(36, 37, 38, 0.5) 100%
+    );
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    border: 1px solid rgba(255, 219, 112, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-text::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 219, 112, 0.4) 50%,
+      transparent 100%
+    );
+  }
+
+  .about-text:hover {
+    border-color: rgba(255, 219, 112, 0.3);
+    box-shadow: 
+      0 12px 40px rgba(255, 219, 112, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transform: translateY(-4px);
+  }
+
+  .about-text p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #e0e0e0;
+    margin-bottom: 1.5rem;
+    text-align: justify;
+  }
+
+  .about-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .about-text b {
+    color: #ffdb70;
+    font-weight: 600;
+  }
+
+  /* Quick Links Section */
+  .quick-links {
+    background: linear-gradient(135deg,
+      rgba(44, 47, 51, 0.6) 0%,
+      rgba(36, 37, 38, 0.5) 100%
+    );
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    border: 1px solid rgba(255, 219, 112, 0.1);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .quick-links h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 1.5rem 0;
+    text-align: center;
+  }
+
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .link-card {
+    background: rgba(44, 47, 51, 0.4);
+    border: 1px solid rgba(255, 219, 112, 0.15);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .link-card:hover {
+    background: rgba(44, 47, 51, 0.7);
+    border-color: rgba(255, 219, 112, 0.3);
+    transform: translateX(4px);
+  }
+
+  .link-icon {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, 
+      rgba(255, 219, 112, 0.2) 0%, 
+      rgba(252, 202, 100, 0.12) 100%
+    );
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: #ffdb70;
+    flex-shrink: 0;
+  }
+
+  .link-content h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffdb70;
+    margin: 0 0 0.25rem 0;
+  }
+
+  .link-content p {
+    font-size: 0.85rem;
+    color: #bdbdbd;
+    margin: 0;
+  }
+
+  /* Service Section */
+  .service {
+    margin-top: 3rem;
+  }
+
+  .h3.service-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #f3f3f3;
+    margin-bottom: 2rem;
+    position: relative;
+    padding-bottom: 1rem;
+    text-align: center;
+  }
+
+  .h3.service-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, #ffdb70 50%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  /* Service List */
+  .service-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Service Items */
+  .service-item {
+    background: linear-gradient(135deg, rgba(44, 47, 51, 0.6) 0%, rgba(36, 37, 38, 0.6) 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 219, 112, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .service-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 219, 112, 0.1) 0%, rgba(252, 202, 100, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .service-item:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 219, 112, 0.4);
+    box-shadow: 
+      0 16px 48px rgba(255, 219, 112, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .service-item:hover::before {
+    opacity: 1;
+  }
+
+  /* Service Icon Box */
+  .service-icon-box {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, rgba(255, 219, 112, 0.15) 0%, rgba(252, 202, 100, 0.1) 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    transition: all 0.4s ease;
+    border: 2px solid rgba(255, 219, 112, 0.2);
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 219, 112, 0.3);
+  }
+
+  .service-item:hover .service-icon-box {
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    transform: rotate(5deg) scale(1.1);
+    box-shadow: 0 8px 24px rgba(255, 219, 112, 0.4);
+  }
+
+  .service-icon-box img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.4s ease;
+    filter: brightness(0) invert(1);
+  }
+
+  .service-item:hover .service-icon-box img {
+    transform: scale(1.1);
+    filter: brightness(0) invert(0);
+  }
+
+  /* Service Content */
+  .service-content-box {
+    position: relative;
+    z-index: 1;
+  }
+
+  .h4.service-item-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffdb70;
+    margin-bottom: 0.75rem;
+    transition: color 0.3s ease;
+  }
+
+  .service-item:hover .h4.service-item-title {
+    color: #fff;
+  }
+
+  .service-item-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #bdbdbd;
+    margin: 0;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .h2.article-title {
+      font-size: 2.5rem;
+    }
+
+    .about-text {
+      padding: 2rem;
+    }
+
+    .about-text p {
+      font-size: 1.15rem;
+      line-height: 1.9;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .h2.article-title {
+      font-size: 2.25rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .about-text {
+      padding: 2rem 1.75rem;
+    }
+
+    .about-text p {
+      font-size: 1.1rem;
+      text-align: left;
+      line-height: 1.85;
+    }
+
+    .quick-links {
+      padding: 1.75rem;
+    }
+
+    .links-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .h3.service-title {
+      font-size: 1.85rem;
+    }
+
+    .service-list {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 580px) {
+    .h2.article-title {
+      font-size: 2rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-text {
+      padding: 1.75rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .quick-links {
+      padding: 1.5rem;
+    }
+
+    .h3.service-title {
+      font-size: 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .service-item {
+      padding: 1.5rem;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .h2.article-title {
+      font-size: 1.85rem;
+    }
+
+    .stat-card {
+      padding: 1.5rem;
+    }
+
+    .stat-number {
+      font-size: 1.75rem;
+    }
+
+    .about-text {
+      padding: 1.5rem 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    .quick-links {
+      padding: 1.25rem;
+    }
+
+    .service {
+      margin-top: 2rem;
+    }
+
+    .h3.service-title {
+      font-size: 1.6rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .service-item {
+      padding: 1.35rem;
+    }
+  }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  .service-item:focus-visible,
+  .link-card:focus-visible {
+    outline: 2px solid #ffdb70;
+    outline-offset: 4px;
+  }
+</style>
+
+<div class="about-container">
+  <header class="about-header">
+    <h2 class="h2 article-title">About Me</h2>
+    <p class="about-subtitle">Project Engineer | Big Data Analytics | Data Science Enthusiast</p>
+  </header>
+
+  <!-- Stats Section -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">
+        <ion-icon name="briefcase-outline"></ion-icon>
+      </div>
+      <h3 class="stat-number">1</h3>
+      <p class="stat-label">Years Experience</p>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <ion-icon name="code-slash-outline"></ion-icon>
+      </div>
+      <h3 class="stat-number">15+</h3>
+      <p class="stat-label">Projects Completed</p>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <ion-icon name="school-outline"></ion-icon>
+      </div>
+      <h3 class="stat-number">15+</h3>
+      <p class="stat-label">Certifications</p>
+    </div>
+
+  </div>
+
+  <!-- About Text -->
+  <section class="about-text">
+    <p>I am currently working as a <b>Project Engineer at CDAC Mumbai</b> in the Education and Training department, where I deliver lectures and conduct practical sessions on <b>Big Data Technologies, Machine Learning, and Generative AI</b> for the DBDA (Diploma in Big Data Analytics) program.</p>
+    
+    <p>I'm a Computer Engineering graduate and CDAC-certified professional with specialized training in <b>Hadoop, Spark, Kafka, Python, R, and Cloud Computing</b>. My expertise spans data engineering, advanced analytics, and building scalable data pipelines for real-time processing.</p>
+    
+    <p>My professional journey includes impactful internships at <b>Solar Industries India Ltd.</b> and <b>Clustor Computing</b>, where I developed real-time dashboards, performed time-series analysis, and built ML models. I've worked on diverse projects including <b>InsightHub</b> (analytics platform), <b>Therapy Connect</b> (AI-powered matching), and various data visualization dashboards.</p>
+    
+    <p>Beyond technical skills, I've served as <b>Technical Class Representative at CDAC</b> and <b>GDSC Technical Lead</b>, where I mentored 50+ students, organized technical workshops, and led coding competitions. I'm passionate about <b>Big Data, Cloud Technologies, and AI-driven solutions</b>, always eager to collaborate on innovative projects that create real-world impact.</p>
+  </section>
+
+  <!-- Quick Links -->
+  <section class="quick-links">
+    <h3>Quick Navigation</h3>
+    <div class="links-grid">
+      <a href="{{ url_for('resume') }}" class="link-card">
+        <div class="link-icon">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+        <div class="link-content">
+          <h4>View Resume</h4>
+          <p>Explore my full career journey</p>
+        </div>
+      </a>
+
+      <a href="{{ url_for('projects') }}" class="link-card">
+        <div class="link-icon">
+          <ion-icon name="folder-open-outline"></ion-icon>
+        </div>
+        <div class="link-content">
+          <h4>Browse Projects</h4>
+          <p>Check out my portfolio</p>
+        </div>
+      </a>
+
+      <a href="{{ url_for('certificates') }}" class="link-card">
+        <div class="link-icon">
+          <ion-icon name="ribbon-outline"></ion-icon>
+        </div>
+        <div class="link-content">
+          <h4>Certifications</h4>
+          <p>View my credentials</p>
+        </div>
+      </a>
+
+      <a href="{{ url_for('contact') }}" class="link-card">
+        <div class="link-icon">
+          <ion-icon name="mail-outline"></ion-icon>
+        </div>
+        <div class="link-content">
+          <h4>Get in Touch</h4>
+          <p>Let's connect and collaborate</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- What I'm Doing -->
+  <section class="service">
+    <h3 class="h3 service-title">What I'm Doing</h3>
+    <ul class="service-list">
+      <li class="service-item" tabindex="0">
+        <div class="service-icon-box">
+          <img src="static/assets/images/DBDA2.svg" alt="Big Data icon" width="40">
+        </div>
+        <div class="service-content-box">
+          <h4 class="h4 service-item-title">Big Data & Analytics</h4>
+          <p class="service-item-text">
+            Teaching and implementing Big Data solutions using Hadoop, Spark, Kafka, and cloud platforms. Expertise in building scalable data pipelines and real-time analytics systems.
+          </p>
+        </div>
+      </li>
+
+      <li class="service-item" tabindex="0">
+        <div class="service-icon-box">
+          <img src="static/assets/images/icons8-data-analytics-68.png" alt="Data Science icon" width="40">
+        </div>
+        <div class="service-content-box">
+          <h4 class="h4 service-item-title">Data Science & ML</h4>
+          <p class="service-item-text">
+            Developing predictive models, performing advanced EDA, and creating data-driven insights. Proficient in Python, R, scikit-learn, and statistical analysis.
+          </p>
+        </div>
+      </li>
+
+      <li class="service-item" tabindex="0">
+        <div class="service-icon-box">
+          <img src="static/assets/images/code-icon.png" alt="Development icon" width="40">
+        </div>
+        <div class="service-content-box">
+          <h4 class="h4 service-item-title">Full-Stack Development</h4>
+          <p class="service-item-text">
+            Building end-to-end applications with Flask, Streamlit, and modern web technologies. Creating interactive dashboards and RESTful APIs integrated with databases.
+          </p>
+        </div>
+      </li>
+
+      <li class="service-item" tabindex="0">
+        <div class="service-icon-box">
+          <img src="static/assets/images/icons8-management-50.png" alt="Teaching icon" width="40">
+        </div>
+        <div class="service-content-box">
+          <h4 class="h4 service-item-title">Teaching & Mentoring</h4>
+          <p class="service-item-text">
+            Training students in Big Data Analytics, conducting workshops on ML and GenAI, and mentoring teams. Leading technical sessions and coordinating educational programs.
+          </p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  
+</div>
 
 {% endblock %}

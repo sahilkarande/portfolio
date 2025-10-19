@@ -1,45 +1,599 @@
 {% extends 'layout.html' %}
 {% set active_page = 'contact' %}
 {% block content %}
-<br><br><br>
-<header>
-  <h2 class="h2 article-title">Contact</h2>
-</header>
 
-<!-- Map Section -->
-<section class="mapbox" data-mapbox>
-  <figure>
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30594.409782773484!2d73.78878237140137!3d18.44396393860206!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2951a8a2d6d43%3A0x49d870c8e2fa28a3!2sDhayari%2C%20Pune%2C%20Maharashtra!5e1!3m2!1sen!2sin!4v1724606966247!5m2!1sen!2sin"
-      width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
-    </iframe>
-  </figure>
-</section>
+<style>
+  /* Contact Page Styles */
+  .contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 
-<!-- Contact Form Section -->
-<section class="contact-form">
-  <h3 class="h3 form-title">Contact Form</h3>
-  <div class="form-container">
-    <form id="contact-form" action="{{ url_for('send_email') }}" method="post">
-      <div class="input-wrapper">
-        <input type="text" name="fullname" class="form-input" placeholder="Full name" required>
-        <input type="email" name="email" class="form-input" placeholder="Email address" required>
-        <input type="text" name="phone" class="form-input" placeholder="Phone number" required>
+  /* Header */
+  .contact-header {
+    margin-bottom: 3rem;
+  }
+
+  .h2.article-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+  }
+
+  .h2.article-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #ffdb70 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  .contact-subtitle {
+    font-size: 1rem;
+    color: #bdbdbd;
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+
+  /* Contact Info Cards */
+  .contact-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .info-card {
+    background: linear-gradient(135deg,
+      rgba(44, 47, 51, 0.6) 0%,
+      rgba(36, 37, 38, 0.5) 100%
+    );
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 219, 112, 0.1);
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .info-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 219, 112, 0.3);
+    box-shadow: 
+      0 10px 30px rgba(255, 219, 112, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .info-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, 
+      rgba(255, 219, 112, 0.2) 0%, 
+      rgba(252, 202, 100, 0.12) 100%
+    );
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #ffdb70;
+    flex-shrink: 0;
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 219, 112, 0.3);
+    border: 1px solid rgba(255, 219, 112, 0.15);
+  }
+
+  .info-content h4 {
+    font-size: 0.85rem;
+    color: #888;
+    margin: 0 0 0.25rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+  }
+
+  .info-content p {
+    font-size: 0.95rem;
+    color: #fff;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .info-content a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .info-content a:hover {
+    color: #ffdb70;
+  }
+
+  /* Main Content Grid */
+  .contact-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  /* Map Section */
+  .map-section {
+    background: linear-gradient(135deg,
+      rgba(44, 47, 51, 0.6) 0%,
+      rgba(36, 37, 38, 0.5) 100%
+    );
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 219, 112, 0.1);
+    box-shadow: 
+      0 8px 24px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .map-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 219, 112, 0.1);
+  }
+
+  .map-header h3 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .map-header p {
+    font-size: 0.9rem;
+    color: #bdbdbd;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .map-header i {
+    color: #ffdb70;
+  }
+
+  .map-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+  }
+
+  .map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* Contact Form Section */
+  .form-section {
+    background: linear-gradient(135deg,
+      rgba(44, 47, 51, 0.6) 0%,
+      rgba(36, 37, 38, 0.5) 100%
+    );
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 219, 112, 0.1);
+    box-shadow: 
+      0 8px 24px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .form-title {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #bdbdbd;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+  }
+
+  .form-input {
+    width: 100%;
+    background: rgba(44, 47, 51, 0.5);
+    border: 1px solid rgba(255, 219, 112, 0.2);
+    border-radius: 12px;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+    color: #fff;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: rgba(255, 219, 112, 0.5);
+    background: rgba(44, 47, 51, 0.7);
+    box-shadow: 0 0 0 3px rgba(255, 219, 112, 0.1);
+  }
+
+  .form-input::placeholder {
+    color: #888;
+  }
+
+  textarea.form-input {
+    min-height: 140px;
+    resize: vertical;
+  }
+
+  .form-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    box-shadow: 0 4px 16px rgba(255, 219, 112, 0.3);
+  }
+
+  .form-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(255, 219, 112, 0.5);
+  }
+
+  .form-btn:active {
+    transform: translateY(0);
+  }
+
+  .form-btn ion-icon {
+    font-size: 1.3rem;
+  }
+
+  /* Success Message */
+  .success-message {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(76, 175, 80, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 10000;
+    animation: slideInRight 0.5s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .success-message i {
+    font-size: 1.5rem;
+  }
+
+  .success-message.hide {
+    animation: slideOutRight 0.5s ease-out forwards;
+  }
+
+  @keyframes slideInRight {
+    from {
+      transform: translateX(400px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideOutRight {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(400px);
+      opacity: 0;
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .h2.article-title {
+      font-size: 2.5rem;
+    }
+
+    .contact-main {
+      gap: 1.75rem;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .contact-main {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .map-container {
+      height: 350px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .contact-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .h2.article-title {
+      font-size: 2.25rem;
+    }
+
+    .contact-info-grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .form-section {
+      padding: 1.75rem;
+    }
+
+    .map-container {
+      height: 300px;
+    }
+
+    .success-message {
+      top: 1rem;
+      right: 1rem;
+      left: 1rem;
+    }
+  }
+
+  @media (max-width: 580px) {
+    .h2.article-title {
+      font-size: 2rem;
+    }
+
+    .contact-subtitle {
+      font-size: 0.95rem;
+    }
+
+    .info-card {
+      padding: 1.25rem;
+    }
+
+    .info-icon {
+      width: 45px;
+      height: 45px;
+      font-size: 1.3rem;
+    }
+
+    .form-section {
+      padding: 1.5rem;
+      border-radius: 16px;
+    }
+
+    .form-title {
+      font-size: 1.25rem;
+    }
+
+    .form-input {
+      padding: 0.8rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .form-btn {
+      padding: 0.9rem 1.75rem;
+      font-size: 0.95rem;
+    }
+
+    .map-section {
+      border-radius: 16px;
+    }
+
+    .map-container {
+      height: 280px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .h2.article-title {
+      font-size: 1.85rem;
+    }
+
+    .contact-info-grid {
+      gap: 1rem;
+    }
+
+    .info-card {
+      padding: 1.15rem;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .form-section {
+      padding: 1.25rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-input {
+      padding: 0.75rem 0.9rem;
+      font-size: 0.88rem;
+    }
+
+    .form-btn {
+      padding: 0.85rem 1.5rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  .form-input:focus-visible,
+  .form-btn:focus-visible {
+    outline: 2px solid #ffdb70;
+    outline-offset: 2px;
+  }
+</style>
+
+<div class="contact-container">
+  <header class="contact-header">
+    <h2 class="h2 article-title">Get in Touch</h2>
+    <p class="contact-subtitle">
+      Feel free to reach out for collaborations, opportunities, or just a friendly chat. I'm always happy to connect!
+    </p>
+  </header>
+
+  <!-- Contact Info Cards -->
+  <div class="contact-info-grid">
+    <div class="info-card">
+      <div class="info-icon">
+        <i class="fas fa-envelope"></i>
       </div>
-      <textarea name="message" class="form-input" placeholder="Your Message" required></textarea>
-      <button class="form-btn" name="send" type="submit">
-        <ion-icon name="paper-plane"></ion-icon>
-        <span>Send Message</span>
-      </button>
-    </form>
-  </div>
-</section>
+      <div class="info-content">
+        <h4>Email</h4>
+        <p><a href="mailto:skarande220@gmail.com">skarande220@gmail.com</a></p>
+      </div>
+    </div>
 
-<!-- ✅ JS Alert on Email Sent -->
+
+
+    <div class="info-card">
+      <div class="info-icon">
+        <i class="fas fa-map-marker-alt"></i>
+      </div>
+      <div class="info-content">
+        <h4>Location</h4>
+        <p>Navi Mumbai, Maharashtra, India</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content: Map and Form -->
+  <div class="contact-main">
+    <!-- Map Section -->
+    <div class="map-section">
+      <div class="map-header">
+        <h3>Find Me Here</h3>
+        <p>
+          <i class="fas fa-location-dot"></i>
+          Dhayari, Pune, Maharashtra
+        </p>
+      </div>
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.8597825275274!2d73.05167127455994!3d19.025899382168383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c24cce39457b%3A0x8bd69eab297890b0!2sCentre%20for%20Development%20of%20Advanced%20Computing%20(CDAC)!5e0!3m2!1sen!2sin!4v1760882478289!5m2!1sen!2sin"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="form-section">
+      <h3 class="form-title">Send me a Message</h3>
+      <form id="contactForm" action="{{ url_for('send_email') }}" method="post">
+        <div class="form-group">
+          <label class="form-label" for="fullname">Full Name</label>
+          <input type="text" id="fullname" name="fullname" class="form-input" placeholder="Sahil" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input type="email" id="email" name="email" class="form-input" placeholder="sahil@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" class="form-input" placeholder="+91 98765 43210" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message">Your Message</label>
+          <textarea id="message" name="message" class="form-input" placeholder="Write your message here..." required></textarea>
+        </div>
+
+        <button class="form-btn" type="submit">
+          <ion-icon name="paper-plane"></ion-icon>
+          <span>Send Message</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Success Message -->
 {% if request.args.get('status') == 'success' %}
+<div class="success-message" id="successMessage">
+  <i class="fas fa-check-circle"></i>
+  <span>Message sent successfully!</span>
+</div>
 <script>
-  alert("✅ Your message has been sent successfully!");
+  setTimeout(() => {
+    const msg = document.getElementById('successMessage');
+    if (msg) {
+      msg.classList.add('hide');
+      setTimeout(() => msg.remove(), 500);
+    }
+  }, 4000);
 </script>
 {% endif %}
+
+<script>
+  // Form submission handling
+  const form = document.getElementById('contactForm');
+  
+  form.addEventListener('submit', function(e) {
+    const btn = this.querySelector('.form-btn');
+    const originalText = btn.innerHTML;
+    
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Sending...</span>';
+    
+    // Note: Form will submit naturally, this just provides visual feedback
+    // If using AJAX, prevent default and handle accordingly
+  });
+</script>
 
 {% endblock %}

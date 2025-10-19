@@ -29,13 +29,9 @@ def certificates():
 def contact():
     return render_template("contact.html", title="Contact - Sahil")
 
-@app.route("/blogs")
+@app.route('/blogs')
 def blogs():
-    feed = feedparser.parse("https://medium.com/feed/@skarande220")
-    entries = feed.entries[:6]
-    return render_template("blogs.html", entries=entries, title="Blogs - Sahil")
-
-
+    return render_template('blogs.html', title='Blogs - Sahil Karande')
 
 @app.route("/send_email", methods=["POST"])
 def send_email():

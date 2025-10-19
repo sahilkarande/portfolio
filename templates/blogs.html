@@ -1,76 +1,497 @@
 {% extends 'layout.html' %}
 {% set active_page = 'blogs' %}
 {% block content %}
-<br><br><br>
-<header><h2 class="h2 article-title">My Blogs</h2></header>
 
-<section class="blog-section">
-  <div class="blog-grid">
+<style>
+  /* Blogs Page Specific Styles */
+  .blogs-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
 
-    <!-- Blog 1 -->
-    <div class="blog-card">
-    <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*HbgN28k26SrTN7A1Tudi7A.png" alt="Cloud computing diagram showing IaaS, PaaS, and SaaS layers with icons and arrows, illustrating relationships between infrastructure, platform, and software services. The environment is clean and modern, with a focus on clarity and education. Text in the image: IaaS, PaaS, SaaS. The tone is informative and neutral." class="blog-image">
-      <h3 class="blog-title">Understanding IaaS, PaaS, and SaaS</h3>
-      <p>Explore the pillars of cloud computing—how IaaS, PaaS, and SaaS are transforming app development and deployment.</p>
-      <a href="https://medium.com/@yourusername/iaas-paas-saas-guide" target="_blank" class="blog-link">Read on Medium →</a>
+  /* Header Styling */
+  .blogs-header {
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .h2.article-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+    animation: slideInLeft 0.6s ease-out;
+  }
+
+  .h2.article-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #ffdb70 0%, transparent 100%);
+    border-radius: 2px;
+    animation: expandWidth 0.8s ease-out 0.3s both;
+  }
+
+  /* Blog Section */
+  .blog-section {
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+  }
+
+  /* Blog Grid */
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  /* Blog Card */
+  .blog-card {
+    background: linear-gradient(135deg,
+      rgba(44, 47, 51, 0.6) 0%,
+      rgba(36, 37, 38, 0.5) 100%
+    );
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 219, 112, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+      0 8px 24px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    position: relative;
+    animation: fadeInUp 0.6s ease-out both;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 219, 112, 0.5) 50%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .blog-card:hover {
+    transform: translateY(-12px);
+    border-color: rgba(255, 219, 112, 0.3);
+    box-shadow: 
+      0 16px 48px rgba(255, 219, 112, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .blog-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Blog Image Container */
+  .blog-image-container {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .blog-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .blog-card:hover .blog-image {
+    transform: scale(1.08);
+  }
+
+  /* Image Overlay */
+  .blog-image-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg,
+      transparent 0%,
+      rgba(36, 37, 38, 0.4) 60%,
+      rgba(36, 37, 38, 0.8) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* Blog Content */
+  .blog-content {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
+  }
+
+  .blog-title {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #ffdb70;
+    margin: 0;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .blog-card:hover .blog-title {
+    color: #fff;
+  }
+
+  .blog-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #bdbdbd;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Blog Link */
+  .blog-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ffdb70;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 219, 112, 0.1);
+    border: 1px solid rgba(255, 219, 112, 0.2);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    margin-top: auto;
+    align-self: flex-start;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 219, 112, 0.2) 50%,
+      transparent 100%
+    );
+    transition: left 0.5s ease;
+  }
+
+  .blog-link:hover::before {
+    left: 100%;
+  }
+
+  .blog-link:hover {
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    color: #000;
+    border-color: transparent;
+    transform: translateX(4px);
+    box-shadow: 0 4px 16px rgba(255, 219, 112, 0.4);
+  }
+
+  /* Animations */
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes expandWidth {
+    from {
+      width: 0;
+    }
+    to {
+      width: 80px;
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .blog-grid {
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .h2.article-title {
+      font-size: 2.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .blogs-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .h2.article-title {
+      font-size: 2.25rem;
+    }
+
+    .blog-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .blog-image-container {
+      height: 200px;
+    }
+
+    .blog-content {
+      padding: 1.5rem;
+    }
+
+    .blog-title {
+      font-size: 1.25rem;
+    }
+
+    .blog-card p {
+      font-size: 0.95rem;
+    }
+
+    .blog-link {
+      padding: 0.7rem 1.3rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 580px) {
+    .blogs-header {
+      margin-bottom: 2rem;
+    }
+
+    .h2.article-title {
+      font-size: 2rem;
+    }
+
+    .blog-grid {
+      gap: 1.75rem;
+    }
+
+    .blog-image-container {
+      height: 180px;
+    }
+
+    .blog-content {
+      padding: 1.35rem;
+    }
+
+    .blog-title {
+      font-size: 1.2rem;
+    }
+
+    .blog-card p {
+      font-size: 0.93rem;
+      line-height: 1.65;
+    }
+
+    .blog-link {
+      padding: 0.65rem 1.2rem;
+      font-size: 0.88rem;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .h2.article-title {
+      font-size: 1.85rem;
+    }
+
+    .blog-grid {
+      gap: 1.5rem;
+    }
+
+    .blog-card {
+      border-radius: 16px;
+    }
+
+    .blog-image-container {
+      height: 170px;
+    }
+
+    .blog-content {
+      padding: 1.25rem;
+    }
+
+    .blog-title {
+      font-size: 1.15rem;
+    }
+
+    .blog-card p {
+      font-size: 0.9rem;
+    }
+
+    .blog-link {
+      padding: 0.6rem 1.1rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Focus styles */
+  .blog-card:focus-within {
+    outline: 2px solid #ffdb70;
+    outline-offset: 4px;
+  }
+
+  .blog-link:focus-visible {
+    outline: 2px solid #ffdb70;
+    outline-offset: 2px;
+  }
+</style>
+
+<div class="blogs-container">
+  <header class="blogs-header">
+    <h2 class="h2 article-title">My Blogs</h2>
+  </header>
+
+  <section class="blog-section">
+    <div class="blog-grid" id="blogGrid">
+      <!-- Blog cards will be dynamically generated here -->
     </div>
+  </section>
+</div>
 
-    <!-- Blog 2 -->
-    <div class="blog-card">
-    <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*Iyzm1_-di-l2CIyykz1K3A.png" alt="Principal Component Analysis PCA From Concepts to Code displayed in bold text with a premium badge and a cartoon brain above the title. A 3D scatter plot with colored clusters and a magnifying glass over a bar chart are shown below the title. The environment is clean and educational with a focus on clarity. The tone is informative and encouraging." class="blog-image">
-      <h3 class="blog-title">PCA: From Concepts to Code</h3>
-      <p>Break down Principal Component Analysis—what it is, why it matters, and how to implement it in Python.</p>
-      <a href="https://medium.com/@yourusername/pca-from-concepts-to-code" target="_blank" class="blog-link">Read on Medium →</a>
-    </div>
+<script>
+  // Blog data array - Add new blogs here
+  const blogs = [
+    {
+      image: "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*HbgN28k26SrTN7A1Tudi7A.png",
+      title: "Understanding IaaS, PaaS, and SaaS",
+      description: "Explore the pillars of cloud computing—how IaaS, PaaS, and SaaS are transforming app development and deployment.",
+      link: "https://medium.com/@skarande220/understanding-iaas-paas-and-saas-a-comprehensive-cloud-computing-guide-26a47206d8cb?source=user_profile_page---------0-------------da698f02535----------------------"
+    },
+    {
+      image: "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*Iyzm1_-di-l2CIyykz1K3A.png",
+      title: "PCA: From Concepts to Code",
+      description: "Break down Principal Component Analysis—what it is, why it matters, and how to implement it in Python.",
+      link: "https://medium.com/@skarande220/understanding-iaas-paas-and-saas-a-comprehensive-cloud-computing-guide-26a47206d8cb?source=user_profile_page---------0-------------da698f02535----------------------"
+    },
+    {
+      image: "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*Pl7rnk0b2vX8Z4iupx5rLQ.png",
+      title: "Regression Types 101",
+      description: "A complete guide to Linear, Logistic, Count, and other regression types with examples and use cases.",
+      link: "https://medium.com/@skarande220/understanding-iaas-paas-and-saas-a-comprehensive-cloud-computing-guide-26a47206d8cb?source=user_profile_page---------0-------------da698f02535----------------------"
+    },
+    {
+      image: "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*zSg1HyEU2TCbzT0dDZAbjA.png",
+      title: "Sigmoid Function & Loan Prediction",
+      description: "Understand the sigmoid curve and how it powers logistic regression models used in finance and beyond.",
+      link: "https://medium.com/@skarande220/sigmoid-function-101-predicting-loan-sanctions-using-logistic-regression-9079012cdecb?source=user_profile_page---------3-------------da698f02535----------------------"
+    },
+    {
+      image: "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*ZmoGG7AmIFqUrFAk-JK0Ow.png",
+      title: "Top Interview Questions for Data Science Freshers",
+      description: "Get prepared with real-world ML, NLP, and statistics questions frequently asked in DS interviews.",
+      link: "https://medium.com/@skarande220/top-interview-questions-for-data-science-freshers-ml-nlp-and-statistics-ab3cfb6d9d73?source=user_profile_page---------4-------------da698f02535----------------------"
+    },
+    {
+      image: "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*iupjWcwo2tIdenQw4xEiBw.png",
+      title: "Log-Odds Explained",
+      description: "Dive deep into the intuition and math behind log-odds in logistic regression and real-world decisions.",
+      link: "https://medium.com/@skarande220/log-of-odds-log-odds-intuition-math-real-world-use-24ff1d3e57b8?source=user_profile_page---------5-------------da698f02535----------------------"
+    },
+    {
+      image: "https://miro.medium.com/v2/resize:fit:1100/format:webp/0*uPRwv9ZSCaaYXasi.png",
+      title: "Advanced Concepts in Neural Networks",
+      description: "Explore vanishing gradients, activation functions, and architectures that shape modern neural networks.",
+      link: "https://medium.com/@skarande220/advanced-concepts-in-neural-networks-vanishing-gradients-activation-choices-and-network-89f3215c9f80?source=user_profile_page---------6-------------da698f02535----------------------"
+    },
+    {
+      image: "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*e2THC8yNFc__5hgnonFFSw.png",
+      title: "Understanding Artificial Neural Networks",
+      description: "Go from feedforward basics to backpropagation and learn how ANNs mimic human learning.",
+      link: "https://medium.com/@skarande220/advanced-concepts-in-neural-networks-vanishing-gradients-activation-choices-and-network-89f3215c9f80?source=user_profile_page---------6-------------da698f02535----------------------"
+    }
+  ];
 
-    <!-- Blog 3 -->
-    <div class="blog-card">
-      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*Pl7rnk0b2vX8Z4iupx5rLQ.png" alt="Graph comparing different regression lines including linear and logistic on a scatter plot of data points. The background is clean and academic, emphasizing clarity and education. Text in the image: Linear Regression, Logistic Regression. The tone is informative and neutral." class="blog-image">
-      <h3 class="blog-title">Regression Types 101</h3>
-      <p>A complete guide to Linear, Logistic, Count, and other regression types with examples and use cases.</p>
-      <a href="https://medium.com/@yourusername/regression-types-guide" target="_blank" class="blog-link">Read on Medium →</a>
-    </div>
+  // Function to create a blog card
+  function createBlogCard(blog, index) {
+    const card = document.createElement('article');
+    card.className = 'blog-card';
+    card.style.animationDelay = `${0.3 + index * 0.05}s`;
 
-    <!-- Blog 4 -->
-    <div class="blog-card">
-      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*zSg1HyEU2TCbzT0dDZAbjA.png" alt="Sigmoid curve graph showing an S-shaped line representing probability values between zero and one on a clean white background. The graph is labeled with axes and the word Sigmoid appears in the image. The tone is educational and neutral." class="blog-image">
-      <h3 class="blog-title">Sigmoid Function & Loan Prediction</h3>
-      <p>Understand the sigmoid curve and how it powers logistic regression models used in finance and beyond.</p>
-      <a href="https://medium.com/@yourusername/sigmoid-loan-logistic" target="_blank" class="blog-link">Read on Medium →</a>
-    </div>
+    card.innerHTML = `
+      <div class="blog-image-container">
+        <img src="${blog.image}" alt="${blog.title}" class="blog-image">
+      </div>
+      <div class="blog-content">
+        <h3 class="blog-title">${blog.title}</h3>
+        <p>${blog.description}</p>
+        <a href="${blog.link}" target="_blank" rel="noopener noreferrer" class="blog-link">
+          Read on Medium →
+        </a>
+      </div>
+    `;
 
-    <!-- Blog 5 -->
-    <div class="blog-card">
-      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*ZmoGG7AmIFqUrFAk-JK0Ow.png" alt="Two people sitting across a table engaged in a job interview with a notepad and pen visible between them in a professional office setting. The environment is bright and modern, conveying a focused and encouraging atmosphere. Text in the image: Interview Questions" class="blog-image">
-      <h3 class="blog-title">Top Interview Questions for Data Science Freshers</h3>
-      <p>Get prepared with real-world ML, NLP, and statistics questions frequently asked in DS interviews.</p>
-      <a href="https://medium.com/@yourusername/data-science-interview-questions" target="_blank" class="blog-link">Read on Medium →</a>
-    </div>
+    return card;
+  }
 
-    <!-- Blog 6 -->
-    <div class="blog-card">
-      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*iupjWcwo2tIdenQw4xEiBw.png" alt="Graph displaying a log-odds curve with axes labeled and a highlighted S-shaped line representing probability transformation. The background is clean and academic, focusing on clarity and education. Text in the image: Log Odds. The tone is informative and neutral." class="blog-image">
-      <h3 class="blog-title">Log-Odds Explained</h3>
-      <p>Dive deep into the intuition and math behind log-odds in logistic regression and real-world decisions.</p>
-      <a href="https://medium.com/@yourusername/log-odds-intuition" target="_blank" class="blog-link">Read on Medium →</a>
-    </div>
+  // Generate all blog cards
+  function renderBlogs() {
+    const blogGrid = document.getElementById('blogGrid');
+    blogs.forEach((blog, index) => {
+      const card = createBlogCard(blog, index);
+      blogGrid.appendChild(card);
+    });
+  }
 
-    <!-- Blog 7 -->
-    <div class="blog-card">
-      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/0*uPRwv9ZSCaaYXasi.png" alt="Diagram of a neural network with interconnected nodes arranged in layers on a clean white background emphasizing structure and flow of information. The environment is academic and modern with a focus on clarity and education. No visible text in the image. The tone is informative and neutral." class="blog-image">
-      <h3 class="blog-title">Advanced Concepts in Neural Networks</h3>
-      <p>Explore vanishing gradients, activation functions, and architectures that shape modern neural networks.</p>
-      <a href="https://medium.com/@yourusername/neural-networks-advanced" target="_blank" class="blog-link">Read on Medium →</a>
-    </div>
+  // Initialize blogs on page load
+  document.addEventListener('DOMContentLoaded', renderBlogs);
+</script>
 
-    <!-- Blog 8 -->
-    <div class="blog-card">
-      <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*e2THC8yNFc__5hgnonFFSw.png" alt="Diagram of an artificial neural network with interconnected nodes arranged in input, hidden, and output layers on a clean white background. The environment is academic and modern, focusing on clarity and education. No visible text in the image. The tone is informative and neutral." class="blog-image">
-      <h3 class="blog-title">Understanding Artificial Neural Networks</h3>
-      <p>Go from feedforward basics to backpropagation and learn how ANNs mimic human learning.</p>
-      <a href="https://medium.com/@yourusername/understanding-anns" target="_blank" class="blog-link">Read on Medium →</a>
-    </div>
-
-  </div>
-</section>
 {% endblock %}

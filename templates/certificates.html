@@ -1,71 +1,686 @@
 {% extends 'layout.html' %}
 {% set active_page = 'certificates' %}
 {% block content %}
-<br><br><br>
-<header>
-  <h2 class="h2 article-title">Certificates</h2>
-</header>
 
-<!-- Filter Section -->
-<section class="project-filter">
-  <button class="filter-btn active" data-category="all">All</button>
-  <button class="filter-btn" data-category="data-science">Data Science / AI / ML</button>
-  <button class="filter-btn" data-category="programming">Programming & Software Tools</button>
-  <button class="filter-btn" data-category="cloud">Cloud & Microsoft Technologies</button>
-  <button class="filter-btn" data-category="recognition">Professional Recognition</button>
-</section>
+<style>
+  /* Certificates Page Styles */
+  .certificates-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
 
-<!-- Certificate Cards -->
-<section class="projects">
-  <ul class="project-list">
-    {% for cert in [
-      {'title': 'AI Skills in SDLC', 'image': 'AI_skills_SDLC.jpg', 'category': 'data-science', 'issuer': 'CDAC Acts', 'link': 'https://drive.google.com/drive/folders/1bmFT6-aDzgILfxnuhg1QKlkrBD-RgeVh'},
-      {'title': 'Reinforcement Learning', 'image': 'NPTEL_RL.jpg', 'category': 'data-science', 'issuer': 'NPTEL', 'link': 'https://archive.nptel.ac.in/content/noc/NOC24/SEM1/Ecertificates/106/noc24-cs52/Course/NPTEL24CS52S56290023630681948.pdf'},
-      {'title': 'Cloud Computing', 'image': 'NPTEL_CC.jpg', 'category': 'data-science', 'issuer': 'NPTEL', 'link': 'https://archive.nptel.ac.in/content/noc/NOC24/SEM1/Ecertificates/106/noc24-cs17/Course/NPTEL24CS17S36290251330681948.pdf'},
-      {'title': 'Artificial Intelligence Program', 'image': 'Sahil_Feb_2022_participation_17615_page-0001.jpg', 'category': 'data-science', 'issuer': 'Techfest, IIT Bombay', 'link': 'https://drive.google.com/file/d/1l-4XGdManavyFghcCorK2Kl2lvWI_ZGw/view'},
-      {'title': 'Python Programming and Machine Learning', 'image': 'YBI  - Python And ML_page-0001.jpg', 'category': 'data-science', 'issuer': 'YBI Foundation', 'link': 'https://drive.google.com/file/d/1Ehxz3gzVfCi_KmD8uzq_wgMsmOc_Pa6i/view'},
-      {'title': 'Introduction to Python Programming', 'image': 'Coursera - Introduction to Python Programming_page-0001.jpg', 'category': 'data-science', 'issuer': 'Coursera', 'link': 'https://drive.google.com/file/d/1glA5yW6WTbO3FWNEFdZ-okuQbWCb-jSQ/view'},
-      {'title': 'SQL (Basic)', 'image': 'SQL_BASIC.png', 'category': 'programming', 'issuer': 'HackerRank', 'link': 'https://www.hackerrank.com/certificates/3ad344462076'},
-      {'title': 'Introduction to Microsoft Excel', 'image': 'Coursera - Introduction to Microsoft Excel_page-0001.jpg', 'category': 'programming', 'issuer': 'Coursera', 'link': 'https://drive.google.com/file/d/1zC_zYOYpnh50jmfStVLShVj8RrIieF7r/view'},
-      {'title': 'C Language Training', 'image': 'Spoken Tutotial IIT Bombay -Completion of C Training_page-0001.jpg', 'category': 'programming', 'issuer': 'Spoken Tutorials IIT Bombay', 'link': 'https://drive.google.com/file/d/13gbFK4K6MUbN6Ic29j8xaCwy1gESTq8Y/view'},
-      {'title': 'Microsoft Azure Fundamentals', 'image': 'MLSA Attendee Certificates-132_page-0001.jpg', 'category': 'cloud', 'issuer': 'Microsoft', 'link': 'https://drive.google.com/file/d/1MV2Nw1CZfRro_BTo1kO1DrDshhqt4AqA/view'},
-      {'title': 'Microsoft AI Classroom Series', 'image': 'MicrosoftCertificate_page-0001.jpg', 'category': 'cloud', 'issuer': 'Microsoft', 'link': 'https://drive.google.com/file/d/1dkBEpp5jBeJ4ahpI_-5PDzSVvOmPyxQU/view'},
-      {'title': '30 Days of Google Cloud', 'image': 'Sahil Karande_30-DGC_page-0001.jpg', 'category': 'cloud', 'issuer': 'Google Cloud', 'link': 'https://drive.google.com/file/d/1UShHUdcQ6pccFipKSVK6AAeu4opuUimx/view'},
-      {'title': 'TCS NQT Cognitive Exam Score', 'image': 'TCS NQT Scoe card_page-0001.jpg', 'category': 'recognition', 'issuer': 'TCS NQT', 'link': 'https://drive.google.com/file/d/1TIaAK5ZjsHKoQYIyD9QtGEiIzT_jd52p/view'},
-      {'title': 'Letter of Recommendation (2022)', 'image': 'LOR GDSC 2022_page-0001.jpg', 'category': 'recognition', 'issuer': 'GDSC SVPCET', 'link': 'https://drive.google.com/file/d/1QWGEmOPeqKnMbMBKE8Bj1WuBH88BwKLl/view'},
-      {'title': 'Letter of Recommendation (2021)', 'image': 'GDSC LOR_page-0001.jpg', 'category': 'recognition', 'issuer': 'GDSC SVPCET', 'link': 'https://drive.google.com/file/d/1QWGEmOPeqKnMbMBKE8Bj1WuBH88BwKLl/view'}
-    ] %}
-    <li class="project-item" data-category="{{ cert.category }}">
-      <a href="{{ cert.link }}" target="_blank">
-        <figure class="project-img">
-          <img src="{{ url_for('static', filename='assets/certificates/Images/' ~ cert.image) }}" alt="{{ cert.title }}">
-        </figure>
-        <h3 class="project-title">{{ cert.title }}</h3>
-        <p class="project-category">{{ cert.issuer }}</p>
-      </a>
-    </li>
-    {% endfor %}
-  </ul>
-</section>
+  /* Header */
+  .certificates-header {
+    margin-bottom: 2.5rem;
+  }
 
-{% block scripts %}
+  .h2.article-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+  }
+
+  .h2.article-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #ffdb70 0%, transparent 100%);
+    border-radius: 2px;
+  }
+
+  .cert-count {
+    font-size: 1rem;
+    color: #bdbdbd;
+    margin-top: 0.75rem;
+  }
+
+  .cert-count span {
+    color: #ffdb70;
+    font-weight: 600;
+  }
+
+  /* Filter Section */
+  .filter-section {
+    margin-bottom: 2.5rem;
+    background: linear-gradient(135deg,
+      rgba(44, 47, 51, 0.6) 0%,
+      rgba(36, 37, 38, 0.5) 100%
+    );
+    padding: 1.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 219, 112, 0.1);
+    box-shadow: 
+      0 8px 24px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  }
+
+  .filter-label {
+    font-size: 0.9rem;
+    color: #bdbdbd;
+    margin-bottom: 1rem;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  .filter-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: rgba(44, 47, 51, 0.5);
+    border: 1px solid rgba(255, 219, 112, 0.2);
+    color: #bdbdbd;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .filter-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .filter-btn span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .filter-btn:hover {
+    border-color: rgba(255, 219, 112, 0.4);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  .filter-btn.active {
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    color: #000;
+    border-color: transparent;
+    font-weight: 600;
+  }
+
+  .filter-btn.active::before {
+    opacity: 1;
+  }
+
+  /* Certificates Grid */
+  .certificates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.75rem;
+  }
+
+  /* Certificate Card */
+  .cert-card {
+    background: linear-gradient(135deg,
+      rgba(44, 47, 51, 0.5) 0%,
+      rgba(36, 37, 38, 0.4) 100%
+    );
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 219, 112, 0.1);
+    transition: all 0.3s ease;
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .cert-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255, 219, 112, 0.3);
+    box-shadow: 
+      0 12px 32px rgba(255, 219, 112, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* Certificate Image */
+  .cert-image-container {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .cert-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .cert-card:hover .cert-image {
+    transform: scale(1.05);
+  }
+
+  .cert-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    color: #000;
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Certificate Content */
+  .cert-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
+  }
+
+  .cert-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .cert-issuer {
+    font-size: 0.9rem;
+    color: #ffdb70;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .cert-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 219, 112, 0.1);
+  }
+
+  .cert-category-tag {
+    font-size: 0.8rem;
+    color: #bdbdbd;
+    background: rgba(255, 219, 112, 0.1);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    text-transform: capitalize;
+  }
+
+  .cert-link-icon {
+    color: #ffdb70;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+  }
+
+  .cert-card:hover .cert-link-icon {
+    transform: translateX(4px);
+  }
+
+  /* Hidden state */
+  .cert-card.hidden {
+    display: none;
+  }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #bdbdbd;
+    display: none;
+  }
+
+  .empty-state.show {
+    display: block;
+  }
+
+  .empty-state i {
+    font-size: 4rem;
+    color: rgba(255, 219, 112, 0.3);
+    margin-bottom: 1rem;
+  }
+
+  .empty-state h3 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .empty-state p {
+    font-size: 1rem;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .certificates-grid {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    .h2.article-title {
+      font-size: 2.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .certificates-header {
+      margin-bottom: 2rem;
+    }
+
+    .h2.article-title {
+      font-size: 2.25rem;
+    }
+
+    .filter-section {
+      padding: 1.25rem;
+    }
+
+    .filter-buttons {
+      gap: 0.6rem;
+    }
+
+    .filter-btn {
+      padding: 0.65rem 1.2rem;
+      font-size: 0.85rem;
+    }
+
+    .certificates-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .cert-image-container {
+      height: 200px;
+    }
+
+    .cert-title {
+      font-size: 1.15rem;
+    }
+  }
+
+  @media (max-width: 580px) {
+    .h2.article-title {
+      font-size: 2rem;
+    }
+
+    .filter-section {
+      padding: 1rem;
+      border-radius: 16px;
+    }
+
+    .filter-label {
+      font-size: 0.85rem;
+    }
+
+    .filter-btn {
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    .cert-image-container {
+      height: 180px;
+    }
+
+    .cert-content {
+      padding: 1.25rem;
+    }
+
+    .cert-title {
+      font-size: 1.1rem;
+    }
+
+    .cert-issuer {
+      font-size: 0.85rem;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .h2.article-title {
+      font-size: 1.85rem;
+    }
+
+    .filter-btn {
+      padding: 0.55rem 0.9rem;
+      font-size: 0.75rem;
+    }
+
+    .cert-card {
+      border-radius: 14px;
+    }
+
+    .cert-image-container {
+      height: 170px;
+    }
+
+    .cert-content {
+      padding: 1.15rem;
+    }
+
+    .cert-title {
+      font-size: 1.05rem;
+    }
+  }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  .cert-card:focus-visible {
+    outline: 2px solid #ffdb70;
+    outline-offset: 4px;
+  }
+
+  .filter-btn:focus-visible {
+    outline: 2px solid #ffdb70;
+    outline-offset: 2px;
+  }
+</style>
+
+<div class="certificates-container">
+  <header class="certificates-header">
+    <h2 class="h2 article-title">Certificates</h2>
+    <p class="cert-count">Total: <span id="certCount">0</span> certificates</p>
+  </header>
+
+  <!-- Filter Section -->
+  <section class="filter-section">
+    <label class="filter-label">Filter by Category</label>
+    <div class="filter-buttons" id="filterButtons">
+      <!-- Filter buttons will be generated here -->
+    </div>
+  </section>
+
+  <!-- Certificates Grid -->
+  <section class="certificates-section">
+    <div class="certificates-grid" id="certificatesGrid">
+      <!-- Certificate cards will be generated here -->
+    </div>
+    <div class="empty-state" id="emptyState">
+      <i class="fas fa-certificate"></i>
+      <h3>No certificates found</h3>
+      <p>Try selecting a different category</p>
+    </div>
+  </section>
+</div>
+
 <script>
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  const certItems = document.querySelectorAll('.project-item');
+  // Certificates data array - Add new certificates here
+  const certificates = [
+    {
+      title: 'AI Skills in SDLC',
+      image: 'AI_skills_SDLC.jpg',
+      category: 'data-science',
+      categoryLabel: 'Data Science',
+      issuer: 'CDAC Acts',
+      link: 'https://drive.google.com/drive/folders/1bmFT6-aDzgILfxnuhg1QKlkrBD-RgeVh'
+    },
+    {
+      title: 'Reinforcement Learning',
+      image: 'NPTEL_RL.jpg',
+      category: 'data-science',
+      categoryLabel: 'Data Science',
+      issuer: 'NPTEL',
+      link: 'https://archive.nptel.ac.in/content/noc/NOC24/SEM1/Ecertificates/106/noc24-cs52/Course/NPTEL24CS52S56290023630681948.pdf'
+    },
+    {
+      title: 'Cloud Computing',
+      image: 'NPTEL_CC.jpg',
+      category: 'data-science',
+      categoryLabel: 'Data Science',
+      issuer: 'NPTEL',
+      link: 'https://archive.nptel.ac.in/content/noc/NOC24/SEM1/Ecertificates/106/noc24-cs17/Course/NPTEL24CS17S36290251330681948.pdf'
+    },
+    {
+      title: 'Artificial Intelligence Program',
+      image: 'Sahil_Feb_2022_participation_17615_page-0001.jpg',
+      category: 'data-science',
+      categoryLabel: 'Data Science',
+      issuer: 'Techfest, IIT Bombay',
+      link: 'https://drive.google.com/file/d/1l-4XGdManavyFghcCorK2Kl2lvWI_ZGw/view'
+    },
+    {
+      title: 'Python Programming and Machine Learning',
+      image: 'YBI  - Python And ML_page-0001.jpg',
+      category: 'data-science',
+      categoryLabel: 'Data Science',
+      issuer: 'YBI Foundation',
+      link: 'https://drive.google.com/file/d/1Ehxz3gzVfCi_KmD8uzq_wgMsmOc_Pa6i/view'
+    },
+    {
+      title: 'Introduction to Python Programming',
+      image: 'Coursera - Introduction to Python Programming_page-0001.jpg',
+      category: 'data-science',
+      categoryLabel: 'Data Science',
+      issuer: 'Coursera',
+      link: 'https://drive.google.com/file/d/1glA5yW6WTbO3FWNEFdZ-okuQbWCb-jSQ/view'
+    },
+    {
+      title: 'SQL (Basic)',
+      image: 'SQL_BASIC.png',
+      category: 'programming',
+      categoryLabel: 'Programming',
+      issuer: 'HackerRank',
+      link: 'https://www.hackerrank.com/certificates/3ad344462076'
+    },
+    {
+      title: 'Introduction to Microsoft Excel',
+      image: 'Coursera - Introduction to Microsoft Excel_page-0001.jpg',
+      category: 'programming',
+      categoryLabel: 'Programming',
+      issuer: 'Coursera',
+      link: 'https://drive.google.com/file/d/1zC_zYOYpnh50jmfStVLShVj8RrIieF7r/view'
+    },
+    {
+      title: 'C Language Training',
+      image: 'Spoken Tutotial IIT Bombay -Completion of C Training_page-0001.jpg',
+      category: 'programming',
+      categoryLabel: 'Programming',
+      issuer: 'Spoken Tutorials IIT Bombay',
+      link: 'https://drive.google.com/file/d/13gbFK4K6MUbN6Ic29j8xaCwy1gESTq8Y/view'
+    },
+    {
+      title: 'Microsoft Azure Fundamentals',
+      image: 'MLSA Attendee Certificates-132_page-0001.jpg',
+      category: 'cloud',
+      categoryLabel: 'Cloud',
+      issuer: 'Microsoft',
+      link: 'https://drive.google.com/file/d/1MV2Nw1CZfRro_BTo1kO1DrDshhqt4AqA/view'
+    },
+    {
+      title: 'Microsoft AI Classroom Series',
+      image: 'MicrosoftCertificate_page-0001.jpg',
+      category: 'cloud',
+      categoryLabel: 'Cloud',
+      issuer: 'Microsoft',
+      link: 'https://drive.google.com/file/d/1dkBEpp5jBeJ4ahpI_-5PDzSVvOmPyxQU/view'
+    },
+    {
+      title: '30 Days of Google Cloud',
+      image: 'Sahil Karande_30-DGC_page-0001.jpg',
+      category: 'cloud',
+      categoryLabel: 'Cloud',
+      issuer: 'Google Cloud',
+      link: 'https://drive.google.com/file/d/1UShHUdcQ6pccFipKSVK6AAeu4opuUimx/view'
+    },
+    {
+      title: 'TCS NQT Cognitive Exam Score',
+      image: 'TCS NQT Scoe card_page-0001.jpg',
+      category: 'recognition',
+      categoryLabel: 'Recognition',
+      issuer: 'TCS NQT',
+      link: 'https://drive.google.com/file/d/1TIaAK5ZjsHKoQYIyD9QtGEiIzT_jd52p/view'
+    },
+    {
+      title: 'Letter of Recommendation (2022)',
+      image: 'LOR GDSC 2022_page-0001.jpg',
+      category: 'recognition',
+      categoryLabel: 'Recognition',
+      issuer: 'GDSC SVPCET',
+      link: 'https://drive.google.com/file/d/1QWGEmOPeqKnMbMBKE8Bj1WuBH88BwKLl/view'
+    },
+    {
+      title: 'Letter of Recommendation (2021)',
+      image: 'GDSC LOR_page-0001.jpg',
+      category: 'recognition',
+      categoryLabel: 'Recognition',
+      issuer: 'GDSC SVPCET',
+      link: 'https://drive.google.com/file/d/1QWGEmOPeqKnMbMBKE8Bj1WuBH88BwKLl/view'
+    }
+  ];
 
-  filterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const category = btn.dataset.category;
+  // Filter categories
+  const categories = [
+    { id: 'all', label: 'All', icon: 'fas fa-th' },
+    { id: 'data-science', label: 'Data Science / AI / ML', icon: 'fas fa-brain' },
+    { id: 'programming', label: 'Programming & Tools', icon: 'fas fa-code' },
+    { id: 'cloud', label: 'Cloud & Microsoft', icon: 'fas fa-cloud' },
+    { id: 'recognition', label: 'Recognition', icon: 'fas fa-award' }
+  ];
 
-      certItems.forEach(item => {
-        item.style.display = (category === 'all' || item.dataset.category === category) ? 'block' : 'none';
-      });
+  let currentFilter = 'all';
 
-      filterButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+  // Create certificate card
+  function createCertCard(cert) {
+    const card = document.createElement('a');
+    card.className = 'cert-card';
+    card.href = cert.link;
+    card.target = '_blank';
+    card.rel = 'noopener noreferrer';
+    card.dataset.category = cert.category;
+
+    const imagePath = `/static/assets/certificates/Images/${cert.image}`;
+
+    card.innerHTML = `
+      <div class="cert-image-container">
+        <img src="${imagePath}" alt="${cert.title}" class="cert-image" loading="lazy">
+        <div class="cert-badge">${cert.categoryLabel}</div>
+      </div>
+      <div class="cert-content">
+        <h3 class="cert-title">${cert.title}</h3>
+        <p class="cert-issuer">${cert.issuer}</p>
+        <div class="cert-footer">
+          <span class="cert-category-tag">${cert.categoryLabel}</span>
+          <i class="fas fa-external-link-alt cert-link-icon"></i>
+        </div>
+      </div>
+    `;
+
+    return card;
+  }
+
+  // Create filter button
+  function createFilterButton(category) {
+    const button = document.createElement('button');
+    button.className = `filter-btn ${category.id === 'all' ? 'active' : ''}`;
+    button.dataset.category = category.id;
+    button.innerHTML = `<span><i class="${category.icon}"></i> ${category.label}</span>`;
+    
+    button.addEventListener('click', () => filterCertificates(category.id));
+    
+    return button;
+  }
+
+  // Filter certificates
+  function filterCertificates(category) {
+    currentFilter = category;
+    const cards = document.querySelectorAll('.cert-card');
+    const emptyState = document.getElementById('emptyState');
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      if (category === 'all' || card.dataset.category === category) {
+        card.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        card.classList.add('hidden');
+      }
     });
-  });
+
+    // Update active button
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.category === category);
+    });
+
+    // Show/hide empty state
+    if (visibleCount === 0) {
+      emptyState.classList.add('show');
+    } else {
+      emptyState.classList.remove('show');
+    }
+
+    // Update count
+    updateCount();
+  }
+
+  // Update certificate count
+  function updateCount() {
+    const visibleCards = document.querySelectorAll('.cert-card:not(.hidden)');
+    document.getElementById('certCount').textContent = visibleCards.length;
+  }
+
+  // Initialize page
+  function init() {
+    const filterButtons = document.getElementById('filterButtons');
+    const certificatesGrid = document.getElementById('certificatesGrid');
+
+    // Generate filter buttons
+    categories.forEach(category => {
+      const button = createFilterButton(category);
+      filterButtons.appendChild(button);
+    });
+
+    // Generate certificate cards
+    certificates.forEach(cert => {
+      const card = createCertCard(cert);
+      certificatesGrid.appendChild(card);
+    });
+
+    // Update initial count
+    updateCount();
+  }
+
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', init);
 </script>
-{% endblock %}
 
 {% endblock %}

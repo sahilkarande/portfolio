@@ -1,93 +1,792 @@
 <!-- sidebar.html -->
+<style>
+  /* Sidebar Toggle Button for Mobile */
+  .sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1001;
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    border: none;
+    color: #000;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(255, 219, 112, 0.4);
+    transition: all 0.3s ease;
+    align-items: center;
+    justify-content: center;
+  }
 
-<aside class="sidebar bg-light p-3 rounded shadow" data-sidebar>
-   <div class="sidebar-info text-center">
-      <!-- Avatar and Modal -->
-      <figure class="avatar-box mb-3 position-relative">
-         <img src="{{ url_for('static', filename='assets/images/Passport_Photo.png') }}"
-                alt="Sahil Karande"
-                class="img-fluid rounded-circle avatar-img"
-                style="cursor:pointer;"
-                onclick="openModal(this)">
-         <ion-icon name="eye-outline" class="eye-icon"></ion-icon>
+  .sidebar-toggle:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 24px rgba(255, 219, 112, 0.6);
+  }
+
+  .sidebar-toggle i {
+    font-size: 1.5rem;
+  }
+
+  /* Sidebar Overlay for Mobile */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .sidebar-overlay.active {
+    opacity: 1;
+  }
+
+  /* Sidebar Styles */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 340px;
+    height: 100vh;
+    background: linear-gradient(135deg, rgba(36, 37, 38, 0.98) 0%, rgba(44, 47, 51, 0.98) 100%);
+    backdrop-filter: blur(20px);
+    padding: 2rem;
+    padding-left: 110px; /* Space for social bar */
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 50;
+    border-right: 1px solid rgba(255, 219, 112, 0.1);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Sidebar Content Wrapper */
+  .sidebar-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  /* Avatar Section */
+  .avatar-section {
+    text-align: center;
+    animation: fadeInDown 0.6s ease-out;
+  }
+
+  .avatar-box {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    padding: 5px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+
+  .avatar-box::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: pulse 2s ease-in-out infinite;
+    z-index: -1;
+  }
+
+  .avatar-box:hover::before {
+    opacity: 0.5;
+  }
+
+  .avatar-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 32px rgba(255, 219, 112, 0.4);
+  }
+
+  .avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid rgba(36, 37, 38, 0.98);
+    transition: transform 0.4s ease;
+  }
+
+  .avatar-box:hover .avatar-img {
+    transform: scale(1.02);
+  }
+
+  /* Eye Icon */
+  .eye-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    color: #000;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+
+  .avatar-box:hover .eye-icon {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  /* Profile Info */
+  .profile-info {
+    text-align: center;
+  }
+
+  .name {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.75rem;
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeIn 0.6s ease-out 0.2s both;
+  }
+
+  .title {
+    font-size: 0.95rem;
+    color: #bdbdbd;
+    line-height: 1.7;
+    margin: 0.5rem 0;
+    animation: fadeIn 0.6s ease-out 0.3s both;
+  }
+
+  /* Update Info Badge */
+  .update-badge {
+    background: rgba(44, 47, 51, 0.6);
+    border: 1px solid rgba(255, 219, 112, 0.2);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+
+  .update-badge:hover {
+    border-color: rgba(255, 219, 112, 0.4);
+    box-shadow: 0 4px 16px rgba(255, 219, 112, 0.1);
+  }
+
+  .update-badge i {
+    color: #ffdb70;
+    font-size: 0.95rem;
+    animation: rotate 2s linear infinite;
+  }
+
+  .update-text {
+    font-size: 0.85rem;
+    color: #bdbdbd;
+  }
+
+  .update-text b {
+    color: #ffdb70;
+    font-weight: 600;
+  }
+
+  /* Separator */
+  .separator {
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #ffdb70 50%, transparent 100%);
+    margin: 0.5rem 0;
+    border-radius: 2px;
+  }
+
+  /* Info Cards Section */
+  .info-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .info-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: rgba(44, 47, 51, 0.4);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 219, 112, 0.1);
+    transition: all 0.3s ease;
+    animation: slideInLeft 0.5s ease-out both;
+  }
+
+  .info-card:nth-child(1) { animation-delay: 0.4s; }
+  .info-card:nth-child(2) { animation-delay: 0.5s; }
+  .info-card:nth-child(3) { animation-delay: 0.6s; }
+
+  .info-card:hover {
+    background: rgba(44, 47, 51, 0.6);
+    border-color: rgba(255, 219, 112, 0.3);
+    transform: translateX(5px);
+    box-shadow: 0 4px 20px rgba(255, 219, 112, 0.15);
+  }
+
+  .info-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, rgba(255, 219, 112, 0.15) 0%, rgba(252, 202, 100, 0.1) 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #ffdb70;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+
+  .info-card:hover .info-icon {
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    color: #000;
+    transform: scale(1.1) rotate(-5deg);
+  }
+
+  .info-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .info-label {
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+  }
+
+  .info-value {
+    font-size: 0.95rem;
+    color: #e0e0e0;
+    line-height: 1.5;
+    word-wrap: break-word;
+  }
+
+  /* Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    max-width: 90%;
+    max-height: 90vh;
+    border-radius: 16px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.3s ease-out forwards;
+    border: 2px solid rgba(255, 219, 112, 0.3);
+  }
+
+  .close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    color: #fff;
+    font-size: 3rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.5);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    line-height: 1;
+    z-index: 10000;
+  }
+
+  .close:hover {
+    background: linear-gradient(135deg, #ffdb70 0%, #fcca64 100%);
+    color: #000;
+    transform: rotate(90deg);
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes zoomIn {
+    to {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.3;
+    }
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Custom Scrollbar */
+  .sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .sidebar::-webkit-scrollbar-track {
+    background: rgba(35, 37, 38, 0.5);
+  }
+
+  .sidebar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ffdb70 0%, #fcca64 100%);
+    border-radius: 10px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .sidebar-toggle {
+      display: flex;
+      width: 52px;
+      height: 52px;
+    }
+
+    .sidebar-toggle i {
+      font-size: 1.6rem;
+    }
+
+    .sidebar-overlay {
+      display: block;
+    }
+
+    .sidebar {
+      transform: translateX(-100%);
+      z-index: 1000;
+      padding-left: 2rem;
+      width: 360px;
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .sidebar-toggle {
+      top: 1rem;
+      left: 1rem;
+      width: 50px;
+      height: 50px;
+    }
+
+    .sidebar-toggle i {
+      font-size: 1.5rem;
+    }
+
+    .sidebar {
+      width: 100%;
+      max-width: 340px;
+      box-shadow: 8px 0 32px rgba(0, 0, 0, 0.5);
+      padding: 2rem 1.75rem;
+    }
+
+    .avatar-box {
+      width: 145px;
+      height: 145px;
+    }
+
+    .name {
+      font-size: 1.55rem;
+    }
+
+    .title {
+      font-size: 0.98rem;
+      line-height: 1.75;
+    }
+
+    .update-text {
+      font-size: 0.88rem;
+    }
+
+    .info-icon {
+      width: 52px;
+      height: 52px;
+      font-size: 1.45rem;
+    }
+
+    .info-label {
+      font-size: 0.85rem;
+    }
+
+    .info-value {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .info-card {
+      padding: 1.4rem;
+    }
+  }
+
+  @media (max-width: 580px) {
+    .sidebar-toggle {
+      width: 48px;
+      height: 48px;
+      top: 0.75rem;
+      left: 0.75rem;
+    }
+
+    .sidebar-toggle i {
+      font-size: 1.4rem;
+    }
+
+    .sidebar {
+      max-width: 320px;
+      padding: 1.75rem 1.5rem;
+    }
+
+    .avatar-box {
+      width: 130px;
+      height: 130px;
+    }
+
+    .name {
+      font-size: 1.45rem;
+    }
+
+    .title {
+      font-size: 0.93rem;
+      line-height: 1.7;
+    }
+
+    .update-badge {
+      padding: 0.7rem 0.9rem;
+    }
+
+    .update-text {
+      font-size: 0.83rem;
+    }
+
+    .info-card {
+      padding: 1.25rem;
+    }
+
+    .info-icon {
+      width: 48px;
+      height: 48px;
+      font-size: 1.35rem;
+    }
+
+    .info-label {
+      font-size: 0.82rem;
+    }
+
+    .info-value {
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .sidebar {
+      max-width: 300px;
+      padding: 1.5rem 1.25rem;
+    }
+
+    .avatar-box {
+      width: 120px;
+      height: 120px;
+    }
+
+    .name {
+      font-size: 1.35rem;
+    }
+
+    .title {
+      font-size: 0.9rem;
+    }
+
+    .update-badge {
+      padding: 0.65rem 0.85rem;
+    }
+
+    .update-text {
+      font-size: 0.8rem;
+    }
+
+    .info-card {
+      padding: 1.15rem;
+    }
+
+    .info-icon {
+      width: 46px;
+      height: 46px;
+      font-size: 1.3rem;
+    }
+
+    .info-label {
+      font-size: 0.8rem;
+    }
+
+    .info-value {
+      font-size: 0.92rem;
+    }
+
+    .close {
+      top: 1rem;
+      right: 1rem;
+      width: 44px;
+      height: 44px;
+      font-size: 2.8rem;
+    }
+  }
+
+  /* Accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Focus styles */
+  .avatar-box:focus-visible,
+  .sidebar-toggle:focus-visible,
+  .info-card:focus-visible {
+    outline: 2px solid #ffdb70;
+    outline-offset: 2px;
+  }
+</style>
+
+<!-- Sidebar Toggle Button -->
+<button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+  <i class="fas fa-bars"></i>
+</button>
+
+<!-- Sidebar Overlay -->
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" data-sidebar>
+  <div class="sidebar-content">
+    <!-- Avatar Section -->
+    <div class="avatar-section">
+      <figure class="avatar-box" tabindex="0" role="button" aria-label="View profile picture" onclick="openModal(this.querySelector('img'))">
+        <img src="{{ url_for('static', filename='assets/images/Passport_Photo.png') }}"
+             alt="Sahil Karande"
+             class="avatar-img">
+        <ion-icon name="eye-outline" class="eye-icon"></ion-icon>
       </figure>
-            <!-- Profile Update Info -->
-      <div class="info-box my-3 d-flex align-items-center justify-content-center">
-         <i class="fas fa-sync-alt me-2"></i>
-         <span class="info-text">Profile Last Updated: <b>8th August 2025</b></span>
+
+      <!-- Profile Info -->
+      <div class="profile-info">
+        <h1 class="name" title="Sahil Karande">Sahil Karande</h1>
+        <span class="role-badge">Project Engineer</span>
+        <p class="title">CDAC Mumbai - Kharghar</p>
+
+        <!-- Update Badge -->
+        <div class="update-badge">
+          <i class="fas fa-sync-alt"></i>
+          <span class="update-text">Updated: <b>19 Oct 2025</b></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <!-- Info Cards -->
+    <div class="info-cards">
+      <div class="info-card" tabindex="0">
+        <div class="info-icon">
+          <ion-icon name="briefcase-outline"></ion-icon>
+        </div>
+        <div class="info-content">
+          <p class="info-label">Current Role</p>
+          <span class="info-value">Project Engineer at CDAC Mumbai</span>
+        </div>
       </div>
 
-      <!-- Modal for Image -->
-      <div id="myModal" class="modal" tabindex="-1">
-         <span class="close" onclick="closeModal()">&times;</span>
-         <img class="modal-content" id="modalImage">
+      <div class="info-card" tabindex="0">
+        <div class="info-icon">
+          <ion-icon name="school-outline"></ion-icon>
+        </div>
+        <div class="info-content">
+          <p class="info-label">Education</p>
+          <span class="info-value">PG Diploma in Big Data Analytics<br>B.Tech in Computer Engineering</span>
+        </div>
       </div>
 
-
-
-      <!-- Name and Titles -->
-      <div class="info-content mb-3">
-         <h1 class="name h4 mb-1" title="Sahil Karande">Sahil Karande</h1>
-         <p class="title mb-1">Diploma in Big Data Analytics (Pursuing)<br>CDAC Mumbai - Kharghar</p>
-         <p class="title">B.Tech in Computer Engineering</p>
+      <div class="info-card" tabindex="0">
+        <div class="info-icon">
+          <ion-icon name="location-outline"></ion-icon>
+        </div>
+        <div class="info-content">
+          <p class="info-label">Location</p>
+          <span class="info-value">Navi Mumbai, Maharashtra, India</span>
+        </div>
       </div>
 
-      <!-- Show Contacts Button -->
-      <button class="info_more-btn btn btn-outline-primary btn-sm mt-2" data-sidebar-btn>
-         <span>Show More</span>
-         <ion-icon name="chevron-down"></ion-icon>
-      </button>
-   </div>
-
-   <!-- Additional Info and Social Links -->
-   <div class="sidebar-info_more mt-4">
-      <div class="separator"></div>
-      <ul class="contacts-list list-unstyled">
-         <li class="contact-item d-flex align-items-center mb-2">
-            <div class="icon-box me-2">
-               <ion-icon name="school-outline"></ion-icon>
-            </div>
-            <div class="contact-info">
-               <p class="contact-title mb-0">Education</p>
-               <span class="contact-link">CDAC Mumbai, B.Tech (Computer Engineering)</span>
-            </div>
-         </li>
-         <li class="contact-item d-flex align-items-center mb-2">
-            <div class="icon-box me-2">
-               <ion-icon name="briefcase-outline"></ion-icon>
-            </div>
-            <div class="contact-info">
-               <p class="contact-title mb-0">Interests</p>
-               <span class="contact-link">Big Data, AI, Web Development</span>
-            </div>
-         </li>
-         <li class="contact-item d-flex align-items-center">
-            <div class="icon-box me-2">
-               <ion-icon name="star-outline"></ion-icon>
-            </div>
-            <div class="contact-info">
-               <p class="contact-title mb-0">Skills</p>
-               <span class="contact-link">Python, SQL, HTML, CSS, JavaScript</span>
-            </div>
-         </li>
-      </ul>
-   </div>
+      <div class="info-card" tabindex="0">
+        <div class="info-icon">
+          <ion-icon name="code-slash-outline"></ion-icon>
+        </div>
+        <div class="info-content">
+          <p class="info-label">Expertise</p>
+          <span class="info-value">Big Data, ML, Cloud, Full-Stack Dev</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </aside>
+
+<!-- Modal for Image -->
+<div id="myModal" class="modal" tabindex="-1" role="dialog" aria-label="Profile picture modal" onclick="closeModal()">
+  <span class="close" onclick="closeModal()" aria-label="Close modal">&times;</span>
+  <img class="modal-content" id="modalImage" alt="Sahil Karande - Full size">
+</div>
+
+
 
 <!-- Ionicons -->
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-<!-- Custom JS -->
-<script src="{{ url_for('static', filename='assets/js/script.js') }}"></script>
+
 <script>
-function openModal(imgElement) {
-    var modal = document.getElementById("myModal");
-    var modalImg = document.getElementById("modalImage");
+  // Toggle Sidebar for Mobile
+  function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+    const toggle = document.querySelector('.sidebar-toggle');
+    
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+    
+    // Change icon
+    const icon = toggle.querySelector('i');
+    if (sidebar.classList.contains('active')) {
+      icon.classList.remove('fa-bars');
+      icon.classList.add('fa-times');
+    } else {
+      icon.classList.remove('fa-times');
+      icon.classList.add('fa-bars');
+    }
+  }
+
+  // Modal functions
+  function openModal(imgElement) {
+    const modal = document.getElementById("myModal");
+    const modalImg = document.getElementById("modalImage");
     modal.style.display = "block";
     modalImg.src = imgElement.src;
-}
-function closeModal() {
-    var modal = document.getElementById("myModal");
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    const modal = document.getElementById("myModal");
     modal.style.display = "none";
-}
+    document.body.style.overflow = 'auto';
+  }
+
+  // Close modal on ESC key
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      closeModal();
+      
+      // Also close sidebar if open on mobile
+      const sidebar = document.querySelector('.sidebar');
+      if (window.innerWidth <= 1200 && sidebar.classList.contains('active')) {
+        toggleSidebar();
+      }
+    }
+  });
+
+  // Prevent modal from closing when clicking on image
+  const modalImage = document.getElementById('modalImage');
+  if (modalImage) {
+    modalImage.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  }
+
+  // Close sidebar when clicking on links (mobile only)
+  if (window.innerWidth <= 1200) {
+    document.querySelectorAll('.sidebar a').forEach(link => {
+      link.addEventListener('click', function() {
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar.classList.contains('active')) {
+          toggleSidebar();
+        }
+      });
+    });
+  }
 </script>
