@@ -2,7 +2,7 @@
 import math
 from datetime import timedelta
 
-from flask import current_app, render_template, request
+from flask import current_app, flash, redirect, render_template, request, url_for
 from sqlalchemy import func, select
 
 from ..extensions import db
@@ -121,3 +121,11 @@ def analytics_report():
         clicks=[(ACTION_NAMES.get(a, a), n) for a, n in _grouped(E.action, click, *in_range)],
         total_events=_count(),
     )
+
+
+@bp.route("/analytics/reset", methods=["POST"])
+def analytics_reset():
+    deleted = db.session.query(E).delete()
+    db.session.commit()
+    flash(f"Analytics reset — removed {deleted:,} recorded event{'s' if deleted != 1 else ''}.", "success")
+    return redirect(url_for(".analytics_report"))

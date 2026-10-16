@@ -241,3 +241,27 @@ def test_delete_removes_thumbnail_too(admin, app):
     assert len(list(folder.iterdir())) == 2   # image + thumbnail
     admin.post(f"/admin/blogs/{b.id}/delete")
     assert list(folder.iterdir()) == []
+
+
+def test_delete_all_messages(admin):
+    db.session.add_all([Message(name=f"T{i}", email="t@example.com", body="test message") for i in range(3)])
+    db.session.commit()
+    assert b"Delete all" in admin.get("/admin/messages").data
+    resp = admin.post("/admin/messages/delete-all", follow_redirects=True)
+    assert b"Deleted 3 messages" in resp.data and Message.query.count() == 0
+
+
+def test_reset_analytics(client):
+    from portfolio.models import AnalyticsEvent
+    client.get("/", headers={"User-Agent": "Mozilla/5.0 Chrome/130"})
+    assert AnalyticsEvent.query.count() == 1
+    from tests.conftest import ADMIN_PASSWORD
+    client.post("/admin/login", data={"username": "admin", "password": ADMIN_PASSWORD})
+    assert b"Reset analytics" in client.get("/admin/analytics").data
+    resp = client.post("/admin/analytics/reset", follow_redirects=True)
+    assert b"Analytics reset" in resp.data and AnalyticsEvent.query.count() == 0
+
+
+def test_bulk_deletes_require_login_and_post(client):
+    assert client.post("/admin/messages/delete-all").status_code == 302      # -> login
+    assert client.post("/admin/analytics/reset").status_code == 302

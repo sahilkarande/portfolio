@@ -1,6 +1,14 @@
 {% extends 'admin/base.html' %}
 {% block title %}Analytics{% endblock %}
 {% block heading %}Analytics{% endblock %}
+{% block actions %}
+{% if total_events %}
+<form method="post" action="{{ url_for('admin.analytics_reset') }}" data-confirm="Delete ALL recorded analytics ({{ '{:,}'.format(total_events) }} events) and start counting from zero? This can't be undone.">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <button class="btn btn--danger" type="submit"><i class="fas fa-rotate-left"></i><span>Reset analytics</span></button>
+</form>
+{% endif %}
+{% endblock %}
 
 {% macro bar_list(rows, empty='No data yet.') %}
   {% if rows %}
