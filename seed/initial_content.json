@@ -1,0 +1,647 @@
+{
+  "projects": [
+    {
+      "title": "Therapy Connect",
+      "image": "therapy_connect_thumb.png",
+      "category": "data-science",
+      "categoryLabel": "Data Science",
+      "description": "AI-powered therapy matching platform using machine learning to connect patients with suitable therapists.",
+      "tech": [
+        "Python",
+        "ML",
+        "Flask",
+        "LLM"
+      ],
+      "status": "completed",
+      "link": "https://github.com/sahilkarande/Therapy_Connect"
+    },
+    {
+      "title": "Used Cars Price Analysis",
+      "image": "used_cars.png",
+      "category": "data-science",
+      "categoryLabel": "Data Science",
+      "description": "Comprehensive EDA and predictive modeling to analyze factors affecting used car prices in the market.",
+      "tech": [
+        "Python",
+        "Pandas",
+        "Seaborn",
+        "Analysis"
+      ],
+      "status": "completed",
+      "link": "https://github.com/sahilkarande/Used-Cars-EDA"
+    },
+    {
+      "title": "Tech Layoff's 2021-2024",
+      "image": "tech_layoffs.png",
+      "category": "data-science",
+      "categoryLabel": "Data Science",
+      "description": "Data analysis and visualization of tech industry layoffs trends, patterns, and insights from 2021 to 2024.",
+      "tech": [
+        "Python",
+        "Tableau",
+        "SQL",
+        "Analysis"
+      ],
+      "status": "completed",
+      "link": "https://github.com/sahilkarande/Tech-Layoffs-Analysis-2020-2025-"
+    },
+    {
+      "title": "Hotel Bookings Case Study",
+      "image": "hotel_dashboard.png",
+      "category": "data-science",
+      "categoryLabel": "Data Science",
+      "description": "Interactive dashboard analyzing hotel booking patterns, cancellation rates, and revenue optimization strategies.",
+      "tech": [
+        "Excel",
+        "Power BI",
+        "SQL",
+        "Analysis"
+      ],
+      "status": "completed",
+      "link": "https://github.com/sahilkarande/Hotel-Bookings-Case-Study"
+    },
+    {
+      "title": "Excel Sales Dashboard - Superstore",
+      "image": "superstore_analysis.png",
+      "category": "data-science",
+      "categoryLabel": "Data Science",
+      "description": "Dynamic Excel dashboard for superstore sales analysis with KPIs, trends, and regional performance metrics.",
+      "tech": [
+        "Excel",
+        "VBA",
+        "Charts"
+      ],
+      "status": "completed",
+      "link": "https://github.com/sahilkarande/Superstore-Analysis"
+    },
+    {
+      "title": "Furrify - A Pet Community",
+      "image": "furrifyweb.jpg",
+      "category": "web-development",
+      "categoryLabel": "Web Development",
+      "description": "Social platform for pet owners to connect, share experiences, and find pet-related services in their area.",
+      "tech": [
+        "PHP",
+        "Angular",
+        "MongoDB"
+      ],
+      "status": "completed",
+      "link": "#"
+    },
+    {
+      "title": "Walmart Sales Prediction Dashboard",
+      "image": "walmart.png",
+      "category": "data-science",
+      "categoryLabel": "Data Science",
+      "description": "Machine learning model predicting Walmart sales with interactive visualization dashboard for insights.",
+      "tech": [
+        "Python",
+        "Scikit-learn",
+        "Streamlit"
+      ],
+      "status": "completed",
+      "link": "#"
+    },
+    {
+      "title": "Apna Bank",
+      "image": "Apnabankweb (1).png",
+      "category": "web-development",
+      "categoryLabel": "Web Development",
+      "description": "Modern banking website with responsive design, account management, and transaction tracking features.",
+      "tech": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "status": "completed",
+      "link": "#"
+    },
+    {
+      "title": "Stocks Prediction For BSE And NSE",
+      "image": "stocksproject (1).png",
+      "category": "data-science",
+      "categoryLabel": "Data Science",
+      "description": "Real-time stock price prediction system for BSE and NSE companies using LSTM and technical indicators.",
+      "tech": [
+        "Python",
+        "TensorFlow",
+        "Plotly"
+      ],
+      "status": "completed",
+      "link": "#"
+    },
+    {
+      "title": "Basic Portfolio",
+      "image": "basicportfolio (1).png",
+      "category": "web-development",
+      "categoryLabel": "Web Development",
+      "description": "Clean and minimal portfolio website showcasing projects, skills, and professional experience.",
+      "tech": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "status": "completed",
+      "link": "#"
+    },
+    {
+      "title": "EncipherX Website",
+      "image": "encipherX.png",
+      "category": "web-development",
+      "categoryLabel": "Web Development",
+      "description": "Official website for EncipherX cybersecurity event with registration, schedules, and information.",
+      "tech": [
+        "React",
+        "Bootstrap",
+        "Firebase"
+      ],
+      "status": "completed",
+      "link": "#"
+    },
+    {
+      "title": "Happiness Center - Student Mentoring",
+      "image": "happiness.png",
+      "category": "web-development",
+      "categoryLabel": "Web Development",
+      "description": "Online mentoring platform connecting students with mentors for academic and career guidance.",
+      "tech": [
+        "PHP",
+        "MySQL",
+        "Bootstrap"
+      ],
+      "status": "completed",
+      "link": "#"
+    },
+    {
+      "title": "GDSC Website",
+      "image": "GDSC.png",
+      "category": "web-development",
+      "categoryLabel": "Web Development",
+      "description": "Official website for Google Developer Student Club featuring events, team, and resources.",
+      "tech": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "status": "completed",
+      "link": "#"
+    },
+    {
+      "title": "Drug Classification",
+      "image": "drugclassification (1).png",
+      "category": "data-science",
+      "categoryLabel": "Data Science",
+      "description": "Machine learning model classifying drugs based on patient characteristics using decision trees.",
+      "tech": [
+        "Python",
+        "Scikit-learn",
+        "Pandas"
+      ],
+      "status": "completed",
+      "link": "#"
+    }
+  ],
+  "project_categories": [
+    {
+      "id": "all",
+      "label": "All Projects",
+      "icon": "fas fa-th"
+    },
+    {
+      "id": "data-science",
+      "label": "Data Science",
+      "icon": "fas fa-chart-line"
+    },
+    {
+      "id": "web-development",
+      "label": "Web Development",
+      "icon": "fas fa-code"
+    }
+  ],
+  "certificates": [
+    {
+      "title": "AI Skills in SDLC",
+      "image": "AI_skills_SDLC.png",
+      "category": "data-science",
+      "categoryLabel": "Data Science",
+      "issuer": "CDAC Acts",
+      "link": "https://drive.google.com/drive/folders/1bmFT6-aDzgILfxnuhg1QKlkrBD-RgeVh"
+    },
+    {
+      "title": "Reinforcement Learning",
+      "image": "NPTEL_RL.jpg",
+      "category": "data-science",
+      "categoryLabel": "Data Science",
+      "issuer": "NPTEL",
+      "link": "https://archive.nptel.ac.in/content/noc/NOC24/SEM1/Ecertificates/106/noc24-cs52/Course/NPTEL24CS52S56290023630681948.pdf"
+    },
+    {
+      "title": "Cloud Computing",
+      "image": "NPTEL_CC.jpg",
+      "category": "data-science",
+      "categoryLabel": "Data Science",
+      "issuer": "NPTEL",
+      "link": "https://archive.nptel.ac.in/content/noc/NOC24/SEM1/Ecertificates/106/noc24-cs17/Course/NPTEL24CS17S36290251330681948.pdf"
+    },
+    {
+      "title": "Artificial Intelligence Program",
+      "image": "Sahil_Feb_2022_participation_17615_page-0001.jpg",
+      "category": "data-science",
+      "categoryLabel": "Data Science",
+      "issuer": "Techfest, IIT Bombay",
+      "link": "https://drive.google.com/file/d/1l-4XGdManavyFghcCorK2Kl2lvWI_ZGw/view"
+    },
+    {
+      "title": "Python Programming and Machine Learning",
+      "image": "YBI  - Python And ML_page-0001.jpg",
+      "category": "data-science",
+      "categoryLabel": "Data Science",
+      "issuer": "YBI Foundation",
+      "link": "https://drive.google.com/file/d/1Ehxz3gzVfCi_KmD8uzq_wgMsmOc_Pa6i/view"
+    },
+    {
+      "title": "Introduction to Python Programming",
+      "image": "Coursera - Introduction to Python Programming_page-0001.jpg",
+      "category": "data-science",
+      "categoryLabel": "Data Science",
+      "issuer": "Coursera",
+      "link": "https://drive.google.com/file/d/1glA5yW6WTbO3FWNEFdZ-okuQbWCb-jSQ/view"
+    },
+    {
+      "title": "SQL (Basic)",
+      "image": "SQL_BASIC.png",
+      "category": "programming",
+      "categoryLabel": "Programming",
+      "issuer": "HackerRank",
+      "link": "https://www.hackerrank.com/certificates/3ad344462076"
+    },
+    {
+      "title": "Introduction to Microsoft Excel",
+      "image": "Coursera - Introduction to Microsoft Excel_page-0001.jpg",
+      "category": "programming",
+      "categoryLabel": "Programming",
+      "issuer": "Coursera",
+      "link": "https://drive.google.com/file/d/1zC_zYOYpnh50jmfStVLShVj8RrIieF7r/view"
+    },
+    {
+      "title": "C Language Training",
+      "image": "Spoken Tutotial IIT Bombay -Completion of C Training_page-0001.jpg",
+      "category": "programming",
+      "categoryLabel": "Programming",
+      "issuer": "Spoken Tutorials IIT Bombay",
+      "link": "https://drive.google.com/file/d/13gbFK4K6MUbN6Ic29j8xaCwy1gESTq8Y/view"
+    },
+    {
+      "title": "Microsoft Azure Fundamentals",
+      "image": "MLSA Attendee Certificates-132_page-0001.jpg",
+      "category": "cloud",
+      "categoryLabel": "Cloud",
+      "issuer": "Microsoft",
+      "link": "https://drive.google.com/file/d/1MV2Nw1CZfRro_BTo1kO1DrDshhqt4AqA/view"
+    },
+    {
+      "title": "Microsoft AI Classroom Series",
+      "image": "MicrosoftCertificate_page-0001.jpg",
+      "category": "cloud",
+      "categoryLabel": "Cloud",
+      "issuer": "Microsoft",
+      "link": "https://drive.google.com/file/d/1dkBEpp5jBeJ4ahpI_-5PDzSVvOmPyxQU/view"
+    },
+    {
+      "title": "30 Days of Google Cloud",
+      "image": "Sahil Karande_30-DGC_page-0001.jpg",
+      "category": "cloud",
+      "categoryLabel": "Cloud",
+      "issuer": "Google Cloud",
+      "link": "https://drive.google.com/file/d/1UShHUdcQ6pccFipKSVK6AAeu4opuUimx/view"
+    },
+    {
+      "title": "TCS NQT Cognitive Exam Score",
+      "image": "TCS NQT Scoe card_page-0001.jpg",
+      "category": "recognition",
+      "categoryLabel": "Recognition",
+      "issuer": "TCS NQT",
+      "link": "https://drive.google.com/file/d/1TIaAK5ZjsHKoQYIyD9QtGEiIzT_jd52p/view"
+    },
+    {
+      "title": "Letter of Recommendation (2022)",
+      "image": "LOR GDSC 2022_page-0001.jpg",
+      "category": "recognition",
+      "categoryLabel": "Recognition",
+      "issuer": "GDSC SVPCET",
+      "link": "https://drive.google.com/file/d/1QWGEmOPeqKnMbMBKE8Bj1WuBH88BwKLl/view"
+    },
+    {
+      "title": "Letter of Recommendation (2021)",
+      "image": "GDSC LOR_page-0001.jpg",
+      "category": "recognition",
+      "categoryLabel": "Recognition",
+      "issuer": "GDSC SVPCET",
+      "link": "https://drive.google.com/file/d/1QWGEmOPeqKnMbMBKE8Bj1WuBH88BwKLl/view"
+    }
+  ],
+  "certificate_categories": [
+    {
+      "id": "all",
+      "label": "All",
+      "icon": "fas fa-th"
+    },
+    {
+      "id": "data-science",
+      "label": "Data Science / AI / ML",
+      "icon": "fas fa-brain"
+    },
+    {
+      "id": "programming",
+      "label": "Programming & Tools",
+      "icon": "fas fa-code"
+    },
+    {
+      "id": "cloud",
+      "label": "Cloud & Microsoft",
+      "icon": "fas fa-cloud"
+    },
+    {
+      "id": "recognition",
+      "label": "Recognition",
+      "icon": "fas fa-award"
+    }
+  ],
+  "education": [
+    {
+      "title": "Post Graduate Diploma in Big Data Analytics (DBDA)",
+      "institution": "CDAC Mumbai-Kharghar",
+      "location": "Navi Mumbai, Maharashtra",
+      "startDate": "2024-08-01",
+      "endDate": "2025-02-28",
+      "grade": "CGPA: 6.13",
+      "current": false,
+      "courses": [
+        "Linux Programming and Cloud Computing",
+        "Python and R Programming",
+        "Java Programming",
+        "Advanced Analytics using Statistics",
+        "Data Collection and DBMS",
+        "Big Data Technologies (Hadoop, Spark, Kafka)",
+        "Data Visualization - Analysis and Reporting",
+        "Practical Machine Learning",
+        "Generative AI",
+        "Aptitude & Effective Communication"
+      ]
+    },
+    {
+      "title": "Bachelor of Technology in Computer Engineering",
+      "institution": "St. Vincent Pallotti College of Engineering & Technology",
+      "location": "Nagpur, Maharashtra",
+      "startDate": "2021-07-01",
+      "endDate": "2024-05-31",
+      "grade": "CGPA: 8.13",
+      "current": false
+    },
+    {
+      "title": "Higher Secondary Education (12th)",
+      "institution": "Macaroon Students Academy Jr. Science College",
+      "location": "Chandrapur, Maharashtra",
+      "startDate": "2019-06-01",
+      "endDate": "2020-05-31",
+      "grade": "CGPA: 6.13",
+      "current": false
+    },
+    {
+      "title": "Secondary Education (10th)",
+      "institution": "Macaroon Students Academy",
+      "location": "Wani, Maharashtra",
+      "startDate": "2017-06-01",
+      "endDate": "2018-05-31",
+      "grade": "CGPA: 7.72",
+      "current": false
+    }
+  ],
+  "experience": [
+    {
+      "title": "Project Engineer",
+      "company": "CDAC Mumbai",
+      "companyLink": null,
+      "location": "Navi Mumbai, Maharashtra",
+      "startDate": "2025-10-09",
+      "endDate": null,
+      "current": true,
+      "description": [
+        "Working in the Education and Training department for DBDA (Diploma in Big Data Analytics) course",
+        "Delivering lectures and training on Big Data Technologies including Hadoop, Spark, and Kafka",
+        "Teaching Python, R, and Java programming for data science applications",
+        "Conducting practical sessions on Machine Learning and Generative AI",
+        "Mentoring students on data visualization tools and cloud computing platforms",
+        "Developing course materials and assessment frameworks for analytics programs"
+      ],
+      "certificate": null
+    },
+    {
+      "title": "IIOT Intern",
+      "company": "Solar Industries India Limited",
+      "companyLink": null,
+      "location": "Nagpur, Maharashtra",
+      "startDate": "2023-12-20",
+      "endDate": "2024-07-17",
+      "current": false,
+      "description": [
+        "Worked on data analysis and visualization projects to support forecasting and process monitoring",
+        "Built Power BI dashboards and used DAX, MS SQL, and Postgres queries for data manipulation",
+        "Performed time-series analysis to understand product performance trends",
+        "Handled real-world datasets and collaborated with cross-functional teams"
+      ],
+      "certificate": "assets/certificates/SolarCompletion.pdf"
+    },
+    {
+      "title": "Data Science Intern",
+      "company": "Clustor Computing",
+      "companyLink": "https://www.clustorcomputing.com/",
+      "location": "Nagpur, Maharashtra",
+      "startDate": "2023-07-01",
+      "endDate": "2023-07-31",
+      "current": false,
+      "description": [
+        "Gained hands-on experience in data analysis, ML modeling, and visualization",
+        "Prepared and cleaned real-world datasets for analysis and reporting",
+        "Developed predictive models using Python and scikit-learn",
+        "Created interactive dashboards for business intelligence"
+      ],
+      "certificate": "assets/certificates/ClustorComputing.pdf"
+    },
+    {
+      "title": "Technical Lead",
+      "company": "GDSC St. Vincent Pallotti College",
+      "companyLink": null,
+      "location": "Nagpur, Maharashtra",
+      "startDate": "2022-07-01",
+      "endDate": "2023-07-31",
+      "current": false,
+      "description": [
+        "Led GDSC events, mentored newcomers, and coordinated workshops and seminars",
+        "Provided technical guidance and support to 50+ club members",
+        "Organized coding competitions and hackathons",
+        "Conducted technical training sessions on web development and cloud platforms"
+      ],
+      "certificate": "assets/certificates/LOR_GDSC_2021.pdf"
+    }
+  ],
+  "skills": {
+    "Data Science & Analytics": [
+      "Exploratory Data Analysis (EDA)",
+      "Predictive Modeling & ML",
+      "Statistical Analysis",
+      "Time Series Analysis",
+      "A/B Testing"
+    ],
+    "Big Data Technologies": [
+      "Hadoop & HDFS",
+      "Apache Spark",
+      "Apache Kafka",
+      "Apache Airflow",
+      "Hive & HBase"
+    ],
+    "Programming Languages": [
+      "Python (Pandas, NumPy, Scikit-learn)",
+      "R Programming",
+      "Java",
+      "SQL",
+      "JavaScript"
+    ],
+    "Databases": [
+      "MySQL",
+      "PostgreSQL",
+      "MongoDB",
+      "Redis",
+      "Amazon Redshift"
+    ],
+    "Visualization Tools": [
+      "Power BI & DAX",
+      "Tableau",
+      "Streamlit",
+      "Matplotlib & Seaborn",
+      "Plotly"
+    ],
+    "Cloud & DevOps": [
+      "AWS (S3, EC2, Redshift)",
+      "Docker",
+      "Git & GitHub",
+      "Linux & CLI",
+      "Cloud Computing Basics"
+    ],
+    "Web Development": [
+      "Flask",
+      "HTML, CSS, JavaScript",
+      "RESTful APIs",
+      "Bootstrap",
+      "WordPress"
+    ],
+    "Soft Skills": [
+      "Leadership & Team Management",
+      "Public Speaking & Presentation",
+      "Mentoring & Training",
+      "Problem Solving",
+      "Agile Collaboration"
+    ]
+  },
+  "blogs": [
+    {
+      "image": "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*HbgN28k26SrTN7A1Tudi7A.png",
+      "title": "Understanding IaaS, PaaS, and SaaS",
+      "description": "Explore the pillars of cloud computing—how IaaS, PaaS, and SaaS are transforming app development and deployment.",
+      "link": "https://medium.com/@skarande220/understanding-iaas-paas-and-saas-a-comprehensive-cloud-computing-guide-26a47206d8cb?source=user_profile_page---------0-------------da698f02535----------------------"
+    },
+    {
+      "image": "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*Iyzm1_-di-l2CIyykz1K3A.png",
+      "title": "PCA: From Concepts to Code",
+      "description": "Break down Principal Component Analysis—what it is, why it matters, and how to implement it in Python.",
+      "link": "https://medium.com/@skarande220/understanding-iaas-paas-and-saas-a-comprehensive-cloud-computing-guide-26a47206d8cb?source=user_profile_page---------0-------------da698f02535----------------------"
+    },
+    {
+      "image": "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*Pl7rnk0b2vX8Z4iupx5rLQ.png",
+      "title": "Regression Types 101",
+      "description": "A complete guide to Linear, Logistic, Count, and other regression types with examples and use cases.",
+      "link": "https://medium.com/@skarande220/understanding-iaas-paas-and-saas-a-comprehensive-cloud-computing-guide-26a47206d8cb?source=user_profile_page---------0-------------da698f02535----------------------"
+    },
+    {
+      "image": "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*zSg1HyEU2TCbzT0dDZAbjA.png",
+      "title": "Sigmoid Function & Loan Prediction",
+      "description": "Understand the sigmoid curve and how it powers logistic regression models used in finance and beyond.",
+      "link": "https://medium.com/@skarande220/sigmoid-function-101-predicting-loan-sanctions-using-logistic-regression-9079012cdecb?source=user_profile_page---------3-------------da698f02535----------------------"
+    },
+    {
+      "image": "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*ZmoGG7AmIFqUrFAk-JK0Ow.png",
+      "title": "Top Interview Questions for Data Science Freshers",
+      "description": "Get prepared with real-world ML, NLP, and statistics questions frequently asked in DS interviews.",
+      "link": "https://medium.com/@skarande220/top-interview-questions-for-data-science-freshers-ml-nlp-and-statistics-ab3cfb6d9d73?source=user_profile_page---------4-------------da698f02535----------------------"
+    },
+    {
+      "image": "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*iupjWcwo2tIdenQw4xEiBw.png",
+      "title": "Log-Odds Explained",
+      "description": "Dive deep into the intuition and math behind log-odds in logistic regression and real-world decisions.",
+      "link": "https://medium.com/@skarande220/log-of-odds-log-odds-intuition-math-real-world-use-24ff1d3e57b8?source=user_profile_page---------5-------------da698f02535----------------------"
+    },
+    {
+      "image": "https://miro.medium.com/v2/resize:fit:1100/format:webp/0*uPRwv9ZSCaaYXasi.png",
+      "title": "Advanced Concepts in Neural Networks",
+      "description": "Explore vanishing gradients, activation functions, and architectures that shape modern neural networks.",
+      "link": "https://medium.com/@skarande220/advanced-concepts-in-neural-networks-vanishing-gradients-activation-choices-and-network-89f3215c9f80?source=user_profile_page---------6-------------da698f02535----------------------"
+    },
+    {
+      "image": "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*e2THC8yNFc__5hgnonFFSw.png",
+      "title": "Understanding Artificial Neural Networks",
+      "description": "Go from feedforward basics to backpropagation and learn how ANNs mimic human learning.",
+      "link": "https://medium.com/@skarande220/advanced-concepts-in-neural-networks-vanishing-gradients-activation-choices-and-network-89f3215c9f80?source=user_profile_page---------6-------------da698f02535----------------------"
+    }
+  ],
+  "profile": {
+    "name": "Sahil Karande",
+    "role": "Project Engineer",
+    "organization": "CDAC Mumbai - Kharghar",
+    "headline": "Project Engineer | Big Data Analytics | Data Science Enthusiast",
+    "about_html": "<p>I am currently working as a <b>Project Engineer at CDAC Mumbai</b> in the Education and Training department, where I deliver lectures and conduct practical sessions on <b>Big Data Technologies, Machine Learning, and Generative AI</b> for the DBDA (Diploma in Big Data Analytics) program.</p>\n<p>I'm a Computer Engineering graduate and CDAC-certified professional with specialized training in <b>Hadoop, Spark, Kafka, Python, R, and Cloud Computing</b>. My expertise spans data engineering, advanced analytics, and building scalable data pipelines for real-time processing.</p>\n<p>My professional journey includes impactful internships at <b>Solar Industries India Ltd.</b> and <b>Clustor Computing</b>, where I developed real-time dashboards, performed time-series analysis, and built ML models. I've worked on diverse projects including <b>InsightHub</b> (analytics platform), <b>Therapy Connect</b> (AI-powered matching), and various data visualization dashboards.</p>\n<p>Beyond technical skills, I've served as <b>Technical Class Representative at CDAC</b> and <b>GDSC Technical Lead</b>, where I mentored 50+ students, organized technical workshops, and led coding competitions. I'm passionate about <b>Big Data, Cloud Technologies, and AI-driven solutions</b>, always eager to collaborate on innovative projects that create real-world impact.</p>",
+    "location": "Navi Mumbai, Maharashtra, India",
+    "email": "skarande220@gmail.com",
+    "phone": "+919881678709",
+    "avatar": "assets/images/Passport_Photo.png",
+    "resume_file": "assets/resume/Sahil_Karande_Resume.pdf",
+    "years_experience": "1",
+    "education_summary": "PG Diploma in Big Data Analytics<br>B.Tech in Computer Engineering",
+    "expertise_summary": "Big Data, ML, Cloud, Full-Stack Dev",
+    "map_label": "Dhayari, Pune, Maharashtra",
+    "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.8597825275274!2d73.05167127455994!3d19.025899382168383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c24cce39457b%3A0x8bd69eab297890b0!2sCentre%20for%20Development%20of%20Advanced%20Computing%20(CDAC)!5e0!3m2!1sen!2sin!4v1760882478289!5m2!1sen!2sin",
+    "meta_description": "Explore Sahil Karande's portfolio including Data Science projects, Web Development, certifications, and insightful Medium blogs.",
+    "meta_keywords": "Sahil Karande, Blogs, Data Science, Web Development, CDAC, Python, Portfolio"
+  },
+  "social_links": [
+    {
+      "url": "https://github.com/sahilkarande",
+      "label": "GitHub",
+      "icon": "fab fa-github"
+    },
+    {
+      "url": "https://www.linkedin.com/in/sahil-karande-a77aa7207/",
+      "label": "LinkedIn",
+      "icon": "fab fa-linkedin-in"
+    },
+    {
+      "url": "mailto:skarande220@gmail.com",
+      "label": "Email",
+      "icon": "fas fa-envelope"
+    },
+    {
+      "url": "https://twitter.com/Sahilkarande9",
+      "label": "Twitter",
+      "icon": "fab fa-twitter"
+    },
+    {
+      "url": "https://www.instagram.com/escaee/",
+      "label": "Instagram",
+      "icon": "fab fa-instagram"
+    },
+    {
+      "url": "https://wa.me/+919881678709",
+      "label": "WhatsApp",
+      "icon": "fab fa-whatsapp"
+    }
+  ]
+}

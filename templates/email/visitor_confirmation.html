@@ -1,0 +1,13 @@
+<html>
+  <body style="font-family: Arial, sans-serif; padding: 10px;">
+    <h2>Hi {{ message.name }},</h2>
+    <p>Thank you for contacting me! I have received your message and will get back to you soon.</p>
+    {% if profile.email %}
+    <p>If your message is urgent, feel free to reach out directly at <a href="mailto:{{ profile.email }}">{{ profile.email }}</a>.</p>
+    {% endif %}
+    <br>
+    <p>Regards,</p>
+    <p><strong>{{ profile.name }}</strong></p>
+    {% if site_url %}<p><a href="{{ site_url }}">Portfolio Website</a></p>{% endif %}
+  </body>
+</html>

@@ -1,0 +1,10 @@
+<html>
+  <body style="font-family: Arial, sans-serif; padding: 10px;">
+    <h2>New contact message</h2>
+    <p><strong>Name:</strong> {{ message.name }}</p>
+    <p><strong>Email:</strong> {{ message.email }}</p>
+    <p><strong>Phone:</strong> {{ message.phone or '—' }}</p>
+    <p><strong>Message:</strong></p>
+    <p style="background:#f2f2f2;padding:10px;border-radius:5px;white-space:pre-wrap;">{{ message.body }}</p>
+  </body>
+</html>

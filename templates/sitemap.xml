@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{%- for path, modified, freq, priority in pages %}
+  <url>
+    <loc>{{ root }}{{ path }}</loc>
+    {%- if modified %}
+    <lastmod>{{ modified.date().isoformat() }}</lastmod>
+    {%- endif %}
+    <changefreq>{{ freq }}</changefreq>
+    <priority>{{ priority }}</priority>
+  </url>
+{%- endfor %}
+</urlset>

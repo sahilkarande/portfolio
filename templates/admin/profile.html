@@ -1,0 +1,28 @@
+{% extends 'admin/base.html' %}
+{% from 'admin/_macros.html' import render_field %}
+{% block title %}Profile{% endblock %}
+{% block heading %}Profile{% endblock %}
+{% block content %}
+<p class="page-intro">Your name, photo, about text, resume and contact details — used across the whole site.</p>
+{% set sections = [
+  ('Identity', ['name', 'role', 'organization', 'headline', 'avatar_upload', 'avatar']),
+  ('About', ['about_html', 'years_experience', 'education_summary', 'expertise_summary']),
+  ('Resume', ['resume_upload', 'resume_file']),
+  ('Contact', ['email', 'phone', 'location', 'map_label', 'map_embed_url']),
+  ('SEO', ['meta_description', 'meta_keywords']),
+] %}
+<form class="card" method="post" enctype="multipart/form-data" novalidate>
+  <div class="card__body">
+    {{ form.csrf_token }}
+    <div class="form-grid">
+      {% for title, names in sections %}
+        <div class="section-title">{{ title }}</div>
+        {% for name in names %}{{ render_field(form[name], form, uploads) }}{% endfor %}
+      {% endfor %}
+    </div>
+    <div class="form-actions">
+      <button class="btn btn--primary" type="submit"><i class="fas fa-check"></i> Save profile</button>
+    </div>
+  </div>
+</form>
+{% endblock %}

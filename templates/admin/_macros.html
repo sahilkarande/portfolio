@@ -1,0 +1,31 @@
+{% macro render_field(field, form=None, uploads=None) %}
+{%- set kind = field.type -%}
+{%- set wide = kind in ('TextAreaField', 'LinesField', 'FileField') -%}
+<div class="field{% if wide %} field--wide{% endif %}{% if field.errors %} has-error{% endif %}">
+  {% if kind == 'BooleanField' %}
+    <label class="switch">{{ field() }}<span class="switch__track"></span><span>{{ field.label.text }}</span></label>
+  {% else %}
+    {{ field.label(class='field__label') }}
+    {% if kind == 'FileField' %}
+      {%- set attr, _kind, allowed = uploads[field.name] -%}
+      {%- set current = form[attr].data -%}
+      <div class="upload">
+        {% if current %}
+          {% if current.rsplit('.', 1)[-1].lower() == 'pdf' %}
+            <a class="upload__file" href="{{ media_url(current) }}" target="_blank" rel="noopener"><i class="fas fa-file-pdf fa-lg"></i> Current file</a>
+          {% else %}
+            <img class="upload__preview" src="{{ media_url(current) }}" alt="Current image">
+          {% endif %}
+        {% endif %}
+        {{ field(accept=allowed|map('format_ext')|join(',')) }}
+      </div>
+    {% elif kind in ('TextAreaField', 'LinesField') %}
+      {{ field(class='tall' if field.name in ('about_html', 'body') else '', rows=6) }}
+    {% else %}
+      {{ field() }}
+    {% endif %}
+  {% endif %}
+  {% if field.description %}<p class="field__help">{{ field.description }}</p>{% endif %}
+  {% for error in field.errors %}<p class="field__error">{{ error }}</p>{% endfor %}
+</div>
+{% endmacro %}

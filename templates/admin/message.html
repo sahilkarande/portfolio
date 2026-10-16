@@ -1,0 +1,33 @@
+{% extends 'admin/base.html' %}
+{% block title %}Message from {{ msg.name }}{% endblock %}
+{% block heading %}
+<a href="{{ url_for('admin.messages') }}" class="btn btn--ghost btn--icon" aria-label="Back"><i class="fas fa-arrow-left"></i></a>
+Message
+{% endblock %}
+{% block actions %}
+<a class="btn btn--primary" href="mailto:{{ msg.email }}?subject={{ ('Re: your message on ' ~ profile.name ~ '\'s portfolio')|urlencode }}"><i class="fas fa-reply"></i><span>Reply</span></a>
+{% endblock %}
+{% block content %}
+<section class="card">
+  <div class="card__body">
+    <dl class="msg-meta">
+      <dt>From</dt><dd><b>{{ msg.name }}</b></dd>
+      <dt>Email</dt><dd><a href="mailto:{{ msg.email }}">{{ msg.email }}</a></dd>
+      {% if msg.phone %}<dt>Phone</dt><dd><a href="tel:{{ msg.phone }}">{{ msg.phone }}</a></dd>{% endif %}
+      <dt>Received</dt><dd>{{ msg.created_at.strftime('%A, %d %B %Y at %H:%M') }} UTC</dd>
+      <dt>Email alert</dt><dd>{% if msg.email_sent %}<span class="badge badge--success">sent</span>{% else %}<span class="badge badge--warning">failed / not configured</span>{% endif %}</dd>
+    </dl>
+    <div class="msg-body">{{ msg.body }}</div>
+    <div class="form-actions">
+      <form method="post" action="{{ url_for('admin.message_delete', msg_id=msg.id) }}" data-confirm="Delete this message permanently?">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="btn btn--danger" type="submit"><i class="fas fa-trash"></i> Delete</button>
+      </form>
+      <form method="post" action="{{ url_for('admin.message_unread', msg_id=msg.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="btn" type="submit"><i class="fas fa-envelope"></i> Mark as unread</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

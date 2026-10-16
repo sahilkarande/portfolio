@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% from 'partials/macros.html' import project_card %}
+{% block description %}{{ project.summary }}{% endblock %}
+
+{% block content %}
+{% if is_preview %}
+<div class="alert alert--error" style="margin:0;border-radius:0;justify-content:center">
+  <i class="fas fa-eye-slash"></i> Preview — this project is hidden from visitors.
+  <a href="{{ url_for('admin.resource_edit', res_slug='projects', obj_id=project.id) }}" style="color:inherit">Edit in admin</a>
+</div>
+{% endif %}
+
+<article>
+  <header class="page-hero project-hero">
+    {% with cls='web--hero' %}{% include 'partials/web.html' %}{% endwith %}
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="{{ url_for('public.projects') }}"><i class="fas fa-arrow-left"></i> All projects</a>
+        {% if project.category %}<span aria-hidden="true">/</span><span>{{ project.category.label }}</span>{% endif %}
+      </nav>
+      <span class="page-hero__issue" aria-hidden="true">{{ '%02d' % number }}</span>
+      <div style="margin-top:18px"><span class="caption">Case file #{{ '%02d' % number }}</span></div>
+      <h1 class="display misprint" style="margin-top:18px">{{ project.title }}</h1>
+      <p class="lead">{{ project.summary }}</p>
+      <div class="hero__actions">
+        {% if project.live_url %}<a class="btn btn--red" href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer" data-track="live" data-track-label="{{ project.slug }}"><i class="fas fa-globe"></i> Live demo</a>{% endif %}
+        {% if project.repo_url %}<a class="btn {{ 'btn--paper' if project.live_url else 'btn--red' }}" href="{{ project.repo_url }}" target="_blank" rel="noopener noreferrer" data-track="repo" data-track-label="{{ project.slug }}"><i class="fab fa-github"></i> View source</a>{% endif %}
+      </div>
+    </div>
+  </header>
+
+  {% if project.image %}
+  <div class="container">
+    <figure class="project-cover reveal">
+      <img src="{{ media_url(project.image) }}" alt="Screenshot of {{ project.title }}" fetchpriority="high" decoding="async">
+    </figure>
+  </div>
+  {% endif %}
+
+  <div class="container project-layout">
+    <div class="prose reveal">
+      {% if project.body %}
+        {{ project.body|markdown }}
+      {% else %}
+        <p><span class="bubble" style="font-size:.9rem">Full case study coming soon!</span></p>
+      {% endif %}
+    </div>
+
+    <aside class="project-facts">
+      <div class="panel reveal"><div class="panel__body">
+        <dl class="facts-list">
+          <div><dt>Status</dt><dd>{% if project.status == 'completed' %}<span class="status-dot" style="color:var(--paper)">{{ project.STATUSES[project.status] }}</span>{% else %}<span class="tag tag--red">{{ project.STATUSES.get(project.status, project.status) }}</span>{% endif %}</dd></div>
+          {% if project.category %}<div><dt>Category</dt><dd>{{ project.category.label }}</dd></div>{% endif %}
+          {% if project.tech %}<div><dt>Tech stack</dt><dd><ul class="tag-list">{% for t in project.tech %}<li class="tag">{{ t }}</li>{% endfor %}</ul></dd></div>{% endif %}
+          {% if project.repo_url or project.live_url %}
+          <div><dt>Links</dt><dd class="facts-links">
+            {% if project.live_url %}<a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer" data-track="live" data-track-label="{{ project.slug }}"><i class="fas fa-globe"></i> Live demo</a>{% endif %}
+            {% if project.repo_url %}<a href="{{ project.repo_url }}" target="_blank" rel="noopener noreferrer" data-track="repo" data-track-label="{{ project.slug }}"><i class="fab fa-github"></i> Source code</a>{% endif %}
+          </dd></div>
+          {% endif %}
+          <div><dt>Last updated</dt><dd>{{ project.updated_at.strftime('%d %b %Y') }}</dd></div>
+        </dl>
+      </div></div>
+    </aside>
+  </div>
+
+  {% if prev_project or next_project %}
+  <nav class="container project-pager" aria-label="More projects">
+    {% if prev_project %}<a class="panel panel--plain pager-link" href="{{ url_for('public.project_detail', slug=prev_project.slug) }}"><span class="fact__label"><i class="fas fa-arrow-left"></i> Previous</span><span class="pager-title">{{ prev_project.title }}</span></a>{% else %}<span></span>{% endif %}
+    {% if next_project %}<a class="panel panel--plain pager-link pager-link--next" href="{{ url_for('public.project_detail', slug=next_project.slug) }}"><span class="fact__label">Next <i class="fas fa-arrow-right"></i></span><span class="pager-title">{{ next_project.title }}</span></a>{% endif %}
+  </nav>
+  {% endif %}
+</article>
+
+{% if related %}
+<section class="section">
+  <div class="container">
+    <header class="section-head"><span class="section-head__kicker">From the same universe</span><h2 class="misprint">Related projects</h2></header>
+    <div class="card-grid">{% for p in related %}{{ project_card(p, loop.index0) }}{% endfor %}</div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}
