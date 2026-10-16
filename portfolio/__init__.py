@@ -2,7 +2,6 @@ import logging
 import os
 from urllib.parse import urlsplit
 
-from dotenv import load_dotenv
 from flask import Flask, flash, redirect, render_template, request
 from flask_wtf.csrf import CSRFError
 from sqlalchemy import func, select
@@ -18,7 +17,6 @@ from .models import (Blog, Certificate, Education, Experience, Profile, Project,
 
 
 def create_app(config_name=None):
-    load_dotenv(BASE_DIR / ".env")
     config_name = config_name or os.getenv("FLASK_ENV_NAME", "production")
 
     app = Flask(

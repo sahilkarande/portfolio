@@ -138,8 +138,8 @@ It backs up, pulls `main`, installs requirements, runs migrations and reloads th
 ---
 
 ## Good to know (free plan)
-- **Keep it alive:** free web apps pause after 3 months — log in and click
-  **"Run until 3 months from today"** on the Web tab when PythonAnywhere emails you.
+- **Keep it alive:** free web apps are disabled after **1 month** unless you log in and click
+  **"Run until 1 month from today"** on the Web tab (PythonAnywhere emails a week before).
 - **Disk:** 512 MB total. Images are optimised on upload, and backups keep the last 14.
 - **Email:** Gmail SMTP works on free accounts; use a Gmail *app password*, not your real one.
 - **Errors:** Web tab → *Error log* (`/var/log/USERNAME.pythonanywhere.com.error.log`).

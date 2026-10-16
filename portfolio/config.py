@@ -1,9 +1,14 @@
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
 from sqlalchemy.engine import URL
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load .env before the Config classes below read os.environ (they do so at import time).
+# Real environment variables still win over values in .env.
+load_dotenv(BASE_DIR / ".env")
 
 
 def _database_uri():
