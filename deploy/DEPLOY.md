@@ -104,14 +104,16 @@ Click the **WSGI configuration file** link, replace its entire contents with
 - [ ] `/sitemap.xml` and `/robots.txt` use your real domain
 - [ ] Open the site in a private window, then check **Admin → Analytics** shows a visit
 
-### 8. Daily backups
-**Tasks** tab → daily scheduled task (free accounts get one):
+### 8. Backups
+Free accounts can't schedule tasks, so backups happen two ways:
+- **Automatically** every time you run `./deploy/deploy.sh`.
+- **Monthly by hand** — when you click *Run until 1 month from today*, also run:
+  ```bash
+  cd ~/portfolio && ~/.virtualenvs/portfolio-venv/bin/flask --app app backup --keep 14
+  ```
 
-```bash
-cd ~/portfolio && ~/.virtualenvs/portfolio-venv/bin/flask --app app backup --keep 14
-```
 Backups land in `~/backups/` (database dump + uploaded files). Uploads and the database exist
-**only on PythonAnywhere** — download a recent backup from the **Files** tab now and then.
+**only on PythonAnywhere** — download the newest backup from the **Files** tab now and then.
 
 ### 9. Google Search Console (optional)
 Your verification file is served at `https://USERNAME.pythonanywhere.com/googlec2d288ffdefa9086.html`.
@@ -140,7 +142,8 @@ It backs up, pulls `main`, installs requirements, runs migrations and reloads th
 ## Good to know (free plan)
 - **Keep it alive:** free web apps are disabled after **1 month** unless you log in and click
   **"Run until 1 month from today"** on the Web tab (PythonAnywhere emails a week before).
-- **Disk:** 512 MB total. Images are optimised on upload, and backups keep the last 14.
+- **Disk:** 512 MB total. Images are optimised on upload, and backups keep the last 14 (~2.5 MB each).
+- **CPU:** 100 CPU-seconds/day for consoles; `optimize-images` on all images uses about 20 of them.
 - **Email:** Gmail SMTP works on free accounts; use a Gmail *app password*, not your real one.
 - **Errors:** Web tab → *Error log* (`/var/log/USERNAME.pythonanywhere.com.error.log`).
   A `RuntimeError: Set SECRET_KEY` means `.env` is missing or `FLASK_ENV_NAME` is wrong.
