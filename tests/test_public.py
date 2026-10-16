@@ -108,3 +108,11 @@ def test_home_shows_featured_or_first_projects(client, app):
 def test_custom_404_page(client):
     resp = client.get("/no-such-page")
     assert resp.status_code == 404 and b"Wrong universe" in resp.data
+
+
+def test_suit_up_button_links_to_login_then_dashboard(client):
+    html = client.get("/").get_data(as_text=True)
+    assert 'href="/admin/login"' in html and "Suit Up" in html
+    client.post("/admin/login", data={"username": "admin", "password": "correct-horse-battery"})
+    html = client.get("/").get_data(as_text=True)
+    assert 'href="/admin/"' in html and "Web HQ" in html and "Suit Up" not in html
