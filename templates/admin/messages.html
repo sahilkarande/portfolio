@@ -2,6 +2,12 @@
 {% block title %}Messages{% endblock %}
 {% block heading %}Messages{% endblock %}
 {% block actions %}
+{% if page.total %}
+<form method="post" action="{{ url_for('admin.messages_delete_all') }}" data-confirm="Permanently delete ALL {{ page.total }} messages? This can't be undone.">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <button class="btn btn--danger" type="submit"><i class="fas fa-trash"></i><span>Delete all</span></button>
+</form>
+{% endif %}
 {% if unread_count %}
 <form method="post" action="{{ url_for('admin.messages_mark_all_read') }}">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

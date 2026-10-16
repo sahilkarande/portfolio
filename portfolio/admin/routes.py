@@ -355,3 +355,11 @@ def format_ext(ext):
 @bp.app_template_filter("capitalize_first")
 def capitalize_first(row):
     return [str(row[0]).capitalize(), *row[1:]]
+
+
+@bp.route("/messages/delete-all", methods=["POST"])
+def messages_delete_all():
+    deleted = db.session.query(Message).delete()
+    db.session.commit()
+    flash(f"Deleted {deleted} message{'s' if deleted != 1 else ''}.", "success")
+    return redirect(url_for(".messages"))
