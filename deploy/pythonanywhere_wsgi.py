@@ -7,4 +7,4 @@ PROJECT = "/home/USERNAME/portfolio"
 if PROJECT not in sys.path:
     sys.path.insert(0, PROJECT)
 
-from app import app as application  # noqa: E402,F401  (.env is loaded by create_app)
+from app import app as application  # noqa: E402,F401  (.env is loaded by portfolio/config.py)
