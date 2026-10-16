@@ -49,6 +49,13 @@
         <li><a class="nav__link" href="{{ url_for(endpoint) }}"{% if request.endpoint == endpoint %} aria-current="page"{% endif %}>{{ label }}</a></li>
         {% endfor %}
         <li class="nav__cta"><a class="btn btn--red btn--sm" href="{{ url_for('public.contact') }}">Contact</a></li>
+        <li class="nav__hq">
+          {% if current_user.is_authenticated %}
+          <a class="hq-btn" href="{{ url_for('admin.dashboard') }}" title="Go to your admin dashboard"><i class="fas fa-spider"></i><span>Web HQ</span></a>
+          {% else %}
+          <a class="hq-btn" href="{{ url_for('admin.login') }}" title="Admin login" rel="nofollow"><i class="fas fa-spider"></i><span>Suit Up</span></a>
+          {% endif %}
+        </li>
       </ul>
     </div>
   </header>

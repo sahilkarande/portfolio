@@ -4,8 +4,8 @@
 <div class="auth">
   <form class="card auth__card" method="post" novalidate>
     <div class="brand"><span class="brand__mark"><i class="fas fa-spider"></i></span><span>Web HQ</span></div>
-    <h1>Welcome back</h1>
-    <p class="sub">Sign in to manage your portfolio</p>
+    <h1>Suit up</h1>
+    <p class="sub">Your spider-sense says it’s time to update the portfolio.</p>
     {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}
     <div class="flashes">{% for category, text in messages %}
       <div class="flash flash--{{ 'error' if category == 'error' else 'success' }}"><span>{{ text }}</span></div>
@@ -15,7 +15,7 @@
     <div class="field">{{ form.username.label(class='field__label') }}{{ form.username(autocomplete='username', autofocus=true) }}</div>
     <div class="field">{{ form.password.label(class='field__label') }}{{ form.password(autocomplete='current-password') }}</div>
     <div class="field" style="margin-top:16px"><label class="switch">{{ form.remember() }}<span class="switch__track"></span><span>{{ form.remember.label.text }}</span></label></div>
-    <button class="btn btn--primary" type="submit"><i class="fas fa-right-to-bracket"></i> Sign in</button>
+    <button class="btn btn--primary" type="submit"><i class="fas fa-spider"></i> Swing in</button>
     <a class="auth__back" href="{{ url_for('public.about') }}">← Back to site</a>
   </form>
 </div>
