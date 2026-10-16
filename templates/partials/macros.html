@@ -1,0 +1,65 @@
+{% macro project_card(p, index, headline='h3') %}
+<a class="pcard reveal" data-item href="{{ url_for('public.project_detail', slug=p.slug) }}" data-delay="{{ (index % 3) * 90 }}"
+  data-category="{{ p.category.slug if p.category else '' }}"
+  data-search="{{ (p.title ~ ' ' ~ p.summary ~ ' ' ~ (p.tech or [])|join(' '))|lower }}">
+  <div class="pcard__media">
+    <span class="pcard__num">#{{ '%02d' % (index + 1) }}</span>
+    {% if p.status != 'completed' %}<span class="pcard__status tag tag--red">{{ p.STATUSES.get(p.status, p.status) }}</span>{% endif %}
+    {% if p.image %}<img src="{{ thumb_url(p.image) }}" alt="" loading="lazy" decoding="async">{% endif %}
+  </div>
+  <div class="pcard__body">
+    {% if p.category %}<span class="pcard__cat">{{ p.category.label }}</span>{% endif %}
+    <{{ headline }} class="pcard__title">{{ p.title }}</{{ headline }}>
+    <p class="pcard__desc">{{ p.summary }}</p>
+    {% if p.tech %}<ul class="tag-list">{% for t in p.tech %}<li class="tag">{{ t }}</li>{% endfor %}</ul>{% endif %}
+    <div class="pcard__foot">
+      <span class="pcard__link">View case file <i class="fas fa-arrow-right"></i></span>
+      <span class="muted" aria-hidden="true">{% if p.repo_url %}<i class="fab fa-github"></i>{% endif %}{% if p.live_url %} <i class="fas fa-globe"></i>{% endif %}</span>
+    </div>
+  </div>
+</a>
+{% endmacro %}
+
+{% macro section_head(kicker, title, intro=None, autoglitch=False) %}
+<header class="section-head reveal">
+  <span class="section-head__kicker">{{ kicker }}</span>
+  <h2 class="misprint{% if autoglitch %} glitch{% endif %}"{% if autoglitch %} data-text="{{ title }}" data-autoglitch{% endif %}>{{ title }}</h2>
+  {% if intro %}<p class="lead">{{ intro }}</p>{% endif %}
+</header>
+{% endmacro %}
+
+{% macro page_hero(kicker, title, lead=None, issue=None) %}
+<section class="page-hero">
+  {% with cls='web--hero' %}{% include 'partials/web.html' %}{% endwith %}
+  <div class="container">
+    {% if issue %}<span class="page-hero__issue" aria-hidden="true">{{ issue }}</span>{% endif %}
+    <div><span class="caption">{{ kicker }}</span></div>
+    <h1 class="display misprint glitch" style="margin-top:18px" data-text="{{ title }}" data-autoglitch>{{ title }}</h1>
+    {% if lead %}<p class="lead">{{ lead }}</p>{% endif %}
+    {{ caller() if caller }}
+  </div>
+</section>
+{% endmacro %}
+
+{% macro filter_bar(categories, items, all_label='All', search_placeholder=None) %}
+<div class="filters">
+  <div class="filter-btns" role="group" aria-label="Filter by category">
+    <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">{{ all_label }} <span class="count">{{ items|length }}</span></button>
+    {% for c in categories %}
+    {% set n = items|selectattr('category_id', 'equalto', c.id)|list|length %}
+    {% if n %}<button class="filter-btn" type="button" data-filter="{{ c.slug }}" aria-pressed="false"><i class="{{ c.icon }}"></i> {{ c.label }} <span class="count">{{ n }}</span></button>{% endif %}
+    {% endfor %}
+  </div>
+  {% if search_placeholder %}
+  <label class="search-box"><span class="sr-only">Search</span><i class="fas fa-magnifying-glass"></i>
+    <input type="search" placeholder="{{ search_placeholder }}" data-filter-search autocomplete="off"></label>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{% macro empty_state(text) %}
+<div class="empty-state" data-filter-empty hidden>
+  <span class="bubble">{{ text }}</span>
+  <p>Try another filter or search term.</p>
+</div>
+{% endmacro %}

@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% from 'partials/macros.html' import project_card, section_head %}
+{% block title %}{{ profile.role or 'Portfolio' }}{% endblock %}
+{% set name_parts = profile.name.split(' ', 1) %}
+
+{% block content %}
+{# ================================================================= HERO #}
+<section class="hero">
+  {% with cls='web--hero' %}{% include 'partials/web.html' %}{% endwith %}
+  <div class="container hero__grid">
+    <div>
+      <div class="hero__kicker">
+        <span class="status-dot">Open to opportunities</span>
+        {% if profile.location %}<span class="caption">Meanwhile, in {{ profile.location.split(',')[0] }}…</span>{% endif %}
+      </div>
+      <h1 class="hero__name display">
+        <span class="glitch misprint" data-text="{{ name_parts[0] }}" data-autoglitch>{{ name_parts[0] }}</span><br>
+        {% if name_parts|length > 1 %}<span class="outline">{{ name_parts[1] }}</span>{% endif %}
+      </h1>
+      <p class="hero__role">
+        {{ profile.role }}{% if profile.organization %} <span class="marker">@ {{ profile.organization }}</span>{% endif %}
+      </p>
+      {% if profile.headline %}<p class="lead hero__lead">{{ profile.headline }}</p>{% endif %}
+      <div class="hero__actions">
+        <a class="btn btn--red" href="{{ url_for('public.projects') }}"><i class="fas fa-bolt"></i> See my work</a>
+        {% if profile.resume_file %}
+        <a class="btn btn--paper" href="{{ media_url(profile.resume_file) }}" data-track="resume" target="_blank" rel="noopener"><i class="fas fa-file-arrow-down"></i> Resume</a>
+        {% endif %}
+      </div>
+      <div class="hero__meta">
+        {% if profile.email %}<span><i class="fas fa-envelope"></i> {{ profile.email }}</span>{% endif %}
+        {% if profile.expertise_summary %}<span><i class="fas fa-bolt"></i> {{ profile.expertise_summary }}</span>{% endif %}
+      </div>
+    </div>
+
+    {% if profile.avatar %}
+    <figure class="portrait">
+      <span class="bubble">Hey there! 👋</span>
+      <div class="portrait__frame">
+        <img class="portrait__img" src="{{ media_url(profile.avatar) }}" alt="Portrait of {{ profile.name }}" fetchpriority="high">
+      </div>
+      <figcaption class="portrait__tag">{{ profile.role }}</figcaption>
+    </figure>
+    {% endif %}
+  </div>
+</section>
+
+{# ================================================================= STATS #}
+<section class="container section--tight" aria-label="Highlights" style="padding-top:0">
+  <div class="stats reveal">
+    {% if profile.years_experience %}
+    <div class="stat"><div class="stat__num">{{ profile.years_experience }}<sup>+</sup></div><div class="stat__label">Years experience</div></div>
+    {% endif %}
+    <div class="stat"><div class="stat__num">{{ stats.projects }}</div><div class="stat__label">Projects shipped</div></div>
+    <div class="stat"><div class="stat__num">{{ stats.certificates }}</div><div class="stat__label">Certifications</div></div>
+    <div class="stat"><div class="stat__num">{{ stats.skills }}</div><div class="stat__label">Skills in the toolbelt</div></div>
+  </div>
+</section>
+
+{# ================================================================= TICKER #}
+{% if skills %}
+<div class="ticker-wrap"><div class="ticker" aria-label="Skills">
+  <div class="ticker__track">
+    {% for _ in range(2) %}{% for s in skills %}<span class="ticker__item"{% if _ %} aria-hidden="true"{% endif %}>{{ s }}</span>{% endfor %}{% endfor %}
+  </div>
+</div></div>
+{% endif %}
+
+{# ================================================================= ORIGIN STORY #}
+<section class="section" id="about">
+  <div class="container">
+    {{ section_head('Chapter 01 — Origin story', 'About me') }}
+    <div class="origin">
+      <ul class="facts">
+        {% set facts = [
+          ('fas fa-briefcase', 'Current role', (profile.role ~ (' at ' ~ profile.organization if profile.organization else ''))),
+          ('fas fa-graduation-cap', 'Education', profile.education_summary),
+          ('fas fa-location-dot', 'Based in', profile.location),
+          ('fas fa-bolt', 'Powers', profile.expertise_summary),
+        ] %}
+        {% for icon, label, value in facts if value %}
+        <li class="panel fact reveal" data-delay="{{ loop.index0 * 80 }}">
+          <span class="fact__icon"><i class="{{ icon }}"></i></span>
+          <div><div class="fact__label">{{ label }}</div><div class="fact__value">{{ value|safe }}</div></div>
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="origin__text reveal">{{ profile.about_html|safe }}</div>
+    </div>
+  </div>
+</section>
+
+{# ================================================================= CURRENT MISSION #}
+{% if current_role %}
+<section class="section--tight">
+  <div class="container">
+    <article class="panel halftone reveal" style="--dot-mask: linear-gradient(90deg, transparent 40%, #000 100%)">
+      <div class="panel__body mission">
+        <div class="mission__badge" aria-hidden="true"><i class="fas fa-spider"></i></div>
+        <div>
+          <span class="section-head__kicker">{{ 'Current mission' if current_role.current else 'Latest mission' }}</span>
+          <h3 style="font-size:clamp(1.8rem,4vw,2.6rem);margin-top:6px">{{ current_role.title }} <span class="red">@ {{ current_role.company }}</span></h3>
+          <p class="muted" style="margin-top:6px">
+            {{ current_role.start_date.strftime('%b %Y') if current_role.start_date }} — {{ 'Present' if current_role.current else (current_role.end_date.strftime('%b %Y') if current_role.end_date) }}
+            {% if current_role.location %}· {{ current_role.location }}{% endif %}
+          </p>
+          {% if current_role.highlights %}
+          <ul class="mission__list">{% for h in current_role.highlights[:4] %}<li>{{ h }}</li>{% endfor %}</ul>
+          {% endif %}
+          <a class="btn btn--ghost btn--sm" style="margin-top:20px" href="{{ url_for('public.resume') }}">Full timeline <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+{% endif %}
+
+{# ================================================================= FEATURED WORK #}
+{% if featured %}
+<section class="section">
+  <div class="container">
+    <div class="section-head__row">
+      {{ section_head('Chapter 02 — Featured work', 'Selected projects', autoglitch=True) }}
+      <a class="btn btn--ghost reveal" href="{{ url_for('public.projects') }}" style="margin-bottom:clamp(32px,5vw,56px)">All {{ stats.projects }} projects <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="card-grid">
+      {% for p in featured %}{{ project_card(p, loop.index0) }}{% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{# ================================================================= CTA #}
+<section class="container">
+  <div class="cta halftone reveal">
+    <span class="caption" style="transform:rotate(-3deg)">Spider-sense tingling?</span>
+    <h2 style="margin-top:18px">Let's build something<br>amazing together</h2>
+    <p>Have a project, an opportunity, or just want to talk data? My inbox is always open.</p>
+    <a class="btn btn--paper" href="{{ url_for('public.contact') }}"><i class="fas fa-paper-plane"></i> Get in touch</a>
+  </div>
+</section>
+{% endblock %}

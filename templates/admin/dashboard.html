@@ -1,0 +1,74 @@
+{% extends 'admin/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block heading %}Dashboard{% endblock %}
+{% block actions %}
+<a class="btn btn--primary" href="{{ url_for('admin.resource_edit', res_slug='projects') }}"><i class="fas fa-plus"></i><span>New project</span></a>
+{% endblock %}
+{% block content %}
+<p class="page-intro">Hey {{ current_user.username }} — here's what's happening with your portfolio.</p>
+
+<div class="stats">
+  <a class="card stat" href="{{ url_for('admin.messages', show='unread') }}">
+    <span class="stat__label"><i class="fas fa-inbox"></i> Unread messages</span>
+    <span class="stat__value">{{ unread_count }}</span>
+    <span class="stat__meta">{{ total_messages }} total</span>
+    <i class="fas fa-inbox stat__bg"></i>
+  </a>
+  {% for slug, label, total, hidden in stats %}
+  <a class="card stat" href="{{ url_for('admin.resource_list', res_slug=slug) }}">
+    <span class="stat__label"><i class="{{ resources[slug].icon }}"></i> {{ label }}</span>
+    <span class="stat__value">{{ total }}</span>
+    <span class="stat__meta">{% if hidden %}{{ hidden }} hidden{% else %}all visible{% endif %}</span>
+    <i class="{{ resources[slug].icon }} stat__bg"></i>
+  </a>
+  {% endfor %}
+</div>
+
+<div class="grid-2">
+  <section class="card">
+    <div class="card__header"><h2>Recent messages</h2><a class="btn btn--sm" href="{{ url_for('admin.messages') }}">View all</a></div>
+    {% if recent %}
+    <ul class="msg-list">
+      {% for m in recent %}
+      <li><a class="msg-item {% if not m.is_read %}unread{% endif %}" href="{{ url_for('admin.message_detail', msg_id=m.id) }}">
+        <span class="msg-item__dot"></span>
+        <div><div class="msg-item__name">{{ m.name }}</div><div class="msg-item__preview">{{ m.body|truncate(160) }}</div></div>
+        <span class="msg-item__date">{{ m.created_at.strftime('%d %b') }}</span>
+      </a></li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="empty"><i class="fas fa-envelope-open"></i><p>No messages yet.</p></div>
+    {% endif %}
+  </section>
+
+  <div style="display:grid;gap:20px">
+    <section class="card">
+      <div class="card__header"><h2>Quick add</h2></div>
+      <div class="card__body quick-actions">
+        {% for slug in ['projects', 'certificates', 'blogs', 'experience'] %}
+        <a class="btn" href="{{ url_for('admin.resource_edit', res_slug=slug) }}"><i class="{{ resources[slug].icon }}"></i> Add {{ resources[slug].singular|lower }}</a>
+        {% endfor %}
+        <a class="btn" href="{{ url_for('admin.profile') }}"><i class="fas fa-file-arrow-up"></i> Update resume PDF</a>
+      </div>
+    </section>
+
+    {% if missing %}
+    <section class="card">
+      <div class="card__header"><h2><i class="fas fa-triangle-exclamation" style="color:var(--warning)"></i> Missing files ({{ missing|length }})</h2></div>
+      <div class="card__body">
+        <p class="field__help" style="margin-bottom:12px">These items point at files that don't exist. Upload a replacement to fix them.</p>
+        <ul class="warn-list">
+          {% for m in missing %}
+          <li>
+            <a class="btn btn--sm" href="{{ url_for('admin.resource_edit', res_slug=m.resource.slug, obj_id=m.obj.id) if m.resource else url_for('admin.profile') }}">Fix</a>
+            <span><b>{{ m.obj.title or m.obj.name }}</b><br><code>{{ m.path }}</code></span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </section>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

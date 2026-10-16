@@ -1,0 +1,66 @@
+{% extends 'admin/base.html' %}
+{% block title %}{{ res.label }}{% endblock %}
+{% block heading %}<i class="{{ res.icon }}" style="color:var(--accent);margin-right:8px"></i>{{ res.label }}{% endblock %}
+{% block actions %}
+<a class="btn btn--primary" href="{{ url_for('admin.resource_edit', res_slug=res.slug) }}"><i class="fas fa-plus"></i><span>Add {{ res.singular|lower }}</span></a>
+{% endblock %}
+{% block content %}
+<p class="page-intro">{{ res.description }}{% if res.sortable and items|length > 1 %} Drag <i class="fas fa-grip-vertical"></i> to change the order on the site.{% endif %}</p>
+
+{% if items %}
+<div class="toolbar">
+  <label class="search"><i class="fas fa-magnifying-glass"></i><input class="input" type="search" placeholder="Filter {{ res.label|lower }}…" data-table-search aria-label="Filter"></label>
+  <span class="badge">{{ items|length }} total</span>
+  <span class="field__help" data-sort-status aria-live="polite"></span>
+</div>
+<div class="card table-wrap">
+  <table class="table">
+    <thead><tr>
+      {% if res.sortable %}<th class="cell-handle" aria-label="Reorder"></th>{% endif %}
+      {% if res.thumbnail %}<th class="hide-sm">Image</th>{% endif %}
+      {% for label, _ in res.columns %}<th{% if not loop.first %} class="hide-sm"{% endif %}>{{ label }}</th>{% endfor %}
+      {% if res.publishable %}<th>Visibility</th>{% endif %}
+      <th></th>
+    </tr></thead>
+    <tbody {% if res.sortable %}data-sortable="{{ url_for('admin.resource_reorder', res_slug=res.slug) }}"{% endif %}>
+      {% for obj in items %}
+      <tr data-row data-id="{{ obj.id }}" class="{% if res.publishable and not obj.is_published %}is-hidden{% endif %}">
+        {% if res.sortable %}<td class="cell-handle" title="Drag to reorder"><i class="fas fa-grip-vertical"></i></td>{% endif %}
+        {% if res.thumbnail %}<td class="hide-sm">
+          {% set src = thumb_url(obj[res.thumbnail]) %}
+          {% if src %}<img class="thumb" src="{{ src }}" alt="" loading="lazy">{% else %}<div class="thumb thumb--empty"><i class="fas fa-image"></i></div>{% endif %}
+        </td>{% endif %}
+        {% for label, getter in res.columns %}
+        <td class="{{ 'cell-main' if loop.first else 'cell-clip hide-sm' }}">
+          {% if loop.first %}<a href="{{ url_for('admin.resource_edit', res_slug=res.slug, obj_id=obj.id) }}" style="text-decoration:none">{{ getter(obj) }}</a>
+            {% if obj.featured %}<span class="badge badge--accent" style="margin-left:6px">Featured</span>{% endif %}
+          {% else %}{{ getter(obj) or '—' }}{% endif %}
+        </td>
+        {% endfor %}
+        {% if res.publishable %}<td>
+          <form method="post" action="{{ url_for('admin.resource_toggle', res_slug=res.slug, obj_id=obj.id) }}" data-toggle>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="pill-toggle {% if obj.is_published %}on{% endif %}" type="submit" title="Click to toggle">{{ 'Visible' if obj.is_published else 'Hidden' }}</button>
+          </form>
+        </td>{% endif %}
+        <td class="cell-actions">
+          {% if res.public_url %}<a class="btn btn--sm btn--icon hide-sm" href="{{ res.public_url(obj) }}" target="_blank" rel="noopener" title="View on site" aria-label="View on site"><i class="fas fa-eye"></i></a>{% endif %}
+          <a class="btn btn--sm btn--icon" href="{{ url_for('admin.resource_edit', res_slug=res.slug, obj_id=obj.id) }}" title="Edit" aria-label="Edit"><i class="fas fa-pen"></i></a>
+          <form method="post" action="{{ url_for('admin.resource_delete', res_slug=res.slug, obj_id=obj.id) }}" data-confirm="Delete this {{ res.singular|lower }}? This can't be undone.">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn--sm btn--icon btn--danger" type="submit" title="Delete" aria-label="Delete"><i class="fas fa-trash"></i></button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="card empty">
+  <i class="{{ res.icon }}"></i>
+  <p>No {{ res.label|lower }} yet.</p>
+  <a class="btn btn--primary" style="margin-top:14px" href="{{ url_for('admin.resource_edit', res_slug=res.slug) }}"><i class="fas fa-plus"></i> Add the first one</a>
+</div>
+{% endif %}
+{% endblock %}

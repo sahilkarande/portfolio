@@ -1,0 +1,112 @@
+{% extends 'admin/base.html' %}
+{% block title %}Analytics{% endblock %}
+{% block heading %}Analytics{% endblock %}
+
+{% macro bar_list(rows, empty='No data yet.') %}
+  {% if rows %}
+  {% set top = rows|map(attribute=-1)|max %}
+  <ul class="hbars">
+    {% for row in rows %}
+    <li>
+      <div class="hbars__row"><span class="hbars__label">{{ row[0] }}</span><span class="hbars__value">{{ '{:,}'.format(row[-1]) }}</span></div>
+      <div class="hbars__track"><span class="hbars__fill" style="width: {{ (row[-1] / top * 100)|round(1) }}%"></span></div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}<p class="empty" style="padding:24px 0">{{ empty }}</p>{% endif %}
+{% endmacro %}
+
+{% block content %}
+<div class="toolbar">
+  <nav class="tabs" aria-label="Date range">
+    {% for r in ranges %}<a href="{{ url_for('admin.analytics_report', days=r) }}" class="{% if r == days %}active{% endif %}">Last {{ r }} days</a>{% endfor %}
+  </nav>
+  <span class="field__help" style="margin-left:auto"><i class="fas fa-user-shield"></i> No cookies, no IP addresses stored · your own visits aren't counted</span>
+</div>
+
+<div class="stats stats--4">
+  {% for k in kpis %}
+  <div class="card stat">
+    <span class="stat__label">{{ k.label }}</span>
+    <span class="stat__value">{{ '{:,}'.format(k.value) if k.value is number else k.value }}</span>
+    <span class="stat__meta">
+      {% if k.delta is none %}vs previous {{ days }} days: —
+      {% else %}<span class="delta {{ 'delta--up' if k.delta >= 0 else 'delta--down' }}"><i class="fas fa-arrow-{{ 'up' if k.delta >= 0 else 'down' }}"></i> {{ k.delta|abs }}%</span> vs previous {{ days }} days{% endif %}
+    </span>
+  </div>
+  {% endfor %}
+</div>
+
+<section class="card" style="margin-bottom:20px">
+  <div class="card__header"><h2>Page views per day</h2></div>
+  <div class="card__body">
+    {% set c = chart %}
+    <div class="chart" data-chart>
+      <svg viewBox="0 0 {{ c.width }} {{ c.height }}" role="img" aria-label="Column chart of page views per day for the last {{ days }} days">
+        {% for t in c.ticks %}
+        <line x1="{{ c.left }}" x2="{{ c.width - 8 }}" y1="{{ t.y }}" y2="{{ t.y }}" class="chart__grid"/>
+        <text x="{{ c.left - 8 }}" y="{{ t.y + 4 }}" class="chart__tick" text-anchor="end">{{ '{:,}'.format(t.value|int) }}</text>
+        {% endfor %}
+        {% for s in c.series %}{% if s.path %}<path d="{{ s.path }}" class="chart__col"/>{% endif %}{% endfor %}
+        {% for s, x in c.labels %}
+        <text x="{{ x }}" y="{{ c.height - 6 }}" class="chart__tick" text-anchor="{{ 'start' if loop.first and c.labels|length > 1 else ('end' if loop.last and c.labels|length > 1 else 'middle') }}">{{ s.date.strftime('%d %b') }}</text>
+        {% endfor %}
+        {% for s in c.series %}
+        <rect x="{{ s.hit_x }}" y="{{ c.top }}" width="{{ s.hit_w }}" height="{{ c.plot_h }}" class="chart__hit" tabindex="0"
+              data-date="{{ s.date.strftime('%a %d %b') }}" data-views="{{ s.views }}" data-visitors="{{ s.visitors }}"
+              aria-label="{{ s.date.strftime('%d %b') }}: {{ s.views }} views, {{ s.visitors }} visitors"/>
+        {% endfor %}
+      </svg>
+      <div class="chart__tip" hidden></div>
+    </div>
+    <details class="chart__table">
+      <summary>View as table</summary>
+      <table class="table">
+        <thead><tr><th>Date</th><th style="text-align:right">Page views</th><th style="text-align:right">Visitors</th></tr></thead>
+        <tbody>{% for s in c.series|reverse %}<tr><td>{{ s.date.strftime('%a %d %b %Y') }}</td><td style="text-align:right">{{ s.views }}</td><td style="text-align:right">{{ s.visitors }}</td></tr>{% endfor %}</tbody>
+      </table>
+    </details>
+  </div>
+</section>
+
+<div class="grid-2" style="margin-bottom:20px">
+  <section class="card">
+    <div class="card__header"><h2>Top projects</h2></div>
+    <div class="card__body">
+      {% if top_projects %}
+      <table class="table table--compact">
+        <thead><tr><th>Project</th><th style="text-align:right">Page views</th><th style="text-align:right" title="Clicks on GitHub / live demo">Link clicks</th></tr></thead>
+        <tbody>
+          {% for p in top_projects %}
+          <tr><td class="cell-main"><a href="{{ url_for('public.project_detail', slug=p.slug) }}" target="_blank" rel="noopener" style="text-decoration:none">{{ p.title }}</a></td>
+              <td style="text-align:right">{{ p.views }}</td><td style="text-align:right">{{ p.clicks }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}<p class="empty" style="padding:24px 0">No project page views yet.</p>{% endif %}
+    </div>
+  </section>
+  <section class="card">
+    <div class="card__header"><h2>Top pages</h2></div>
+    <div class="card__body">{{ bar_list(pages) }}</div>
+  </section>
+</div>
+
+<div class="grid-3">
+  <section class="card">
+    <div class="card__header"><h2>Referrers</h2></div>
+    <div class="card__body">{{ bar_list(referrers, 'No external referrers yet — visits so far are direct.') }}</div>
+  </section>
+  <section class="card">
+    <div class="card__header"><h2>Outbound clicks</h2></div>
+    <div class="card__body">{{ bar_list(clicks, 'No resume downloads or link clicks yet.') }}</div>
+  </section>
+  <section class="card">
+    <div class="card__header"><h2>Devices</h2></div>
+    <div class="card__body">{{ bar_list(devices|map('list')|map('capitalize_first')|list) }}</div>
+  </section>
+</div>
+{% if not total_events %}
+<p class="page-intro" style="margin-top:20px"><i class="fas fa-circle-info"></i> Analytics start recording once your site is live. Visits while you're logged in aren't counted — open the site in a private window to test.</p>
+{% endif %}
+{% endblock %}

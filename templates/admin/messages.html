@@ -1,0 +1,45 @@
+{% extends 'admin/base.html' %}
+{% block title %}Messages{% endblock %}
+{% block heading %}Messages{% endblock %}
+{% block actions %}
+{% if unread_count %}
+<form method="post" action="{{ url_for('admin.messages_mark_all_read') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <button class="btn" type="submit"><i class="fas fa-check-double"></i><span>Mark all read</span></button>
+</form>
+{% endif %}
+{% endblock %}
+{% block content %}
+<div class="toolbar">
+  <nav class="tabs">
+    <a href="{{ url_for('admin.messages') }}" class="{% if show != 'unread' %}active{% endif %}">All</a>
+    <a href="{{ url_for('admin.messages', show='unread') }}" class="{% if show == 'unread' %}active{% endif %}">Unread{% if unread_count %} ({{ unread_count }}){% endif %}</a>
+  </nav>
+</div>
+<section class="card">
+  {% if page.items %}
+  <ul class="msg-list">
+    {% for m in page.items %}
+    <li><a class="msg-item {% if not m.is_read %}unread{% endif %}" href="{{ url_for('admin.message_detail', msg_id=m.id) }}">
+      <span class="msg-item__dot"></span>
+      <div>
+        <div class="msg-item__name">{{ m.name }} <span class="field__help" style="display:inline">&lt;{{ m.email }}&gt;</span>
+          {% if not m.email_sent %}<span class="badge badge--warning" title="The email notification failed; this message is only in the inbox">not emailed</span>{% endif %}</div>
+        <div class="msg-item__preview">{{ m.body|truncate(160) }}</div>
+      </div>
+      <span class="msg-item__date">{{ m.created_at.strftime('%d %b %Y, %H:%M') }}</span>
+    </a></li>
+    {% endfor %}
+  </ul>
+  {% if page.pages > 1 %}
+  <nav class="pagination">
+    {% if page.has_prev %}<a class="btn btn--sm" href="{{ url_for('admin.messages', page=page.prev_num, show=show) }}">← Newer</a>{% endif %}
+    <span class="badge">Page {{ page.page }} of {{ page.pages }}</span>
+    {% if page.has_next %}<a class="btn btn--sm" href="{{ url_for('admin.messages', page=page.next_num, show=show) }}">Older →</a>{% endif %}
+  </nav>
+  {% endif %}
+  {% else %}
+  <div class="empty"><i class="fas fa-envelope-open"></i><p>{{ 'No unread messages.' if show == 'unread' else 'No messages yet. They appear here when someone uses your contact form.' }}</p></div>
+  {% endif %}
+</section>
+{% endblock %}

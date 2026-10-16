@@ -1,0 +1,19 @@
+{% extends 'admin/base.html' %}
+{% from 'admin/_macros.html' import render_field %}
+{% block title %}Account{% endblock %}
+{% block heading %}Account{% endblock %}
+{% block content %}
+<p class="page-intro">Signed in as <b>{{ current_user.username }}</b>{% if current_user.last_login_at %} · last login {{ current_user.last_login_at.strftime('%d %b %Y, %H:%M') }} UTC{% endif %}</p>
+<form class="card" method="post" novalidate style="max-width:520px">
+  <div class="card__header"><h2>Change password</h2></div>
+  <div class="card__body">
+    {{ form.csrf_token }}
+    <div class="form-grid" style="grid-template-columns:1fr">
+      {{ render_field(form.current_password) }}
+      {{ render_field(form.new_password) }}
+      {{ render_field(form.confirm) }}
+    </div>
+    <div class="form-actions"><button class="btn btn--primary" type="submit">Update password</button></div>
+  </div>
+</form>
+{% endblock %}
